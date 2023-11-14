@@ -156,7 +156,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             Scene scene = new Scene(root, sceneWidth, sceneHeight);
             scene.getStylesheets().add("style.css");
             scene.setOnKeyPressed(this);
-            scene.setOnMouseDragged(event -> handleMouseDragged(event));
+            scene.setOnMouseDragged(event -> handleMouseDraggedInBackgroundThread(event));
 
 
 
@@ -231,6 +231,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < level + 1; j++) {
                 int r = new Random().nextInt(500);
+                //System.out.println("r is " + r);
                 if (r % 5 == 0) {
                     continue;
                 }
@@ -267,7 +268,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 move(LEFT);
                 break;
             case RIGHT:
-
                 move(RIGHT);
                 break;
             case DOWN:
@@ -275,6 +275,12 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 break;
             case S:
                 saveGame();
+                break;
+            case R:
+                restartGame();
+                break;
+            case L:
+                loadGame();
                 break;
         }
     }
@@ -285,14 +291,14 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         double mouseX = event.getSceneX();
         double mouseY = event.getSceneY();
 
-        //check if the mouse drag event is within the area
+        // check if the mouse drag event is within the area
         if (mouseY >= yBreak && mouseY <= (yBreak + breakHeight)) {
-            //update the position of the object based on the mouse's x-coordinate
+            // update the position of the object based on the mouse's x-coordinate
             xBreak = mouseX - halfBreakWidth;
             centerBreakX = mouseX;
             rect.setX(xBreak);
 
-            //ensure the object stays within the bounds of the scene
+            // ensure the object stays within the bounds of the scene
             if (xBreak < 0) {
                 xBreak = 0;
                 centerBreakX = halfBreakWidth;
@@ -302,9 +308,14 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 centerBreakX = xBreak + halfBreakWidth;
                 rect.setX(xBreak);
             }
-
         }
     }
+
+    // Call this method from your background thread
+    private void handleMouseDraggedInBackgroundThread(MouseEvent event) {
+        Platform.runLater(() -> handleMouseDragged(event));
+    }
+
 
 
     private void move(final int direction) {
@@ -312,6 +323,17 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             @Override
             public void run() {
                 int sleepTime = 4;
+
+                // ensure the object stays within the bounds of the scene
+                if (xBreak < 0) {
+                    xBreak = 0;
+                    centerBreakX = halfBreakWidth;
+                    rect.setX(xBreak);
+                } else if (xBreak > sceneWidth - breakWidth) {
+                    xBreak = sceneWidth - breakWidth;
+                    centerBreakX = xBreak + halfBreakWidth;
+                    rect.setX(xBreak);
+                }
 
                 for (int i = 0; i < 30; i++) {
                     //System.out.println("i = " + i);
@@ -568,7 +590,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     outputStream.writeBoolean(collideToTopBlock);
 
                     ArrayList<BlockSerializable> blockSerializables = new ArrayList<BlockSerializable>();
-                    if (blocks.size() > 0) {
+                    if (!blocks.isEmpty()) {
                         for (Block block : blocks) {
                             if (block.isDestroyed) {
                                 continue;
