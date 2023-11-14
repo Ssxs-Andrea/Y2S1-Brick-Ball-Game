@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 
 public class LoadSave {
     public boolean          isExistHeartBlock;
-    public boolean          isGoldStauts;
+    public boolean          isGoldStatus;
     public boolean          goDownBall;
     public boolean          goRightBall;
     public boolean          collideToBreak;
@@ -77,7 +77,7 @@ public class LoadSave {
 
 
             isExistHeartBlock = inputStream.readBoolean();
-            isGoldStauts = inputStream.readBoolean();
+            isGoldStatus = inputStream.readBoolean();
             goDownBall = inputStream.readBoolean();
             goRightBall = inputStream.readBoolean();
             collideToBreak = inputStream.readBoolean();

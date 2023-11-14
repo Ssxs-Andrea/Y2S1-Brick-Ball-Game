@@ -483,6 +483,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
 
     private void checkDestroyedCount() {
+        System.out.println("Block Count " + blocks.size());
+        System.out.println("Destroyed Count " + destroyedBlockCount);
+
         if (destroyedBlockCount == blocks.size()) {
             //TODO win level todo...
             //System.out.println("You Win");
@@ -504,7 +507,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     outputStream.writeInt(level);
                     outputStream.writeInt(score);
                     outputStream.writeInt(heart);
-                    outputStream.writeInt(destroyedBlockCount);
+                    //reset the destroyed block count to 0
+                    outputStream.writeInt(0);
+
 
 
                     outputStream.writeDouble(xBall);
@@ -569,7 +574,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
 
         isExistHeartBlock = loadSave.isExistHeartBlock;
-        isGoldStatus = loadSave.isGoldStauts;
+        isGoldStatus = loadSave.isGoldStatus;
         goDownBall = loadSave.goDownBall;
         goRightBall = loadSave.goRightBall;
         collideToBreak = loadSave.collideToBreak;
