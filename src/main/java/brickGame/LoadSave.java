@@ -6,6 +6,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
+//import packages for files and paths
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 public class LoadSave {
     public boolean          isExistHeartBlock;
     public boolean          isGoldStauts;
@@ -32,6 +37,20 @@ public class LoadSave {
     public long             goldTime;
     public double           vX;
     public ArrayList<BlockSerializable> blocks = new ArrayList<BlockSerializable>();
+
+    //method to check there is saved game
+    public boolean doesSaveFileExist() {
+        Path savePath = Paths.get(Main.savePath);
+        //check if the file exists
+        if (Files.exists(savePath)) {
+            //the file exists
+            return true;
+        } else {
+            //the file does not exist
+            System.out.println("The file " + savePath + " does not exist.");
+            return false;
+        }
+    }
 
 
     public void read() {

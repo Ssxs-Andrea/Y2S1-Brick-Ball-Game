@@ -128,6 +128,11 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         heartLabel.setTranslateX(sceneWidth - 70);
         if (loadFromSave == false) {
             root.getChildren().addAll(rect, ball, scoreLabel, heartLabel, levelLabel, newGame);
+            //add load to root if save file exists
+            LoadSave loadsave = new LoadSave();
+            if(loadsave.doesSaveFileExist()){
+                root.getChildren().add(load);
+            }
         } else {
             root.getChildren().addAll(rect, ball, scoreLabel, heartLabel, levelLabel);
         }
