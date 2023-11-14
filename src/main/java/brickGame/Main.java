@@ -87,10 +87,11 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     private boolean loadFromSave = false;
     private SoundEffects sound;
-
+    private InstructionPage instructionPage;
     Stage  primaryStage;
     Button load    = null;
     Button newGame = null;
+    Button instruction = null;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -115,12 +116,18 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             initBreak();
             initBoard();
 
+            instruction = new Button("Instruction");
             load = new Button("Load Game");
             newGame = new Button("Start New Game");
-            load.setTranslateX(220);
+            load.setTranslateX(180);
             load.setTranslateY(300);
-            newGame.setTranslateX(220);
+            load.setPrefSize(150,30);
+            newGame.setTranslateX(180);
             newGame.setTranslateY(340);
+            newGame.setPrefSize(150,30);
+            instruction.setTranslateX(180);
+            instruction.setTranslateY(380);
+            instruction.setPrefSize(150,30);
 
         }
 
@@ -132,7 +139,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         heartLabel = new Label("Heart : " + heart);
         heartLabel.setTranslateX(sceneWidth - 70);
         if (loadFromSave == false) {
-            root.getChildren().addAll(rect, ball, scoreLabel, heartLabel, levelLabel, newGame);
+            root.getChildren().addAll(rect, ball, scoreLabel, heartLabel, levelLabel, newGame, instruction);
             //add load to root if save file exists
             LoadSave loadsave = new LoadSave();
             if(loadsave.doesSaveFileExist()){
@@ -157,6 +164,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 if (level > 1 && level < 18) {
                     load.setVisible(false);
                     newGame.setVisible(false);
+                    instruction.setVisible(false);
                     engine = new GameEngine();
                     engine.setOnAction(this);
                     engine.setFps(120);
@@ -170,6 +178,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
                         load.setVisible(false);
                         newGame.setVisible(false);
+                        instruction.setVisible(false);
                     }
                 });
 
@@ -183,6 +192,17 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
                         load.setVisible(false);
                         newGame.setVisible(false);
+                        instruction.setVisible(false);
+                    }
+                });
+                instruction.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        switchToInstructionPage();
+
+                        load.setVisible(false);
+                        newGame.setVisible(false);
+                        instruction.setVisible(false);
                     }
                 });
             } else {
@@ -195,6 +215,12 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
 
 
+    }
+
+
+    public void switchToInstructionPage() {
+        InstructionPage instructionScene = new InstructionPage(this); // Create an InstructionPage scene
+        primaryStage.setScene(instructionScene.getScene());
     }
 
     private void initBoard() {
