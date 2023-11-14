@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -155,6 +156,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             Scene scene = new Scene(root, sceneWidth, sceneHeight);
             scene.getStylesheets().add("style.css");
             scene.setOnKeyPressed(this);
+            scene.setOnMouseDragged(event -> handleMouseDragged(event));
+
+
 
             primaryStage.setTitle("Game");
             primaryStage.setScene(scene);
@@ -277,12 +281,40 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     float oldXBreak;
 
+    private void handleMouseDragged(MouseEvent event) {
+        double mouseX = event.getSceneX();
+        double mouseY = event.getSceneY();
+
+        //check if the mouse drag event is within the area
+        if (mouseY >= yBreak && mouseY <= (yBreak + breakHeight)) {
+            //update the position of the object based on the mouse's x-coordinate
+            xBreak = mouseX - halfBreakWidth;
+            centerBreakX = mouseX;
+            rect.setX(xBreak);
+
+            //ensure the object stays within the bounds of the scene
+            if (xBreak < 0) {
+                xBreak = 0;
+                centerBreakX = halfBreakWidth;
+                rect.setX(xBreak);
+            } else if (xBreak > sceneWidth - breakWidth) {
+                xBreak = sceneWidth - breakWidth;
+                centerBreakX = xBreak + halfBreakWidth;
+                rect.setX(xBreak);
+            }
+
+        }
+    }
+
+
     private void move(final int direction) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 int sleepTime = 4;
+
                 for (int i = 0; i < 30; i++) {
+                    //System.out.println("i = " + i);
                     if (xBreak == (sceneWidth - breakWidth) && direction == RIGHT) {
                         return;
                     }
@@ -483,8 +515,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
 
     private void checkDestroyedCount() {
-        System.out.println("Block Count " + blocks.size());
-        System.out.println("Destroyed Count " + destroyedBlockCount);
+        //System.out.println("Block Count " + blocks.size());
+        //System.out.println("Destroyed Count " + destroyedBlockCount);
 
         if (destroyedBlockCount == blocks.size()) {
             //TODO win level todo...
