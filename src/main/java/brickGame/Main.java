@@ -86,6 +86,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private Label            levelLabel;
 
     private boolean loadFromSave = false;
+    private SoundEffects sound;
 
     Stage  primaryStage;
     Button load    = null;
@@ -94,6 +95,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
+
+        sound= new SoundEffects();
+        sound.initSoundEffects();
 
 
         if (loadFromSave == false) {
@@ -370,6 +374,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
 
         if (yBall >= yBreak - ballRadius) {
+            sound.playHitSliderSound();
             //System.out.println("Collide1");
             if (xBall >= xBreak && xBall <= xBreak + breakWidth) {
                 hitTime = time;
@@ -667,6 +672,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     int hitCode = block.checkHitToBlock(xBall, yBall);
                     if (hitCode != Block.NO_HIT) {
                         score += 1;
+                        sound.playHitBlockSound();
 
                         new Score().show(block.x, block.y, 1, this);
 
@@ -743,6 +749,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             }
             if (choco.y >= yBreak && choco.y <= yBreak + breakHeight && choco.x >= xBreak && choco.x <= xBreak + breakWidth) {
                 System.out.println("You Got it and +3 score for you");
+                sound.playHitBonusSound();
                 choco.taken = true;
                 choco.choco.setVisible(false);
                 score += 3;
