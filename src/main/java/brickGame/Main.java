@@ -48,7 +48,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private boolean isExistHeartBlock = false;
 
     private Rectangle rect;
-    private int       ballRadius = 10;
+    private int       ballRadius = 20;
 
     private int destroyedBlockCount = 0;
 
@@ -419,7 +419,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         //v = ((time - hitTime) / 1000.000) + 1.000;
 
         if (goDownBall) {
-            yBall += vY;
+            yBall  += vY;
         } else {
             yBall -= vY;
         }
@@ -430,33 +430,34 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             xBall -= vX;
         }
 
-        if (yBall <= 0) {
+        if (yBall <= 0 + ballRadius) {
             //vX = 1.000;
+            //yBall = 0;
             resetCollideFlags();
             goDownBall = true;
             return;
         }
-        if (yBall >= sceneHeight) {
-
+        if (yBall >= sceneHeight - ballRadius) {
+            //yBall = sceneHeight;
+            goDownBall = false;
             if (!isGoldStatus) {
-                //TODO game over
                 heart--;
                 new Score().show(sceneWidth / 2, sceneHeight / 2, -1, this);
-
+                //game over
                 if (heart == 0) {
                     new Score().showGameOver(this);
                     engine.stop();
                 }
 
             }
-            goDownBall = false;
             //return;
         }
 
         if (yBall >= yBreak - ballRadius) {
-            sound.playHitSliderSound();
+
             //System.out.println("Collide1");
-            if (xBall >= xBreak && xBall <= xBreak + breakWidth) {
+            if (xBall + ballRadius >= xBreak  && xBall - ballRadius <= xBreak + breakWidth) {
+                sound.playHitSliderSound();
                 hitTime = time;
                 resetCollideFlags();
                 collideToBreak = true;
@@ -484,13 +485,13 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             }
         }
 
-        if (xBall >= sceneWidth) {
+        if (xBall >= sceneWidth - ballRadius) {
             resetCollideFlags();
             //vX = 1.000;
             collideToRightWall = true;
         }
 
-        if (xBall <= 0) {
+        if (xBall <= 0 + ballRadius) {
             resetCollideFlags();
             //vX = 1.000;
             collideToLeftWall = true;
@@ -609,11 +610,13 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 } catch (IOException e) {
                     e.printStackTrace();
                 } finally {
-                    try {
-                        outputStream.flush();
-                        outputStream.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if (outputStream != null) {
+                        try {
+                            outputStream.flush();
+                            outputStream.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
@@ -751,10 +754,11 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         });
 
 
-        if (yBall >= Block.getPaddingTop() && yBall <= (Block.getHeight() * (level + 1)) + Block.getPaddingTop()) {
+        if (yBall + ballRadius >= Block.getPaddingTop() && yBall - ballRadius <= (Block.getHeight() * (level + 1)) + Block.getPaddingTop()) {
             if (!blocks.isEmpty()) {
                 for (final Block block : blocks) {
                     int hitCode = block.checkHitToBlock(xBall, yBall);
+                    //System.out.println("Check hit");
                     if (hitCode != Block.NO_HIT) {
                         score += 1;
                         sound.playHitBlockSound();

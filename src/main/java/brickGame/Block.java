@@ -40,6 +40,7 @@ public class Block implements Serializable {
     public static int BLOCK_CHOCO = 100;
     public static int BLOCK_STAR = 101;
     public static int BLOCK_HEART = 102;
+    public int ballRadius = 20;
 
 
     public Block(int row, int column, Color color, int type) {
@@ -86,19 +87,19 @@ public class Block implements Serializable {
             return NO_HIT;
         }
 
-        if (xBall >= x && xBall <= x + width && yBall == y + height) {
+        if (xBall + ballRadius >= x && xBall - ballRadius <= x + width && yBall - ballRadius == y + height ) {
             return HIT_BOTTOM;
         }
 
-        if (xBall >= x && xBall <= x + width && yBall == y) {
+        if (xBall + ballRadius >= x && xBall - ballRadius <= x + width && yBall + ballRadius == y ) {
             return HIT_TOP;
         }
 
-        if (yBall >= y && yBall <= y + height && xBall == x + width) {
+        if (yBall + ballRadius >= y && yBall - ballRadius <= y + height && xBall - ballRadius == x + width ) {
             return HIT_RIGHT;
         }
 
-        if (yBall >= y && yBall <= y + height && xBall == x) {
+        if (yBall + ballRadius >= y && yBall - ballRadius <= y + height && xBall + ballRadius == x ) {
             return HIT_LEFT;
         }
 
