@@ -10,6 +10,7 @@ public class SoundEffects {
     private MediaPlayer hitBlockSound;
     private MediaPlayer hitSliderSound;
     private MediaPlayer hitBonusSound;
+    private MediaPlayer hitButtonSound;
 
     public void initSoundEffects() {
         try {
@@ -17,20 +18,27 @@ public class SoundEffects {
             File hitBlockSoundFile = new File("src/main/resources/hitBlock.m4a");
             File hitSliderSoundFile = new File("src/main/resources/hitSlider.mp3");
             File hitBonusSoundFile = new File("src/main/resources/hitBonus.m4a");
+            File hitButtonSoundFile = new File("src/main/resources/hitButton.m4a");
 
             URI hitBlockSoundURI = hitBlockSoundFile.toURI();
             URI hitSliderSoundURI = hitSliderSoundFile.toURI();
             URI hitBonusSoundURI = hitBonusSoundFile.toURI();
+            URI hitButtonSoundURI = hitButtonSoundFile.toURI();
 
             //create Media objects using the URIs
             Media hitBlockMedia = new Media(hitBlockSoundURI.toString());
             Media hitSliderMedia = new Media(hitSliderSoundURI.toString());
             Media hitBonusMedia = new Media(hitBonusSoundURI.toString());
+            Media hitButtonMedia = new Media(hitButtonSoundURI.toString());
+
 
             //create MediaPlayer instances
             hitBlockSound = new MediaPlayer(hitBlockMedia);
             hitSliderSound = new MediaPlayer(hitSliderMedia);
             hitBonusSound = new MediaPlayer(hitBonusMedia);
+            hitButtonSound = new MediaPlayer(hitButtonMedia);
+
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -50,4 +58,9 @@ public class SoundEffects {
         hitBonusSound.stop(); //stop in case it's already playing
         hitBonusSound.play();
     }
+    public void playHitButtonSound() {
+        hitButtonSound.stop(); //stop in case it's already playing
+        hitButtonSound.play();
+    }
+
 }

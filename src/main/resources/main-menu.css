@@ -1,0 +1,21 @@
+.button {
+    -fx-background-color: #A38852; /* Green background color */
+    -fx-text-fill: white; /* White text color */
+    -fx-font-size: 14px; /* Font size */
+    -fx-padding: 10px 20px; /* Padding */
+    -fx-border-radius: 5px; /* Rounded corners */
+    -fx-min-width: 350px; /* Fixed width */
+    -fx-min-height: 50px; /* Fixed height */
+    -fx-font-weight: bold; /* Bold font */
+    -fx-font-family: 'Your Custom Font', sans-serif; /* Replace 'Your Custom Font' with the actual font name */
+    -fx-alignment: center;
+}
+
+.button:hover {
+    -fx-background-color: #45a049; /* Darker green on hover */
+}
+
+.root {
+    -fx-background-image: url("bricksWallpaper.jpg");
+    -fx-background-size: cover;
+}

@@ -48,7 +48,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private boolean isExistHeartBlock = false;
 
     private Rectangle rect;
-    private int       ballRadius = 20;
+    private int       ballRadius = 10;
 
     private int destroyedBlockCount = 0;
 
@@ -64,8 +64,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     public static String savePath    = "D:/save/save.mdds";
     public static String savePathDir = "D:/save/";
 
-    private ArrayList<Block> blocks = new ArrayList<Block>();
-    private ArrayList<Bonus> chocos = new ArrayList<Bonus>();
+    private ArrayList<Block> blocks = new ArrayList<>();
+    private ArrayList<Bonus> chocos = new ArrayList<>();
     private Color[]          colors = new Color[]{
             Color.MAGENTA,
             Color.RED,
@@ -96,11 +96,17 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
         this.primaryStage = primaryStage;
+
+        switchToMainMenuPage();
+
+    }
+
+    public void initializeNewGame() {
 
         sound= new SoundEffects();
         sound.initSoundEffects();
-
 
         if (loadFromSave == false) {
             level++;
@@ -117,19 +123,14 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             initBreak();
             initBoard();
 
-            instruction = new Button("Instruction");
             load = new Button("Load Game");
-            newGame = new Button("Start New Game");
             load.setTranslateX(180);
             load.setTranslateY(300);
             load.setPrefSize(150,30);
+            newGame = new Button("Level 1");
             newGame.setTranslateX(180);
             newGame.setTranslateY(340);
             newGame.setPrefSize(150,30);
-            instruction.setTranslateX(180);
-            instruction.setTranslateY(380);
-            instruction.setPrefSize(150,30);
-
         }
 
 
@@ -140,7 +141,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         heartLabel = new Label("Heart : " + heart);
         heartLabel.setTranslateX(sceneWidth - 70);
         if (loadFromSave == false) {
-            root.getChildren().addAll(rect, ball, scoreLabel, heartLabel, levelLabel, newGame, instruction);
+            root.getChildren().addAll(rect, ball, scoreLabel, heartLabel, levelLabel, newGame);
             //add load to root if save file exists
             LoadSave loadsave = new LoadSave();
             if(loadsave.doesSaveFileExist()){
@@ -182,7 +183,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
                         load.setVisible(false);
                         newGame.setVisible(false);
-                        instruction.setVisible(false);
                     }
                 });
 
@@ -196,17 +196,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
                         load.setVisible(false);
                         newGame.setVisible(false);
-                        instruction.setVisible(false);
-                    }
-                });
-                instruction.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        switchToInstructionPage();
-
-                        load.setVisible(false);
-                        newGame.setVisible(false);
-                        instruction.setVisible(false);
                     }
                 });
             } else {
@@ -225,6 +214,12 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     public void switchToInstructionPage() {
         InstructionPage instructionScene = new InstructionPage(this); // Create an InstructionPage scene
         primaryStage.setScene(instructionScene.getScene());
+    }
+
+    public void switchToMainMenuPage() {
+        MainMenuPage mainMenuScene = new MainMenuPage(this); // Create an InstructionPage scene
+        primaryStage.setScene(mainMenuScene.getScene());
+        primaryStage.show();
     }
 
     private void initBoard() {
@@ -468,6 +463,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 if (Math.abs(relation) <= 0.3) {
                     //vX = 0;
                     vX = Math.abs(relation);
+                    //System.out.println("vX " + vX);
                 } else if (Math.abs(relation) > 0.3 && Math.abs(relation) <= 0.7) {
                     vX = (Math.abs(relation) * 1.5) + (level / 3.500);
                     //System.out.println("vX " + vX);
@@ -666,7 +662,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
         try {
             loadFromSave = true;
-            start(primaryStage);
+            initializeNewGame();
         } catch (Exception e) {
             e.printStackTrace();
         }
