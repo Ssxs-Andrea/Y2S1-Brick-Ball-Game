@@ -18,7 +18,7 @@ public class GameEngine {
      * @param fps set fps and we convert it to millisecond
      */
     public void setFps(int fps) {
-        this.fps = (int) 1000 / fps;
+        this.fps = 1000 / fps;
     }
 
     private void Update() {
@@ -72,7 +72,7 @@ public class GameEngine {
     }
 
     private long time = 0;
-    private Thread timeThread;
+    //private Thread timeThread;
     private volatile boolean isTimeThreadRunning = true;
 
     private void TimeStart() {

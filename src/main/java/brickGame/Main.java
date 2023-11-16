@@ -163,6 +163,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
             primaryStage.setTitle("Game");
             primaryStage.setScene(scene);
+            primaryStage.setResizable(false);
             primaryStage.show();
 
             if (loadFromSave == false) {
@@ -214,11 +215,13 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     public void switchToInstructionPage() {
         InstructionPage instructionScene = new InstructionPage(this); // Create an InstructionPage scene
         primaryStage.setScene(instructionScene.getScene());
+        primaryStage.setResizable(false);
     }
 
     public void switchToMainMenuPage() {
         MainMenuPage mainMenuScene = new MainMenuPage(this); // Create an InstructionPage scene
         primaryStage.setScene(mainMenuScene.getScene());
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

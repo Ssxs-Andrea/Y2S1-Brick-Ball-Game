@@ -1,9 +1,10 @@
 .root {
-    -fx-background-color: #1d1d1d;
+    -fx-background-image: url("bg.png");
+    -fx-background-size: cover;
 }
 
 .goldRoot {
-    -fx-background-color: #4b4a08;
+    -fx-background-image: url("goldbg.jpg");
 }
 
 .label {
