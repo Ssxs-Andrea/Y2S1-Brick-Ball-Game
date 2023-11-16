@@ -87,6 +87,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     private boolean loadFromSave = false;
     private SoundEffects sound;
+    private BackgroundMusic backgroundMusic;
     Stage  primaryStage;
     Button load    = null;
     Button newGame = null;
@@ -101,14 +102,16 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     public void start(Stage primaryStage) throws Exception {
 
         this.primaryStage = primaryStage;
-
+        backgroundMusic = new BackgroundMusic();
+        backgroundMusic.playBackgroundMusic();
         switchToMainMenuPage();
+
 
     }
 
     public void initializeNewGame() {
 
-        sound= new SoundEffects();
+        sound = new SoundEffects();
         sound.initSoundEffects();
 
         if (loadFromSave == false) {
@@ -161,8 +164,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             scene.getStylesheets().add("style.css");
             scene.setOnKeyPressed(this);
             scene.setOnMouseDragged(event -> handleMouseDraggedInBackgroundThread(event));
-
-
+            backgroundMusic = new BackgroundMusic();
+            backgroundMusic.setupKeyEvents(scene);
 
             primaryStage.setTitle("Game");
             primaryStage.setScene(scene);

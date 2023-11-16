@@ -41,6 +41,8 @@ public class InstructionPage {
         VBox vbox = new VBox(instructionsBox, backButton);
         scene = new Scene(vbox, 500, 700);
         scene.getStylesheets().add(getClass().getResource("/instruction/instruction.css").toExternalForm());
+        BackgroundMusic backgroundMusic = new BackgroundMusic();
+        backgroundMusic.setupKeyEvents(scene);
     }
     private VBox getInstructionsBox() {
         Image leftKeyImage = new Image(getClass().getResource("/instruction/arrow-left.png").toExternalForm());

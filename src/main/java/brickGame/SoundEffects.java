@@ -31,14 +31,11 @@ public class SoundEffects {
             Media hitBonusMedia = new Media(hitBonusSoundURI.toString());
             Media hitButtonMedia = new Media(hitButtonSoundURI.toString());
 
-
             //create MediaPlayer instances
             hitBlockSound = new MediaPlayer(hitBlockMedia);
             hitSliderSound = new MediaPlayer(hitSliderMedia);
             hitBonusSound = new MediaPlayer(hitBonusMedia);
             hitButtonSound = new MediaPlayer(hitButtonMedia);
-
-
 
         } catch (Exception e) {
             e.printStackTrace();

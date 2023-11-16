@@ -1,0 +1,45 @@
+.popup-content {
+    -fx-background-color: linear-gradient(to bottom, #B0C4DE, #708090);
+    -fx-padding: 30;
+    -fx-background-radius: 10;
+    -fx-border-color: #2F4F4F;
+    -fx-border-width: 15;
+    -fx-border-color: linear-gradient(to bottom, #808080, #000000);
+}
+
+.volume-label {
+
+    -fx-font-size: 25;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Papyrus', Cursive;
+}
+
+.volume-slider {
+    -fx-pref-width: 200;
+    -fx-padding: 0 0 20 0;
+}
+
+.mute-checkbox {
+    -fx-font-size: 20;
+    -fx-font-family: 'Papyrus', Cursive;
+}
+
+.volume-slider .thumb {
+    -fx-background-color: #000000;
+    -fx-background-radius: 5;
+    -fx-padding: 10;
+}
+
+.volume-slider .track {
+    -fx-background-color: #808080;
+    -fx-background-radius: 10;
+}
+
+.mute-checkbox .box {
+    -fx-background-color: #808080;
+}
+
+
+.mute-checkbox .box {
+    -fx-background-color: white;
+}

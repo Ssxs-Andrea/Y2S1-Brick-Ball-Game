@@ -69,6 +69,8 @@ public class MainMenuPage {
 
         scene = new Scene(root, 500, 700);
         scene.getStylesheets().add(getClass().getResource("/main-menu/main-menu.css").toExternalForm());
+        BackgroundMusic backgroundMusic = new BackgroundMusic();
+        backgroundMusic.setupKeyEvents(scene);
     }
 
     public Scene getScene() {
