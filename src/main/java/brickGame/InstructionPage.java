@@ -1,5 +1,7 @@
 package brickGame;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -24,7 +26,16 @@ public class InstructionPage {
         VBox instructionsBox = getInstructionsBox();
 
         Button backButton = new Button("Back To Main Menu");
-        backButton.setOnAction(e -> main.switchToMainMenuPage());
+        backButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                SoundEffects sound = new SoundEffects();
+                sound.initSoundEffects();
+                sound.playHitButtonSound();
+
+                main.switchToMainMenuPage();
+            }
+        });
         backButton.setTranslateX(70);
 
         VBox vbox = new VBox(instructionsBox, backButton);

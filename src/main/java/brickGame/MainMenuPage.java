@@ -19,7 +19,7 @@ public class MainMenuPage {
 
     private void init() {
 
-        Image logoImage = new Image("bricksLogo.png");
+        Image logoImage = new Image(getClass().getResource("/main-menu/bricksLogo.png").toExternalForm());
         ImageView imageView = new ImageView(logoImage);
 
         Button newGame = new Button("START");
@@ -68,7 +68,7 @@ public class MainMenuPage {
         root.getChildren().addAll(imageView,newGame,instruction);
 
         scene = new Scene(root, 500, 700);
-        scene.getStylesheets().add("main-menu.css");
+        scene.getStylesheets().add(getClass().getResource("/main-menu/main-menu.css").toExternalForm());
     }
 
     public Scene getScene() {

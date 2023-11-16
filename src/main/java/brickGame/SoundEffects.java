@@ -15,10 +15,10 @@ public class SoundEffects {
     public void initSoundEffects() {
         try {
             //load sound effect files
-            File hitBlockSoundFile = new File("src/main/resources/hitBlock.m4a");
-            File hitSliderSoundFile = new File("src/main/resources/hitSlider.mp3");
-            File hitBonusSoundFile = new File("src/main/resources/hitBonus.m4a");
-            File hitButtonSoundFile = new File("src/main/resources/hitButton.m4a");
+            File hitBlockSoundFile = new File("src/main/resources/sound-effects/hitBlock.m4a");
+            File hitSliderSoundFile = new File("src/main/resources/sound-effects/hitSlider.mp3");
+            File hitBonusSoundFile = new File("src/main/resources/sound-effects/hitBonus.m4a");
+            File hitButtonSoundFile = new File("src/main/resources/sound-effects/hitButton.m4a");
 
             URI hitBlockSoundURI = hitBlockSoundFile.toURI();
             URI hitSliderSoundURI = hitSliderSoundFile.toURI();
