@@ -40,7 +40,7 @@ public class Block implements Serializable {
     public static int BLOCK_CHOCO = 100;
     public static int BLOCK_STAR = 101;
     public static int BLOCK_HEART = 102;
-    public int ballRadius = 20;
+    public int ballRadius = 10;
 
 
     public Block(int row, int column, Color color, int type) {

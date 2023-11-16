@@ -23,7 +23,6 @@ import java.util.Random;
 
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
 
-
     private int level = 0;
 
     private double xBreak = 0.0f;
@@ -88,11 +87,15 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     private boolean loadFromSave = false;
     private SoundEffects sound;
-    private InstructionPage instructionPage;
     Stage  primaryStage;
     Button load    = null;
     Button newGame = null;
-    Button instruction = null;
+
+    private boolean restartCertainLevel = false;
+    private int saveHeart = 3;
+    private int saveScore = 0;
+    private boolean isPaused = false;
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -110,11 +113,11 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
         if (loadFromSave == false) {
             level++;
-            if (level >1){
+            if (level >1 && !restartCertainLevel){
                 new Score().showMessage("Level Up :)", this);
                 System.out.printf("Level " + level +"\n");
             }
-            if (level == 18) {
+            if (level == 18 && !restartCertainLevel) {
                 new Score().showWin(this);
                 return;
             }
@@ -170,7 +173,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 if (level > 1 && level < 18) {
                     load.setVisible(false);
                     newGame.setVisible(false);
-                    instruction.setVisible(false);
                     engine = new GameEngine();
                     engine.setOnAction(this);
                     engine.setFps(120);
@@ -207,8 +209,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 loadFromSave = false;
             }
         }
-
-
     }
 
 
@@ -275,15 +275,33 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 saveGame();
                 break;
             case R:
-                restartGame();
+                restartLevel(level,saveHeart,saveScore);
                 break;
             case L:
                 loadGame();
                 break;
+            case P:
+                togglePause();
+                break;
+
         }
     }
 
     float oldXBreak;
+    private void togglePause() {
+        isPaused = !isPaused;
+
+        if (isPaused) {
+            // Pause the game (stop the engine)
+            engine.stop();
+        } else {
+            // Resume the game (start the engine)
+            engine = new GameEngine();
+            engine.setOnAction(this);
+            engine.setFps(120);
+            engine.start();
+        }
+    }
 
     private void handleMouseDragged(MouseEvent event) {
         double mouseX = event.getSceneX();
@@ -674,6 +692,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     }
 
     private void nextLevel() {
+        saveHeart=heart;
+        saveScore=score;
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -696,7 +716,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     blocks.clear();
                     chocos.clear();
                     destroyedBlockCount = 0;
-                    start(primaryStage);
+                    initializeNewGame();
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -725,7 +745,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             blocks.clear();
             chocos.clear();
 
-            start(primaryStage);
+            initializeNewGame();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -821,13 +841,19 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     @Override
     public void onPhysicsUpdate() {
+
+        if (isPaused) {
+            return;
+        }
         checkDestroyedCount();
         setPhysicsToBall();
 
 
         if (time - goldTime > 5000) {
             ball.setFill(new ImagePattern(new Image("ball.png")));
-            root.getStyleClass().remove("goldRoot");
+            if (root != null) {
+                root.getStyleClass().remove("goldRoot");
+            }
             isGoldStatus = false;
         }
 
@@ -850,6 +876,41 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     }
 
+    private void restartLevel(int level1,int heart1,int score1) {
+        restartCertainLevel = true;
+        level = level1-1;
+        heart = heart1;
+        score = score1;
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    vX = 1.000;
+
+                    engine.stop();
+                    resetCollideFlags();
+                    goDownBall = true;
+
+                    isGoldStatus = false;
+                    isExistHeartBlock = false;
+
+
+                    hitTime = 0;
+                    time = 0;
+                    goldTime = 0;
+
+                    engine.stop();
+                    blocks.clear();
+                    chocos.clear();
+                    destroyedBlockCount = 0;
+                    initializeNewGame();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
     @Override
     public void onTime(long time) {

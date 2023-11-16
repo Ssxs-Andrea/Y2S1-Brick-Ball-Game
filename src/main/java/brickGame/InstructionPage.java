@@ -89,7 +89,7 @@ public class InstructionPage {
                 createLabelWithImage(leftKeyImageView, "   Move Paddle Left\n"),
                 createLabelWithImage(rightKeyImageView, "   Move Paddle Right\n"),
                 createLabelWithImage(mouseImageView, "   Drag and Move Paddle\n"),
-                createLabelWithImage(rKeyImageView, "   Restart the Game\n"),
+                createLabelWithImage(rKeyImageView, "   Restart the Level\n"),
                 createLabelWithImage(pKeyImageView, "   Pause the Game\n"),
                 createLabelWithImage(sKeyImageView, "   Save the Game\n"),
                 createLabelWithImage(lKeyImageView, "   Load the Game\n")

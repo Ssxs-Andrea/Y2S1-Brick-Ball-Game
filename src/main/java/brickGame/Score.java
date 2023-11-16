@@ -39,6 +39,9 @@ public class Score {
                         e.printStackTrace();
                     }
                 }
+                Platform.runLater(() -> {
+                    main.root.getChildren().remove(label);
+                });
             }
         }).start();
     }
@@ -68,6 +71,9 @@ public class Score {
                         e.printStackTrace();
                     }
                 }
+                Platform.runLater(() -> {
+                    main.root.getChildren().remove(label);
+                });
             }
         }).start();
     }
