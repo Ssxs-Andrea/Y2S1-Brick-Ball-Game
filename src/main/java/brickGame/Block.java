@@ -41,6 +41,7 @@ public class Block implements Serializable {
     public static int BLOCK_STAR = 101;
     public static int BLOCK_HEART = 102;
     public int ballRadius = 10;
+    private double epsilon = 0.01 * height;
 
 
     public Block(int row, int column, Color color, int type) {
@@ -80,27 +81,26 @@ public class Block implements Serializable {
 
     }
 
-
     public int checkHitToBlock(double xBall, double yBall) {
 
         if (isDestroyed) {
             return NO_HIT;
         }
 
-        if (xBall + ballRadius >= x && xBall - ballRadius <= x + width && yBall - ballRadius == y + height ) {
-            return HIT_BOTTOM;
-        }
-
-        if (xBall + ballRadius >= x && xBall - ballRadius <= x + width && yBall + ballRadius == y ) {
-            return HIT_TOP;
-        }
-
-        if (yBall + ballRadius >= y && yBall - ballRadius <= y + height && xBall - ballRadius == x + width ) {
+        if (yBall  >= y - epsilon && yBall  <= y + height + epsilon && xBall >= x + width && xBall - ballRadius <= x + width ) {
             return HIT_RIGHT;
         }
 
-        if (yBall + ballRadius >= y && yBall - ballRadius <= y + height && xBall + ballRadius == x ) {
+        if (yBall >= y - epsilon && yBall  <= y + height + epsilon && xBall <= x && xBall + ballRadius >= x ) {
             return HIT_LEFT;
+        }
+
+        if (xBall + ballRadius >= x  && xBall - ballRadius <= x + width  && yBall >= y && yBall - ballRadius <= y  + epsilon) {
+            return HIT_TOP;
+        }
+
+        if (xBall  + ballRadius >= x  && xBall - ballRadius <= x + width  && yBall  <= y + height + epsilon && yBall + ballRadius>= y + height ) {
+            return HIT_BOTTOM;
         }
 
         return NO_HIT;

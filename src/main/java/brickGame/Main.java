@@ -29,43 +29,43 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private double centerBreakX;
     private double yBreak = 640.0f;
 
-    private final int breakWidth     = 130;
-    private final int breakHeight    = 30;
+    private final int breakWidth = 130;
+    private final int breakHeight = 30;
     private final int halfBreakWidth = breakWidth / 2;
 
     private final int sceneWidth = 500;
     private final int sceneHeight = 700;
 
-    private static final int LEFT  = 1;
+    private static final int LEFT = 1;
     private static final int RIGHT = 2;
 
     private Circle ball;
     private double xBall;
     private double yBall;
 
-    private boolean isGoldStatus      = false;
+    private boolean isGoldStatus = false;
     private boolean isExistHeartBlock = false;
 
     private Rectangle rect;
-    private int       ballRadius = 10;
+    private int ballRadius = 10;
 
     private int destroyedBlockCount = 0;
 
     private double v = 1.000;
 
-    private int  heart    = 3;
-    private int  score    = 0;
-    private long time     = 0;
-    private long hitTime  = 0;
+    private int heart = 3;
+    private int score = 0;
+    private long time = 0;
+    private long hitTime = 0;
     private long goldTime = 0;
 
     private GameEngine engine;
-    public static String savePath    = "D:/save/save.mdds";
+    public static String savePath = "D:/save/save.mdds";
     public static String savePathDir = "D:/save/";
 
     private ArrayList<Block> blocks = new ArrayList<>();
     private ArrayList<Bonus> chocos = new ArrayList<>();
-    private Color[]          colors = new Color[]{
+    private Color[] colors = new Color[]{
             Color.MAGENTA,
             Color.RED,
             Color.GOLD,
@@ -80,23 +80,24 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             Color.TOMATO,
             Color.TAN,
     };
-    public  Pane             root;
-    private Label            scoreLabel;
-    private Label            heartLabel;
-    private Label            levelLabel;
+    public Pane root;
+    private Label scoreLabel;
+    private Label heartLabel;
+    private Label levelLabel;
 
     private boolean loadFromSave = false;
     private SoundEffects sound;
     private BackgroundMusic backgroundMusic;
-    Stage  primaryStage;
-    Button load    = null;
+    Stage primaryStage;
+    Button load = null;
     Button newGame = null;
 
     private boolean restartCertainLevel = false;
     private int saveHeart = 3;
     private int saveScore = 0;
     private boolean isPaused = false;
-
+    private PauseMenu pauseMenu;
+    private Scene gameScene;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -105,22 +106,26 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         backgroundMusic = new BackgroundMusic();
         backgroundMusic.playBackgroundMusic();
         switchToMainMenuPage();
-
-
     }
 
-    public void initializeNewGame() {
+    public void initializeNewGame(boolean fromMainMenu) {
+
+        if (fromMainMenu == true){
+            level = 0;
+            isPaused=false;
+        }
 
         sound = new SoundEffects();
         sound.initSoundEffects();
 
-        if (loadFromSave == false) {
+        if (!loadFromSave) {
             level++;
-            if (level >1 && !restartCertainLevel){
+            if (level > 1 && !restartCertainLevel) {
                 new Score().showMessage("Level Up :)", this);
-                System.out.printf("Level " + level +"\n");
+                System.out.printf("Level " + level + "\n");
             }
             if (level == 18 && !restartCertainLevel) {
+                root.getChildren().clear();
                 new Score().showWin(this);
                 return;
             }
@@ -130,13 +135,13 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             initBoard();
 
             load = new Button("Load Game");
-            load.setTranslateX(180);
-            load.setTranslateY(300);
-            load.setPrefSize(150,30);
+            load.setTranslateX(70);
+            load.setTranslateY(250);
+            load.setPrefSize(150, 30);
             newGame = new Button("Level 1");
-            newGame.setTranslateX(180);
-            newGame.setTranslateY(340);
-            newGame.setPrefSize(150,30);
+            newGame.setTranslateX(70);
+            newGame.setTranslateY(320);
+            newGame.setPrefSize(150, 30);
         }
 
 
@@ -146,11 +151,11 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         levelLabel.setTranslateY(20);
         heartLabel = new Label("Heart : " + heart);
         heartLabel.setTranslateX(sceneWidth - 70);
-        if (loadFromSave == false) {
+        if (!loadFromSave) {
             root.getChildren().addAll(rect, ball, scoreLabel, heartLabel, levelLabel, newGame);
             //add load to root if save file exists
             LoadSave loadsave = new LoadSave();
-            if(loadsave.doesSaveFileExist()){
+            if (loadsave.doesSaveFileExist()) {
                 root.getChildren().add(load);
             }
         } else {
@@ -160,19 +165,19 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             for (Block block : blocks) {
                 root.getChildren().add(block.rect);
             }
-            Scene scene = new Scene(root, sceneWidth, sceneHeight);
-            scene.getStylesheets().add("style.css");
-            scene.setOnKeyPressed(this);
-            scene.setOnMouseDragged(event -> handleMouseDraggedInBackgroundThread(event));
+            gameScene = new Scene(root, sceneWidth, sceneHeight);
+            gameScene.getStylesheets().add("style.css");
+            gameScene.setOnKeyPressed(this);
+            gameScene.setOnMouseDragged(event -> handleMouseDraggedInBackgroundThread(event));
             backgroundMusic = new BackgroundMusic();
-            backgroundMusic.setupKeyEvents(scene);
+            backgroundMusic.setupKeyEvents(gameScene);
 
-            primaryStage.setTitle("Game");
-            primaryStage.setScene(scene);
+            primaryStage.setTitle("Brick Ball Game");
+            primaryStage.setScene(gameScene);
             primaryStage.setResizable(false);
             primaryStage.show();
 
-            if (loadFromSave == false) {
+            if (!loadFromSave) {
                 if (level > 1 && level < 18) {
                     load.setVisible(false);
                     newGame.setVisible(false);
@@ -216,13 +221,16 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
 
     public void switchToInstructionPage() {
-        InstructionPage instructionScene = new InstructionPage(this); // Create an InstructionPage scene
+        if (root!=null) {
+            root.getChildren().clear();
+        }
+        InstructionPage instructionScene = new InstructionPage(this);
         primaryStage.setScene(instructionScene.getScene());
         primaryStage.setResizable(false);
     }
 
     public void switchToMainMenuPage() {
-        MainMenuPage mainMenuScene = new MainMenuPage(this); // Create an InstructionPage scene
+        MainMenuPage mainMenuScene = new MainMenuPage(this);
         primaryStage.setScene(mainMenuScene.getScene());
         primaryStage.setResizable(false);
         primaryStage.show();
@@ -278,31 +286,33 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 saveGame();
                 break;
             case R:
-                restartLevel(level,saveHeart,saveScore);
-                break;
-            case L:
-                loadGame();
+                restartLevel(level, saveHeart, saveScore);
                 break;
             case P:
-                togglePause();
+                togglePause(gameScene);
                 break;
 
         }
     }
 
-    float oldXBreak;
-    private void togglePause() {
+    public void togglePause(Scene gameScene) {
         isPaused = !isPaused;
 
         if (isPaused) {
-            // Pause the game (stop the engine)
             engine.stop();
+            pauseMenu = new PauseMenu(this, gameScene);
+            root.getChildren().add(pauseMenu);
+            pauseMenu.setVisible(true);
+
         } else {
-            // Resume the game (start the engine)
             engine = new GameEngine();
             engine.setOnAction(this);
             engine.setFps(120);
             engine.start();
+
+            if (pauseMenu != null) {
+                pauseMenu.setVisible(false);
+            }
         }
     }
 
@@ -334,8 +344,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private void handleMouseDraggedInBackgroundThread(MouseEvent event) {
         Platform.runLater(() -> handleMouseDragged(event));
     }
-
-
 
     private void move(final int direction) {
         new Thread(new Runnable() {
@@ -387,7 +395,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private void initBall() {
         Random random = new Random();
         xBall = random.nextInt(sceneWidth) + 1;
-        yBall = random.nextInt(sceneHeight - 200) + ((level + 1) * Block.getHeight()) + 15;
+        //yBall = random.nextInt(sceneHeight - 200) + ((level + 1) * Block.getHeight()) + 15;
+        yBall = sceneHeight-200;
         ball = new Circle();
         ball.setRadius(ballRadius);
         ball.setFill(new ImagePattern(new Image("ball.png")));
@@ -406,16 +415,16 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     }
 
 
-    private boolean goDownBall                  = true;
-    private boolean goRightBall                 = true;
-    private boolean collideToBreak               = false;
+    private boolean goDownBall = true;
+    private boolean goRightBall = true;
+    private boolean collideToBreak = false;
     private boolean collideToBreakAndMoveToRight = true;
-    private boolean collideToRightWall           = false;
-    private boolean collideToLeftWall            = false;
-    private boolean collideToRightBlock          = false;
-    private boolean collideToBottomBlock         = false;
-    private boolean collideToLeftBlock           = false;
-    private boolean collideToTopBlock            = false;
+    private boolean collideToRightWall = false;
+    private boolean collideToLeftWall = false;
+    private boolean collideToRightBlock = false;
+    private boolean collideToBottomBlock = false;
+    private boolean collideToLeftBlock = false;
+    private boolean collideToTopBlock = false;
 
     private double vX = 1.000;
     private double vY = 1.000;
@@ -438,7 +447,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         //v = ((time - hitTime) / 1000.000) + 1.000;
 
         if (goDownBall) {
-            yBall  += vY;
+            yBall += vY;
         } else {
             yBall -= vY;
         }
@@ -475,7 +484,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         if (yBall >= yBreak - ballRadius) {
 
             //System.out.println("Collide1");
-            if (xBall + ballRadius >= xBreak  && xBall - ballRadius <= xBreak + breakWidth) {
+            if (xBall + ballRadius >= xBreak && xBall - ballRadius <= xBreak + breakWidth) {
                 sound.playHitSliderSound();
                 hitTime = time;
                 resetCollideFlags();
@@ -586,7 +595,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     outputStream.writeInt(0);
 
 
-
                     outputStream.writeDouble(xBall);
                     outputStream.writeDouble(yBall);
                     outputStream.writeDouble(xBreak);
@@ -686,7 +694,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
         try {
             loadFromSave = true;
-            initializeNewGame();
+            initializeNewGame(false);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -695,8 +703,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     }
 
     private void nextLevel() {
-        saveHeart=heart;
-        saveScore=score;
+        saveHeart = heart;
+        saveScore = score;
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -719,7 +727,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     blocks.clear();
                     chocos.clear();
                     destroyedBlockCount = 0;
-                    initializeNewGame();
+                    root.getChildren().clear();
+                    initializeNewGame(false);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -727,6 +736,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             }
         });
     }
+
+
 
     public void restartGame() {
 
@@ -748,7 +759,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             blocks.clear();
             chocos.clear();
 
-            initializeNewGame();
+            initializeNewGame(false);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -826,9 +837,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                         } else if (hitCode == Block.HIT_TOP) {
                             collideToTopBlock = true;
                         }
-
                     }
-
                     //TODO hit to break and some work here....
                     //System.out.println("Break in row:" + block.row + " and column:" + block.column + " hit");
                 }
@@ -839,7 +848,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     @Override
     public void onInit() {
-
     }
 
     @Override
@@ -850,7 +858,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
         checkDestroyedCount();
         setPhysicsToBall();
-
 
         if (time - goldTime > 5000) {
             ball.setFill(new ImagePattern(new Image("ball.png")));
@@ -874,12 +881,22 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             }
             choco.y += ((time - choco.timeCreated) / 1000.000) + 1.000;
         }
-
         //System.out.println("time is:" + time + " goldTime is " + goldTime);
-
     }
 
-    private void restartLevel(int level1,int heart1,int score1) {
+    public int getLevel() {
+        return level;
+    }
+
+    public int getHeart() {
+        return saveHeart;
+    }
+
+    public int getScore() {
+        return saveScore;
+    }
+
+    public void restartLevel(int level1,int heart1,int score1) {
         restartCertainLevel = true;
         level = level1-1;
         heart = heart1;
@@ -897,7 +914,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     isGoldStatus = false;
                     isExistHeartBlock = false;
 
-
                     hitTime = 0;
                     time = 0;
                     goldTime = 0;
@@ -906,7 +922,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     blocks.clear();
                     chocos.clear();
                     destroyedBlockCount = 0;
-                    initializeNewGame();
+                    initializeNewGame(false);
 
                 } catch (Exception e) {
                     e.printStackTrace();

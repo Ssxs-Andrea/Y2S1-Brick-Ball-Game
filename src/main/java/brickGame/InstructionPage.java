@@ -51,7 +51,7 @@ public class InstructionPage {
         Image rKeyImage = new Image(getClass().getResource("/instruction/letter-r.png").toExternalForm());
         Image pKeyImage = new Image(getClass().getResource("/instruction/letter-p.png").toExternalForm());
         Image sKeyImage = new Image(getClass().getResource("/instruction/letter-s.png").toExternalForm());
-        Image lKeyImage = new Image(getClass().getResource("/instruction/letter-l.png").toExternalForm());
+        Image mKeyImage = new Image(getClass().getResource("/instruction/letter-m.png").toExternalForm());
 
         ImageView leftKeyImageView = new ImageView(leftKeyImage);
         ImageView rightKeyImageView = new ImageView(rightKeyImage);
@@ -59,7 +59,7 @@ public class InstructionPage {
         ImageView rKeyImageView = new ImageView(rKeyImage);
         ImageView pKeyImageView = new ImageView(pKeyImage);
         ImageView sKeyImageView = new ImageView(sKeyImage);
-        ImageView lKeyImageView = new ImageView(lKeyImage);
+        ImageView mKeyImageView = new ImageView(mKeyImage);
 
         leftKeyImageView.setFitWidth(40);
         leftKeyImageView.setFitHeight(40);
@@ -79,8 +79,8 @@ public class InstructionPage {
         sKeyImageView.setFitWidth(40);
         sKeyImageView.setFitHeight(40);
 
-        lKeyImageView.setFitWidth(40);
-        lKeyImageView.setFitHeight(40);
+        mKeyImageView.setFitWidth(40);
+        mKeyImageView.setFitHeight(40);
 
         Text instructionsText = new Text("Instructions:\n\n");
         instructionsText.setId("instructionsText");
@@ -88,13 +88,13 @@ public class InstructionPage {
 
         TextFlow textFlow = new TextFlow(
                 instructionsText,
-                createLabelWithImage(leftKeyImageView, "   Move Paddle Left\n"),
-                createLabelWithImage(rightKeyImageView, "   Move Paddle Right\n"),
-                createLabelWithImage(mouseImageView, "   Drag and Move Paddle\n"),
+                createLabelWithImage(leftKeyImageView, "   Move Break Left\n"),
+                createLabelWithImage(rightKeyImageView, "   Move Break Right\n"),
+                createLabelWithImage(mouseImageView, "   Drag and Move Break\n"),
                 createLabelWithImage(rKeyImageView, "   Restart the Level\n"),
                 createLabelWithImage(pKeyImageView, "   Pause the Game\n"),
                 createLabelWithImage(sKeyImageView, "   Save the Game\n"),
-                createLabelWithImage(lKeyImageView, "   Load the Game\n")
+                createLabelWithImage(mKeyImageView, "   Music Volume Control\n")
         );
 
         VBox instructionsBox = new VBox(textFlow);

@@ -46,7 +46,7 @@ public class MainMenuPage {
                     sound.initSoundEffects();
                     sound.playHitButtonSound();
 
-                    main.initializeNewGame();
+                    main.initializeNewGame(true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

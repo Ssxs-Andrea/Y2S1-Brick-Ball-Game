@@ -89,7 +89,7 @@ public class Score {
                 label.setScaleY(2);
 
                 Button restart = new Button("Restart");
-                restart.setTranslateX(220);
+                restart.setTranslateX(70);
                 restart.setTranslateY(300);
                 restart.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
@@ -114,8 +114,17 @@ public class Score {
                 label.setScaleX(2);
                 label.setScaleY(2);
 
+                Button mainMenu = new Button("Main Menu");
+                mainMenu.setTranslateX(70);
+                mainMenu.setTranslateY(300);
+                mainMenu.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        main.switchToMainMenuPage();
+                    }
+                });
 
-                main.root.getChildren().addAll(label);
+                main.root.getChildren().addAll(label,mainMenu);
 
             }
         });

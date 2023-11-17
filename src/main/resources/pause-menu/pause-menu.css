@@ -1,16 +1,6 @@
-.root {
-    -fx-background-image: url("bg.png");
-    -fx-background-size: cover;
-}
-
-.goldRoot {
-    -fx-background-image: url("goldbg.jpg");
-}
-
-.label {
-    -fx-text-fill: #FFF;
-    -fx-label-padding: 8px;
-    -fx-font-size: 15px;
+.pause-menu {
+    -fx-background-color: rgba(0, 0, 0, 0.5);
+    -fx-spacing: 10px;
 }
 
 .button {
