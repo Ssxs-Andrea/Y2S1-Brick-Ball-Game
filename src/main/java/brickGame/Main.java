@@ -16,18 +16,16 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
 
-    private int level = 0;
+    protected int level = 0;
 
-    private double xBreak = 0.0f;
-    private double centerBreakX;
-    private double yBreak = 640.0f;
+    protected double xBreak = 0.0f;
+    protected double centerBreakX;
+    protected double yBreak = 640.0f;
 
     private final int breakWidth = 130;
     private final int breakHeight = 30;
@@ -40,32 +38,30 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private static final int RIGHT = 2;
 
     private Circle ball;
-    private double xBall;
-    private double yBall;
+    protected double xBall;
+    protected double yBall;
 
-    private boolean isGoldStatus = false;
-    private boolean isExistHeartBlock = false;
+    protected boolean isGoldStatus = false;
+    protected boolean isExistHeartBlock = false;
 
     private Rectangle rect;
     private int ballRadius = 10;
 
-    private int destroyedBlockCount = 0;
+    protected int destroyedBlockCount = 0;
 
-    private double v = 1.000;
-
-    private int heart = 3;
-    private int score = 0;
-    private long time = 0;
+    protected int heart = 3;
+    protected int score = 0;
+    protected long time = 0;
     private long hitTime = 0;
-    private long goldTime = 0;
+    protected long goldTime = 0;
 
     private GameEngine engine;
     public static String savePath = "D:/save/save.mdds";
     public static String savePathDir = "D:/save/";
 
-    private ArrayList<Block> blocks = new ArrayList<>();
-    private ArrayList<Bonus> chocos = new ArrayList<>();
-    private Color[] colors = new Color[]{
+    protected ArrayList<Block> blocks = new ArrayList<>();
+    protected ArrayList<Bonus> chocos = new ArrayList<>();
+    protected Color[] colors = new Color[]{
             Color.MAGENTA,
             Color.RED,
             Color.GOLD,
@@ -85,7 +81,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private Label heartLabel;
     private Label levelLabel;
 
-    private boolean loadFromSave = false;
+    protected boolean loadFromSave = false;
     private SoundEffects sound;
     private BackgroundMusic backgroundMusic;
     Stage primaryStage;
@@ -99,10 +95,12 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private boolean isPaused = false;
     private PauseMenu pauseMenu;
     private Scene gameScene;
+    private LoadSaveManager loadSaveManager;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        loadSaveManager = new LoadSaveManager(this);
         this.primaryStage = primaryStage;
         backgroundMusic = new BackgroundMusic();
         backgroundMusic.playBackgroundMusic();
@@ -113,8 +111,19 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
         if (fromMainMenu == true){
             level = 0;
-            isPaused=false;
+            score = 0;
+            heart = 3;
+
+            if (blocks!= null){
+                blocks.clear();
+            }
         }
+
+        if (root!=null){
+            root.getChildren().clear();
+        }
+
+        isPaused=false;
 
         sound = new SoundEffects();
         sound.initSoundEffects();
@@ -193,6 +202,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 if (level > 1 && level < 18) {
                     load.setVisible(false);
                     newGame.setVisible(false);
+                    back.setVisible(false);
                     // Set all Block nodes to be visible again
                     for (Block block : blocks) {
                         block.rect.setVisible(true);
@@ -222,7 +232,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                         scoreLabel.setVisible(true);
                         heartLabel.setVisible(true);
                         levelLabel.setVisible(true);
-                        loadGame();
+                        loadSaveManager.loadGame();
 
                         back.setVisible(false);
                         load.setVisible(false);
@@ -345,7 +355,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 //setPhysicsToBall();
                 break;
             case S:
-                saveGame();
+                loadSaveManager.saveGame();
                 break;
             case R:
                 restartLevel(level, saveHeart, saveScore);
@@ -477,18 +487,18 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     }
 
 
-    private boolean goDownBall = true;
-    private boolean goRightBall = true;
-    private boolean collideToBreak = false;
-    private boolean collideToBreakAndMoveToRight = true;
-    private boolean collideToRightWall = false;
-    private boolean collideToLeftWall = false;
-    private boolean collideToRightBlock = false;
-    private boolean collideToBottomBlock = false;
-    private boolean collideToLeftBlock = false;
-    private boolean collideToTopBlock = false;
+    protected boolean goDownBall = true;
+    protected boolean goRightBall = true;
+    protected boolean collideToBreak = false;
+    protected boolean collideToBreakAndMoveToRight = true;
+    protected boolean collideToRightWall = false;
+    protected boolean collideToLeftWall = false;
+    protected boolean collideToRightBlock = false;
+    protected boolean collideToBottomBlock = false;
+    protected boolean collideToLeftBlock = false;
+    protected boolean collideToTopBlock = false;
 
-    private double vX = 1.000;
+    protected double vX = 1.000;
     private double vY = 1.000;
 
 
@@ -534,7 +544,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 heart--;
                 new Score().show(sceneWidth / 2, sceneHeight / 2, -1, this);
                 //game over
-                if (heart == 0) {
+                if (heart <= 0) {
                     new Score().showGameOver(this);
                     engine.stop();
                 }
@@ -638,130 +648,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
             nextLevel();
         }
-    }
-
-    private void saveGame() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                new File(savePathDir).mkdirs();
-                File file = new File(savePath);
-                ObjectOutputStream outputStream = null;
-                try {
-                    outputStream = new ObjectOutputStream(new FileOutputStream(file));
-
-                    outputStream.writeInt(level);
-                    outputStream.writeInt(score);
-                    outputStream.writeInt(heart);
-                    //reset the destroyed block count to 0
-                    outputStream.writeInt(0);
-
-
-                    outputStream.writeDouble(xBall);
-                    outputStream.writeDouble(yBall);
-                    outputStream.writeDouble(xBreak);
-                    outputStream.writeDouble(yBreak);
-                    outputStream.writeDouble(centerBreakX);
-                    outputStream.writeLong(time);
-                    outputStream.writeLong(goldTime);
-                    outputStream.writeDouble(vX);
-
-
-                    outputStream.writeBoolean(isExistHeartBlock);
-                    outputStream.writeBoolean(isGoldStatus);
-                    outputStream.writeBoolean(goDownBall);
-                    outputStream.writeBoolean(goRightBall);
-                    outputStream.writeBoolean(collideToBreak);
-                    outputStream.writeBoolean(collideToBreakAndMoveToRight);
-                    outputStream.writeBoolean(collideToRightWall);
-                    outputStream.writeBoolean(collideToLeftWall);
-                    outputStream.writeBoolean(collideToRightBlock);
-                    outputStream.writeBoolean(collideToBottomBlock);
-                    outputStream.writeBoolean(collideToLeftBlock);
-                    outputStream.writeBoolean(collideToTopBlock);
-
-                    ArrayList<BlockSerializable> blockSerializables = new ArrayList<BlockSerializable>();
-                    if (!blocks.isEmpty()) {
-                        for (Block block : blocks) {
-                            if (block.isDestroyed) {
-                                continue;
-                            }
-                            blockSerializables.add(new BlockSerializable(block.row, block.column, block.type));
-                        }
-                    }
-
-                    outputStream.writeObject(blockSerializables);
-
-                    new Score().showMessage("Game Saved", Main.this);
-
-
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    if (outputStream != null) {
-                        try {
-                            outputStream.flush();
-                            outputStream.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-        }).start();
-
-    }
-
-    private void loadGame() {
-
-        LoadSave loadSave = new LoadSave();
-        loadSave.read();
-
-
-        isExistHeartBlock = loadSave.isExistHeartBlock;
-        isGoldStatus = loadSave.isGoldStatus;
-        goDownBall = loadSave.goDownBall;
-        goRightBall = loadSave.goRightBall;
-        collideToBreak = loadSave.collideToBreak;
-        collideToBreakAndMoveToRight = loadSave.collideToBreakAndMoveToRight;
-        collideToRightWall = loadSave.collideToRightWall;
-        collideToLeftWall = loadSave.collideToLeftWall;
-        collideToRightBlock = loadSave.collideToRightBlock;
-        collideToBottomBlock = loadSave.collideToBottomBlock;
-        collideToLeftBlock = loadSave.collideToLeftBlock;
-        collideToTopBlock = loadSave.collideToTopBlock;
-        level = loadSave.level;
-        score = loadSave.score;
-        heart = loadSave.heart;
-        destroyedBlockCount = loadSave.destroyedBlockCount;
-        xBall = loadSave.xBall;
-        yBall = loadSave.yBall;
-        xBreak = loadSave.xBreak;
-        yBreak = loadSave.yBreak;
-        centerBreakX = loadSave.centerBreakX;
-        time = loadSave.time;
-        goldTime = loadSave.goldTime;
-        vX = loadSave.vX;
-
-        blocks.clear();
-        chocos.clear();
-
-        for (BlockSerializable ser : loadSave.blocks) {
-            int r = new Random().nextInt(200);
-            blocks.add(new Block(ser.row, ser.j, colors[r % colors.length], ser.type));
-        }
-
-
-        try {
-            loadFromSave = true;
-            initializeNewGame(false);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
     }
 
     private void nextLevel() {
@@ -906,7 +792,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             }
         }
     }
-
 
     @Override
     public void onInit() {
