@@ -91,6 +91,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     Stage primaryStage;
     Button load = null;
     Button newGame = null;
+    Button back = null;
 
     private boolean restartCertainLevel = false;
     private int saveHeart = 3;
@@ -138,10 +139,14 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             load.setTranslateX(70);
             load.setTranslateY(250);
             load.setPrefSize(150, 30);
-            newGame = new Button("Level 1");
+            newGame = new Button("New Game");
             newGame.setTranslateX(70);
             newGame.setTranslateY(320);
             newGame.setPrefSize(150, 30);
+            back = new Button("Back To Main Menu");
+            back.setTranslateX(70);
+            back.setTranslateY(390);
+            back.setPrefSize(150, 30);
         }
 
 
@@ -152,18 +157,25 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         heartLabel = new Label("Heart : " + heart);
         heartLabel.setTranslateX(sceneWidth - 70);
         if (!loadFromSave) {
-            root.getChildren().addAll(rect, ball, scoreLabel, heartLabel, levelLabel, newGame);
+            root.getChildren().addAll(rect, ball, scoreLabel, heartLabel, levelLabel, newGame, back);
             //add load to root if save file exists
             LoadSave loadsave = new LoadSave();
             if (loadsave.doesSaveFileExist()) {
                 root.getChildren().add(load);
             }
+            rect.setVisible(false);
+            ball.setVisible(false);
+            scoreLabel.setVisible(false);
+            heartLabel.setVisible(false);
+            levelLabel.setVisible(false);
+
         } else {
             root.getChildren().addAll(rect, ball, scoreLabel, heartLabel, levelLabel);
         }
         if (blocks.size() > 0) {
             for (Block block : blocks) {
                 root.getChildren().add(block.rect);
+                block.rect.setVisible(false);
             }
             gameScene = new Scene(root, sceneWidth, sceneHeight);
             gameScene.getStylesheets().add("style.css");
@@ -181,6 +193,16 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 if (level > 1 && level < 18) {
                     load.setVisible(false);
                     newGame.setVisible(false);
+                    // Set all Block nodes to be visible again
+                    for (Block block : blocks) {
+                        block.rect.setVisible(true);
+                    }
+                    rect.setVisible(true);
+                    ball.setVisible(true);
+                    scoreLabel.setVisible(true);
+                    heartLabel.setVisible(true);
+                    levelLabel.setVisible(true);
+
                     engine = new GameEngine();
                     engine.setOnAction(this);
                     engine.setFps(120);
@@ -190,8 +212,19 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 load.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
+                        // Set all Block nodes to be visible again
+                        for (Block block : blocks) {
+                            block.rect.setVisible(true);
+                        }
+
+                        rect.setVisible(true);
+                        ball.setVisible(true);
+                        scoreLabel.setVisible(true);
+                        heartLabel.setVisible(true);
+                        levelLabel.setVisible(true);
                         loadGame();
 
+                        back.setVisible(false);
                         load.setVisible(false);
                         newGame.setVisible(false);
                     }
@@ -200,6 +233,17 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 newGame.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
+                        // Set all Block nodes to be visible again
+                        for (Block block : blocks) {
+                            block.rect.setVisible(true);
+                        }
+
+                        rect.setVisible(true);
+                        ball.setVisible(true);
+                        scoreLabel.setVisible(true);
+                        heartLabel.setVisible(true);
+                        levelLabel.setVisible(true);
+
                         engine = new GameEngine();
                         engine.setOnAction(Main.this);
                         engine.setFps(120);
@@ -207,9 +251,27 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
                         load.setVisible(false);
                         newGame.setVisible(false);
+                        back.setVisible(false);
+                    }
+                });
+                back.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        switchToMainMenuPage();
                     }
                 });
             } else {
+                // Set all Block nodes to be visible again
+                for (Block block : blocks) {
+                    block.rect.setVisible(true);
+                }
+
+                rect.setVisible(true);
+                ball.setVisible(true);
+                scoreLabel.setVisible(true);
+                heartLabel.setVisible(true);
+                levelLabel.setVisible(true);
+
                 engine = new GameEngine();
                 engine.setOnAction(this);
                 engine.setFps(120);

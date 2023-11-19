@@ -56,7 +56,7 @@ public class GameEngine {
     public void start() {
         time = 0;
         Initialize();
-        executorService = Executors.newFixedThreadPool(3); // You can adjust the pool size
+        executorService = Executors.newFixedThreadPool(8);
         Update();
         PhysicsCalculation();
         TimeStart();
