@@ -115,6 +115,9 @@ public class LoadSaveManager {
         main.blocks.clear();
         main.chocos.clear();
 
+        main.saveScore = loadSave.score;
+        main.saveHeart = loadSave.heart;
+
         for (BlockSerializable ser : loadSave.blocks) {
             int r = new Random().nextInt(200);
             main.blocks.add(new Block(ser.row, ser.j, main.colors[r % main.colors.length], ser.type));

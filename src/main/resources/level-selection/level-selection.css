@@ -1,0 +1,55 @@
+.root {
+    -fx-background-image: url("../in-game-background/bg.png");
+    -fx-background-size: cover;
+}
+
+.label {
+    -fx-text-fill: #FFF;
+    -fx-label-padding: 8px;
+    -fx-font-size: 15px;
+}
+
+.button {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Papyrus', Cursive;
+    -fx-alignment: center;
+    -fx-background-color: rgba(0, 0, 0, 0.5);
+    -fx-padding: 5 10 5 10;
+    -fx-min-width: 150px;
+    -fx-min-height: 20px;
+}
+
+.button:hover {
+    -fx-background-color: #45a049;
+}
+
+.level-select-header {
+    -fx-font-size: 25px;
+    -fx-font-weight: bold;
+    -fx-fill: black;
+    -fx-font-family: 'Papyrus', Cursive;
+}
+
+.level-select-instruction {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-fill: black;
+    -fx-font-family: 'Papyrus', Cursive;
+}
+
+.back-button {
+    -fx-background-color: rgba(0, 0, 0, 0.5);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-min-width: 350px;
+    -fx-min-height: 50px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Papyrus', Cursive;
+    -fx-alignment: center;
+}

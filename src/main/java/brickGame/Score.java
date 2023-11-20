@@ -76,10 +76,8 @@ public class Score {
             restart.setTranslateX(70);
             restart.setTranslateY(300);
             restart.setOnAction(event -> {
-                //main.restartGame();
                 RestartGame restartGame = new RestartGame();
                 restartGame.restartGame(main);
-
             });
 
                 main.root.getChildren().addAll(label, restart);

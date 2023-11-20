@@ -31,8 +31,6 @@ import initGame.InitBoard;
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
 
     public int level = 0;
-
-
     public double xBreak = 0.0f;
     public double centerBreakX;
     public double yBreak = 640.0f;
@@ -65,7 +63,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     public long hitTime = 0;
     public long goldTime = 0;
 
-    private GameEngine engine;
+    public GameEngine engine;
     public static String savePath = "D:/save/save.mdds";
     public static String savePathDir = "D:/save/";
 
@@ -98,10 +96,12 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     Button load = null;
     Button newGame = null;
     Button back = null;
+    Button levelSelect = null;
+    private LevelSelection levelSelection;
 
     private boolean restartCertainLevel = false;
-    private int saveHeart = 3;
-    private int saveScore = 0;
+    public int saveHeart = 3;
+    public int saveScore = 0;
     private boolean isPaused = false;
     private PauseMenu pauseMenu;
     private Scene gameScene;
@@ -158,17 +158,21 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             InitBoard initBoard = new InitBoard(this);
             blocks = initBoard.initBoard(level, isExistHeartBlock, colors);
 
+            levelSelect = new Button("Level Select");
+            levelSelect.setTranslateX(70);
+            levelSelect.setTranslateY(110);
+            levelSelect.setPrefSize(150, 30);
             load = new Button("Load Game");
             load.setTranslateX(70);
-            load.setTranslateY(250);
+            load.setTranslateY(180);
             load.setPrefSize(150, 30);
             newGame = new Button("New Game");
             newGame.setTranslateX(70);
-            newGame.setTranslateY(320);
+            newGame.setTranslateY(250);
             newGame.setPrefSize(150, 30);
             back = new Button("Back To Main Menu");
             back.setTranslateX(70);
-            back.setTranslateY(390);
+            back.setTranslateY(320);
             back.setPrefSize(150, 30);
         }
 
@@ -185,6 +189,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             LoadSaveRead loadSave = new LoadSaveRead();
             if (loadSave.doesSaveFileExist()) {
                 root.getChildren().add(load);
+                root.getChildren().add(levelSelect);
             }
             rect.setVisible(false);
             ball.setVisible(false);
@@ -216,6 +221,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 if (level > 1 && level < 18) {
                     load.setVisible(false);
                     newGame.setVisible(false);
+                    levelSelect.setVisible(false);
                     back.setVisible(false);
                     // Set all Block nodes to be visible again
                     for (Block block : blocks) {
@@ -250,6 +256,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
                         back.setVisible(false);
                         load.setVisible(false);
+                        levelSelect.setVisible(false);
                         newGame.setVisible(false);
                     }
                 });
@@ -275,7 +282,29 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
                         load.setVisible(false);
                         newGame.setVisible(false);
+                        levelSelect.setVisible(false);
                         back.setVisible(false);
+                    }
+                });
+                levelSelect.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        // Set all Block nodes to be visible again
+                        for (Block block : blocks) {
+                            block.rect.setVisible(true);
+                        }
+
+                        rect.setVisible(true);
+                        ball.setVisible(true);
+                        scoreLabel.setVisible(true);
+                        heartLabel.setVisible(true);
+                        levelLabel.setVisible(true);
+                        switchToLevelSelectionPage();
+
+                        back.setVisible(false);
+                        load.setVisible(false);
+                        levelSelect.setVisible(false);
+                        newGame.setVisible(false);
                     }
                 });
                 back.setOnAction(new EventHandler<ActionEvent>() {
@@ -321,6 +350,13 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         primaryStage.show();
     }
 
+    public void switchToLevelSelectionPage(){
+        if (root!=null){
+            root.getChildren().clear();
+        }
+        LevelSelection levelSelection = new LevelSelection(this);
+        primaryStage.setScene(levelSelection.getScene());
+    }
     public static void main(String[] args) {
         launch(args);
     }
