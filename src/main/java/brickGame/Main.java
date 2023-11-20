@@ -213,6 +213,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             backgroundMusic.setupKeyEvents(gameScene);
 
             primaryStage.setTitle("Brick Ball Game");
+            primaryStage.getIcons().add(new Image("/game-elements/icon.png"));
             primaryStage.setScene(gameScene);
             primaryStage.setResizable(false);
             primaryStage.show();
@@ -339,12 +340,16 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             root.getChildren().clear();
         }
         InstructionPage instructionScene = new InstructionPage(this);
+        primaryStage.setTitle("Brick Ball Game");
+        primaryStage.getIcons().add(new Image("/game-elements/icon.png"));
         primaryStage.setScene(instructionScene.getScene());
         primaryStage.setResizable(false);
     }
 
     public void switchToMainMenuPage() {
         MainMenuPage mainMenuScene = new MainMenuPage(this);
+        primaryStage.setTitle("Brick Ball Game");
+        primaryStage.getIcons().add(new Image("/game-elements/icon.png"));
         primaryStage.setScene(mainMenuScene.getScene());
         primaryStage.setResizable(false);
         primaryStage.show();
@@ -355,6 +360,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             root.getChildren().clear();
         }
         LevelSelection levelSelection = new LevelSelection(this);
+        primaryStage.setTitle("Brick Ball Game");
+        primaryStage.getIcons().add(new Image("/game-elements/icon.png"));
         primaryStage.setScene(levelSelection.getScene());
     }
     public static void main(String[] args) {
