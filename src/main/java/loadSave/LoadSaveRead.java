@@ -1,17 +1,21 @@
-package brickGame;
+package loadSave;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.ArrayList;
+
 
 //import packages for files and paths
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
-public class LoadSave {
+import brickGame.BlockSerializable;
+import brickGame.Main;
+
+public class LoadSaveRead {
     public boolean          isExistHeartBlock;
     public boolean          isGoldStatus;
     public boolean          goDownBall;
@@ -52,19 +56,15 @@ public class LoadSave {
         }
     }
 
-
     public void read() {
-
 
         try {
             ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(new File(Main.savePath)));
-
 
             level = inputStream.readInt();
             score = inputStream.readInt();
             heart = inputStream.readInt();
             destroyedBlockCount = inputStream.readInt();
-
 
             xBall = inputStream.readDouble();
             yBall = inputStream.readDouble();
@@ -74,7 +74,6 @@ public class LoadSave {
             time = inputStream.readLong();
             goldTime = inputStream.readLong();
             vX = inputStream.readDouble();
-
 
             isExistHeartBlock = inputStream.readBoolean();
             isGoldStatus = inputStream.readBoolean();
@@ -89,16 +88,13 @@ public class LoadSave {
             collideToLeftBlock = inputStream.readBoolean();
             collideToTopBlock = inputStream.readBoolean();
 
-
             try {
                 blocks = (ArrayList<BlockSerializable>) inputStream.readObject();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }

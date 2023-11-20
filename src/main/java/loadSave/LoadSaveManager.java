@@ -1,8 +1,13 @@
-package brickGame;
+package loadSave;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
+
+import brickGame.Block;
+import brickGame.BlockSerializable;
+import brickGame.Main;
+import brickGame.Score;
 
 public class LoadSaveManager {
     private Main main;
@@ -79,7 +84,7 @@ public class LoadSaveManager {
     }
 
     public void loadGame() {
-        LoadSave loadSave = new LoadSave();
+        LoadSaveRead loadSave = new LoadSaveRead();
         loadSave.read();
 
         main.isExistHeartBlock = loadSave.isExistHeartBlock;

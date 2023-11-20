@@ -12,6 +12,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import soundEffects.BackgroundMusic;
+import soundEffects.SoundEffects;
 
 public class InstructionPage {
     private Scene scene; // Reference to the InstructionPage Scene

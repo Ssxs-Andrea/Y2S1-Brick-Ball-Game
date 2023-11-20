@@ -1,9 +1,10 @@
-package brickGame;
+package soundEffects;
 
 import java.io.File;
 import java.net.URI;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import brickGame.Main;
 
 public class SoundEffects {
 

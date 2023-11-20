@@ -17,51 +17,57 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.Iterator;
+
+import loadSave.LoadSaveRead;
+import loadSave.LoadSaveManager;
+import soundEffects.SoundEffects;
+import soundEffects.BackgroundMusic;
 
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
 
-    protected int level = 0;
+    public int level = 0;
 
-    protected double xBreak = 0.0f;
-    protected double centerBreakX;
-    protected double yBreak = 640.0f;
+
+    public double xBreak = 0.0f;
+    public double centerBreakX;
+    public double yBreak = 640.0f;
 
     private final int breakWidth = 130;
     private final int breakHeight = 30;
     private final int halfBreakWidth = breakWidth / 2;
 
-    private final int sceneWidth = 500;
-    private final int sceneHeight = 700;
+    public final int sceneWidth = 500;
+    public final int sceneHeight = 700;
 
     private static final int LEFT = 1;
     private static final int RIGHT = 2;
 
     private Circle ball;
-    protected double xBall;
-    protected double yBall;
+    public double xBall;
+    public double yBall;
 
-    protected boolean isGoldStatus = false;
-    protected boolean isExistHeartBlock = false;
+    public boolean isGoldStatus = false;
+    public boolean isExistHeartBlock = false;
 
     private Rectangle rect;
-    private int ballRadius = 10;
+    public int ballRadius = 10;
 
-    protected int destroyedBlockCount = 0;
+    public int destroyedBlockCount = 0;
 
-    protected int heart = 3;
-    protected int score = 0;
-    protected long time = 0;
-    private long hitTime = 0;
-    protected long goldTime = 0;
+    public int heart = 3;
+    public int score = 0;
+    public long time = 0;
+    public long hitTime = 0;
+    public long goldTime = 0;
 
     private GameEngine engine;
     public static String savePath = "D:/save/save.mdds";
     public static String savePathDir = "D:/save/";
 
-    protected ArrayList<Block> blocks = new ArrayList<>();
-    protected ArrayList<Bonus> chocos = new ArrayList<>();
-    protected Color[] colors = new Color[]{
+    public ArrayList<Block> blocks = new ArrayList<>();
+    public ArrayList<Bonus> chocos = new ArrayList<>();
+    public Color[] colors = new Color[]{
             Color.MAGENTA,
             Color.RED,
             Color.GOLD,
@@ -81,7 +87,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private Label heartLabel;
     private Label levelLabel;
 
-    protected boolean loadFromSave = false;
+    public boolean loadFromSave = false;
     private SoundEffects sound;
     private BackgroundMusic backgroundMusic;
     Stage primaryStage;
@@ -99,7 +105,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
         loadSaveManager = new LoadSaveManager(this);
         this.primaryStage = primaryStage;
         backgroundMusic = new BackgroundMusic();
@@ -109,7 +114,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     public void initializeNewGame(boolean fromMainMenu) {
 
-        if (fromMainMenu == true){
+        if (fromMainMenu){
             level = 0;
             score = 0;
             heart = 3;
@@ -140,9 +145,14 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 return;
             }
 
-            initBall();
-            initBreak();
-            initBoard();
+            InitBall initBall = new InitBall(this);
+            ball = initBall.initBall();
+
+            InitBreak initBreak = new InitBreak(this);
+            rect = initBreak.initBreak(breakWidth, breakHeight, xBreak, yBreak);
+
+            InitBoard initBoard = new InitBoard(this);
+            blocks = initBoard.initBoard(level, isExistHeartBlock, colors);
 
             load = new Button("Load Game");
             load.setTranslateX(70);
@@ -158,18 +168,18 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             back.setPrefSize(150, 30);
         }
 
-
         root = new Pane();
         scoreLabel = new Label("Score: " + score);
         levelLabel = new Label("Level: " + level);
         levelLabel.setTranslateY(20);
         heartLabel = new Label("Heart : " + heart);
         heartLabel.setTranslateX(sceneWidth - 70);
+
         if (!loadFromSave) {
             root.getChildren().addAll(rect, ball, scoreLabel, heartLabel, levelLabel, newGame, back);
             //add load to root if save file exists
-            LoadSave loadsave = new LoadSave();
-            if (loadsave.doesSaveFileExist()) {
+            LoadSaveRead loadSave = new LoadSaveRead();
+            if (loadSave.doesSaveFileExist()) {
                 root.getChildren().add(load);
             }
             rect.setVisible(false);
@@ -291,7 +301,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
     }
 
-
     public void switchToInstructionPage() {
         if (root!=null) {
             root.getChildren().clear();
@@ -307,36 +316,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         primaryStage.setResizable(false);
         primaryStage.show();
     }
-
-    private void initBoard() {
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < level + 1; j++) {
-                int r = new Random().nextInt(500);
-                //System.out.println("r is " + r);
-                if (r % 5 == 0) {
-                    continue;
-                }
-                int type;
-                if (r % 10 == 1) {
-                    type = Block.BLOCK_CHOCO;
-                } else if (r % 10 == 2) {
-                    if (!isExistHeartBlock) {
-                        type = Block.BLOCK_HEART;
-                        isExistHeartBlock = true;
-                    } else {
-                        type = Block.BLOCK_NORMAL;
-                    }
-                } else if (r % 10 == 3) {
-                    type = Block.BLOCK_STAR;
-                } else {
-                    type = Block.BLOCK_NORMAL;
-                }
-                blocks.add(new Block(j, i, colors[r % (colors.length)], type));
-                //System.out.println("colors " + r % (colors.length));
-            }
-        }
-    }
-
 
     public static void main(String[] args) {
         launch(args);
@@ -412,7 +391,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
     }
 
-    // Call this method from your background thread
     private void handleMouseDraggedInBackgroundThread(MouseEvent event) {
         Platform.runLater(() -> handleMouseDragged(event));
     }
@@ -459,50 +437,23 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 }
             }
         }).start();
-
-
     }
 
+    public boolean goDownBall = true;
+    public boolean goRightBall = true;
+    public boolean collideToBreak = false;
+    public boolean collideToBreakAndMoveToRight = true;
+    public boolean collideToRightWall = false;
+    public boolean collideToLeftWall = false;
+    public boolean collideToRightBlock = false;
+    public boolean collideToBottomBlock = false;
+    public boolean collideToLeftBlock = false;
+    public boolean collideToTopBlock = false;
 
-    private void initBall() {
-        Random random = new Random();
-        xBall = random.nextInt(sceneWidth) + 1;
-        //yBall = random.nextInt(sceneHeight - 200) + ((level + 1) * Block.getHeight()) + 15;
-        yBall = sceneHeight-200;
-        ball = new Circle();
-        ball.setRadius(ballRadius);
-        ball.setFill(new ImagePattern(new Image("ball.png")));
-    }
+    public double vX = 2.000;
+    private double vY = 2.000;
 
-    private void initBreak() {
-        rect = new Rectangle();
-        rect.setWidth(breakWidth);
-        rect.setHeight(breakHeight);
-        rect.setX(xBreak);
-        rect.setY(yBreak);
-
-        ImagePattern pattern = new ImagePattern(new Image("block.jpg"));
-
-        rect.setFill(pattern);
-    }
-
-
-    protected boolean goDownBall = true;
-    protected boolean goRightBall = true;
-    protected boolean collideToBreak = false;
-    protected boolean collideToBreakAndMoveToRight = true;
-    protected boolean collideToRightWall = false;
-    protected boolean collideToLeftWall = false;
-    protected boolean collideToRightBlock = false;
-    protected boolean collideToBottomBlock = false;
-    protected boolean collideToLeftBlock = false;
-    protected boolean collideToTopBlock = false;
-
-    protected double vX = 1.000;
-    private double vY = 1.000;
-
-
-    private void resetCollideFlags() {
+    public void resetCollideFlags() {
 
         collideToBreak = false;
         collideToBreakAndMoveToRight = false;
@@ -516,7 +467,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     }
 
     private void setPhysicsToBall() {
-        //v = ((time - hitTime) / 1000.000) + 1.000;
 
         if (goDownBall) {
             yBall += vY;
@@ -531,26 +481,23 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
 
         if (yBall <= 0 + ballRadius) {
-            //vX = 1.000;
-            //yBall = 0;
             resetCollideFlags();
             goDownBall = true;
             return;
         }
-        if (yBall >= sceneHeight - ballRadius) {
-            //yBall = sceneHeight;
+        if (yBall >= (sceneHeight - ballRadius) && goDownBall) {
             goDownBall = false;
-            if (!isGoldStatus) {
+            if (!isGoldStatus ) {
                 heart--;
+                goDownBall = false;
+
                 new Score().show(sceneWidth / 2, sceneHeight / 2, -1, this);
                 //game over
                 if (heart <= 0) {
                     new Score().showGameOver(this);
                     engine.stop();
                 }
-
             }
-            //return;
         }
 
         if (yBall >= yBreak - ballRadius) {
@@ -607,7 +554,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
 
         //Wall Collide
-
         if (collideToRightWall) {
             goRightBall = false;
         }
@@ -617,7 +563,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
 
         //Block Collide
-
         if (collideToRightBlock) {
             goRightBall = true;
         }
@@ -633,15 +578,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         if (collideToBottomBlock) {
             goDownBall = true;
         }
-
-
     }
-
-
     private void checkDestroyedCount() {
-        //System.out.println("Block Count " + blocks.size());
-        //System.out.println("Destroyed Count " + destroyedBlockCount);
-
         if (destroyedBlockCount == blocks.size()) {
             //TODO win level todo...
             //System.out.println("You Win");
@@ -653,93 +591,57 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private void nextLevel() {
         saveHeart = heart;
         saveScore = score;
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    vX = 1.000;
+        Platform.runLater(() -> {
+            try {
+                vX = 1.000;
+                engine.stop();
+                resetCollideFlags();
+                goDownBall = true;
 
-                    engine.stop();
-                    resetCollideFlags();
-                    goDownBall = true;
+                isGoldStatus = false;
+                isExistHeartBlock = false;
 
-                    isGoldStatus = false;
-                    isExistHeartBlock = false;
+                hitTime = 0;
+                time = 0;
+                goldTime = 0;
 
+                engine.stop();
+                blocks.clear();
+                chocos.clear();
+                destroyedBlockCount = 0;
+                root.getChildren().clear();
+                initializeNewGame(false);
 
-                    hitTime = 0;
-                    time = 0;
-                    goldTime = 0;
-
-                    engine.stop();
-                    blocks.clear();
-                    chocos.clear();
-                    destroyedBlockCount = 0;
-                    root.getChildren().clear();
-                    initializeNewGame(false);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
-
-
-
-    public void restartGame() {
-
-        try {
-            level = 0;
-            heart = 3;
-            score = 0;
-            vX = 1.000;
-            destroyedBlockCount = 0;
-            resetCollideFlags();
-            goDownBall = true;
-
-            isGoldStatus = false;
-            isExistHeartBlock = false;
-            hitTime = 0;
-            time = 0;
-            goldTime = 0;
-
-            blocks.clear();
-            chocos.clear();
-
-            initializeNewGame(false);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 
     @Override
     public void onUpdate() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
+        Platform.runLater(() -> {
+            scoreLabel.setText("Score: " + score);
+            heartLabel.setText("Heart : " + heart);
 
-                scoreLabel.setText("Score: " + score);
-                heartLabel.setText("Heart : " + heart);
+            rect.setX(xBreak);
+            rect.setY(yBreak);
+            ball.setCenterX(xBall);
+            ball.setCenterY(yBall);
 
-                rect.setX(xBreak);
-                rect.setY(yBreak);
-                ball.setCenterX(xBall);
-                ball.setCenterY(yBall);
-
-                for (Bonus choco : chocos) {
-                    choco.choco.setY(choco.y);
-                }
+            for (Bonus choco : chocos) {
+                choco.choco.setY(choco.y);
             }
-        });
 
+            synchronized (blocks) {
+                ArrayList<Block> blocksCopy = new ArrayList<>(blocks);
 
-        if (yBall + ballRadius >= Block.getPaddingTop() && yBall - ballRadius <= (Block.getHeight() * (level + 1)) + Block.getPaddingTop()) {
-            if (!blocks.isEmpty()) {
-                for (final Block block : blocks) {
+                Iterator<Block> iterator = blocksCopy.iterator();
+
+                while (iterator.hasNext()) {
+                    Block block = iterator.next();
                     int hitCode = block.checkHitToBlock(xBall, yBall);
-                    //System.out.println("Check hit");
+
                     if (hitCode != Block.NO_HIT) {
                         score += 1;
                         sound.playHitBlockSound();
@@ -749,7 +651,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                         block.rect.setVisible(false);
                         block.isDestroyed = true;
                         destroyedBlockCount++;
-                        //System.out.println("size is " + blocks.size());
                         resetCollideFlags();
 
                         if (block.type == Block.BLOCK_CHOCO) {
@@ -785,12 +686,13 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                         } else if (hitCode == Block.HIT_TOP) {
                             collideToTopBlock = true;
                         }
+                        iterator.remove();
                     }
                     //TODO hit to break and some work here....
                     //System.out.println("Break in row:" + block.row + " and column:" + block.column + " hit");
                 }
             }
-        }
+        });
     }
 
     @Override
@@ -804,9 +706,11 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             return;
         }
         checkDestroyedCount();
-        setPhysicsToBall();
 
-        if (time - goldTime > 5000) {
+        setPhysicsToBall();
+        //System.out.println(time - goldTime);
+        if (time - goldTime > 300) {
+
             ball.setFill(new ImagePattern(new Image("ball.png")));
             if (root != null) {
                 root.getStyleClass().remove("goldRoot");
@@ -814,10 +718,16 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             isGoldStatus = false;
         }
 
-        for (Bonus choco : chocos) {
+        double speedFactor = 2.0;
+
+        Iterator<Bonus> iterator = chocos.iterator();
+        while (iterator.hasNext()) {
+            Bonus choco = iterator.next();
+
             if (choco.y > sceneHeight || choco.taken) {
                 continue;
             }
+
             if (choco.y >= yBreak && choco.y <= yBreak + breakHeight && choco.x >= xBreak && choco.x <= xBreak + breakWidth) {
                 System.out.println("You Got it and +3 score for you");
                 sound.playHitBonusSound();
@@ -825,10 +735,10 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 choco.choco.setVisible(false);
                 score += 3;
                 new Score().show(choco.x, choco.y, 3, this);
+                iterator.remove();
             }
-            choco.y += ((time - choco.timeCreated) / 1000.000) + 1.000;
+            choco.y += speedFactor * (((time - choco.timeCreated) / 1000.000) + 1.000);
         }
-        //System.out.println("time is:" + time + " goldTime is " + goldTime);
     }
 
     public int getLevel() {

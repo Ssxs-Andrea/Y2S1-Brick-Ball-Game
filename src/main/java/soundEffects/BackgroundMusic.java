@@ -1,4 +1,4 @@
-package brickGame;
+package soundEffects;
 
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -17,6 +17,7 @@ import javafx.util.Duration;
 import java.io.File;
 import java.net.URI;
 import java.util.Objects;
+import brickGame.Main;
 
 public class BackgroundMusic {
 
