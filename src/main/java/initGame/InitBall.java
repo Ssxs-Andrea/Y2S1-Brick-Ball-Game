@@ -1,10 +1,11 @@
-package brickGame;
+package initGame;
 
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-
 import java.util.Random;
+
+import brickGame.Main;
 
 public class InitBall {
 

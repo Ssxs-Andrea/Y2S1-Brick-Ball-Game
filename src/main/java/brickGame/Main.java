@@ -23,6 +23,10 @@ import loadSave.LoadSaveRead;
 import loadSave.LoadSaveManager;
 import soundEffects.SoundEffects;
 import soundEffects.BackgroundMusic;
+import initGame.InitBall;
+import initGame.InitBreak;
+import initGame.InitBoard;
+
 
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
 
