@@ -25,7 +25,7 @@ public class InitBall {
         main.yBall = main.sceneHeight-200;
         ball = new Circle();
         ball.setRadius(main.ballRadius);
-        ball.setFill(new ImagePattern(new Image("ball.png")));
+        ball.setFill(new ImagePattern(new Image("game-elements/ball.png")));
 
         return ball;
     }

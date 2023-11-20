@@ -21,7 +21,7 @@ public class InitBreak {
         rect.setX(xBreak);
         rect.setY(yBreak);
 
-        ImagePattern pattern = new ImagePattern(new Image("block.jpg"));
+        ImagePattern pattern = new ImagePattern(new Image("game-elements/block.jpg"));
         rect.setFill(pattern);
 
         return rect;

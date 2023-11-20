@@ -1,10 +1,10 @@
 .root {
-    -fx-background-image: url("bg.png");
+    -fx-background-image: url("in-game-background/bg.png");
     -fx-background-size: cover;
 }
 
 .goldRoot {
-    -fx-background-image: url("goldbg.jpg");
+    -fx-background-image: url("in-game-background/goldbg.jpg");
 }
 
 .label {

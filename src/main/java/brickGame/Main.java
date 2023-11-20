@@ -671,7 +671,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
                         if (block.type == Block.BLOCK_STAR) {
                             goldTime = time;
-                            ball.setFill(new ImagePattern(new Image("goldball.png")));
+                            ball.setFill(new ImagePattern(new Image("game-elements/goldBall.png")));
                             System.out.println("gold ball");
                             root.getStyleClass().add("goldRoot");
                             isGoldStatus = true;
@@ -715,7 +715,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         //System.out.println(time - goldTime);
         if (time - goldTime > 300) {
 
-            ball.setFill(new ImagePattern(new Image("ball.png")));
+            ball.setFill(new ImagePattern(new Image("game-elements/ball.png")));
             if (root != null) {
                 root.getStyleClass().remove("goldRoot");
             }

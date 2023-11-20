@@ -64,15 +64,15 @@ public class Block implements Serializable {
         rect.setY(y);
 
         if (type == BLOCK_CHOCO) {
-            Image image = new Image("choco.jpg");
+            Image image = new Image("game-elements/choco.jpg");
             ImagePattern pattern = new ImagePattern(image);
             rect.setFill(pattern);
         } else if (type == BLOCK_HEART) {
-            Image image = new Image("heart.jpg");
+            Image image = new Image("game-elements/heart.jpg");
             ImagePattern pattern = new ImagePattern(image);
             rect.setFill(pattern);
         } else if (type == BLOCK_STAR) {
-            Image image = new Image("star.jpg");
+            Image image = new Image("game-elements/star.jpg");
             ImagePattern pattern = new ImagePattern(image);
             rect.setFill(pattern);
         } else {
