@@ -42,9 +42,9 @@ public class LoadSaveRead {
     public double           vX;
     public ArrayList<BlockSerializable> blocks = new ArrayList<BlockSerializable>();
 
-    //method to check there is saved game
+    LoadSaveManager loadSave = new LoadSaveManager();
     public boolean doesSaveFileExist() {
-        Path savePath = Paths.get(Main.savePath);
+        Path savePath = Paths.get(loadSave.getSavePath());
         //check if the file exists
         if (Files.exists(savePath)) {
             //the file exists
@@ -59,7 +59,7 @@ public class LoadSaveRead {
     public void read() {
 
         try {
-            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(new File(Main.savePath)));
+            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(new File(loadSave.getSavePath())));
 
             level = inputStream.readInt();
             score = inputStream.readInt();

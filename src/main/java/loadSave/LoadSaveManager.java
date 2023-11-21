@@ -11,15 +11,20 @@ import brickGame.Score;
 
 public class LoadSaveManager {
     private Main main;
+    private final String savePath = "D:/save/save.mdds";
+    private final String savePathDir = "D:/save/";
 
     public LoadSaveManager(Main main) {
         this.main = main;
     }
+    public LoadSaveManager() {
+
+    }
 
     public void saveGame() {
         new Thread(() -> {
-            new File(main.savePathDir).mkdirs();
-            File file = new File(main.savePath);
+            new File(savePathDir).mkdirs();
+            File file = new File(savePath);
             ObjectOutputStream outputStream = null;
             try {
                 outputStream = new ObjectOutputStream(new FileOutputStream(file));
@@ -82,6 +87,11 @@ public class LoadSaveManager {
 
     }).start();
     }
+
+    public String getSavePath() {
+        return savePath;
+    }
+
 
     public void loadGame() {
         LoadSaveRead loadSave = new LoadSaveRead();

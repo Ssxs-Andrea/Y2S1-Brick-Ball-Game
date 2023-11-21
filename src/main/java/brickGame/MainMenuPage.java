@@ -26,6 +26,7 @@ public class MainMenuPage {
 
         Button newGame = new Button("START");
         Button instruction = new Button("INSTRUCTION");
+        Button highScore = new Button("HIGH SCORE");
 
         instruction.getStyleClass().add("button");
 
@@ -34,6 +35,9 @@ public class MainMenuPage {
 
         instruction.setTranslateX(70);
         instruction.setTranslateY(450);
+
+        highScore.setTranslateX(70);
+        highScore.setTranslateY(520);
 
         imageView.setFitWidth(350);
         imageView.setFitHeight(170);
@@ -65,9 +69,19 @@ public class MainMenuPage {
                 main.switchToInstructionPage();
             }
         });
+        highScore.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                SoundEffects sound = new SoundEffects();
+                sound.initSoundEffects();
+                sound.playHitButtonSound();
+
+                main.switchToHighScorePage();
+            }
+        });
 
         Pane root=new Pane();
-        root.getChildren().addAll(imageView,newGame,instruction);
+        root.getChildren().addAll(imageView,newGame,instruction, highScore);
 
         scene = new Scene(root, 500, 700);
         scene.getStylesheets().add(getClass().getResource("/main-menu/main-menu.css").toExternalForm());

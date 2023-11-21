@@ -64,8 +64,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     public long goldTime = 0;
 
     public GameEngine engine;
-    public static String savePath = "D:/save/save.mdds";
-    public static String savePathDir = "D:/save/";
 
     public ArrayList<Block> blocks = new ArrayList<>();
     public ArrayList<Bonus> chocos = new ArrayList<>();
@@ -106,6 +104,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private PauseMenu pauseMenu;
     private Scene gameScene;
     private LoadSaveManager loadSaveManager;
+    private HighScoreManager highScoreManager = new HighScoreManager();
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -113,6 +113,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         this.primaryStage = primaryStage;
         backgroundMusic = new BackgroundMusic();
         backgroundMusic.playBackgroundMusic();
+        highScoreManager = new HighScoreManager();
         switchToMainMenuPage();
     }
 
@@ -145,6 +146,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             }
             if (level == 18 && !restartCertainLevel) {
                 root.getChildren().clear();
+                highScoreManager.checkAndAddHighScore(score, this);
                 new Score().showWin(this);
                 return;
             }
@@ -346,6 +348,17 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         primaryStage.setResizable(false);
     }
 
+    public void switchToHighScorePage() {
+        if (root!=null) {
+            root.getChildren().clear();
+        }
+        HighScorePage highScoreScene = new HighScorePage(this);
+        primaryStage.setTitle("Brick Ball Game");
+        primaryStage.getIcons().add(new Image("/game-elements/icon.png"));
+        primaryStage.setScene(highScoreScene.getScene());
+        primaryStage.setResizable(false);
+    }
+
     public void switchToMainMenuPage() {
         MainMenuPage mainMenuScene = new MainMenuPage(this);
         primaryStage.setTitle("Brick Ball Game");
@@ -541,7 +554,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 new Score().show(sceneWidth / 2, sceneHeight / 2, -1, this);
                 //game over
                 if (heart <= 0) {
+                    highScoreManager.checkAndAddHighScore(score, this);
                     new Score().showGameOver(this);
+
                     engine.stop();
                 }
             }
