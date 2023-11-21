@@ -3,6 +3,8 @@ package brickGame;
 import java.io.Serializable;
 
 public class HighScore implements Serializable {
+    private static final long serialVersionUID = 1L; // Add this line in your HighScore class
+
     private String playerName;
     private int score;
 
