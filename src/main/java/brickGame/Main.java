@@ -19,7 +19,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import loadSave.LoadSaveRead;
-import loadSave.LoadSaveManager;
+import loadSave.LoadGame;
+import loadSave.SaveGame;
 import soundEffects.SoundEffects;
 import soundEffects.BackgroundMusic;
 import initGame.InitBall;
@@ -101,14 +102,16 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     public boolean isPaused = false;
     private PauseMenu pauseMenu;
     private Scene gameScene;
-    private LoadSaveManager loadSaveManager;
+    private LoadGame loadGame;
+    private SaveGame saveGame;
     private HighScoreManager highScoreManager = new HighScoreManager();
 
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         WindowsFocusManager focusManager = new WindowsFocusManager(this, primaryStage);
-        loadSaveManager = new LoadSaveManager(this);
+        loadGame = new LoadGame(this);
+        saveGame = new SaveGame(this);
         this.primaryStage = primaryStage;
         backgroundMusic = new BackgroundMusic();
         backgroundMusic.playBackgroundMusic();
@@ -278,7 +281,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     scoreLabel.setVisible(true);
                     heartLabel.setVisible(true);
                     levelLabel.setVisible(true);
-                    loadSaveManager.loadGame();
+                    loadGame.loadGame();
+
 
                     back.setVisible(false);
                     load.setVisible(false);
@@ -413,7 +417,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 //setPhysicsToBall();
                 break;
             case S:
-                loadSaveManager.saveGame();
+                saveGame.saveGame();
                 break;
             case R:
                 restartLevel(level, saveHeart, saveScore);
