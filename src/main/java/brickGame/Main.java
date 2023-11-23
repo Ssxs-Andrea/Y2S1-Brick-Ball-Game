@@ -2,7 +2,6 @@ package brickGame;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -95,12 +94,11 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     Button newGame = null;
     Button back = null;
     Button levelSelect = null;
-    private LevelSelection levelSelection;
 
     public boolean restartCertainLevel = false;
     public int saveHeart = 3;
     public int saveScore = 0;
-    private boolean isPaused = false;
+    public boolean isPaused = false;
     private PauseMenu pauseMenu;
     private Scene gameScene;
     private LoadSaveManager loadSaveManager;
@@ -202,7 +200,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         } else {
             root.getChildren().addAll(rect, ball, scoreLabel, heartLabel, levelLabel);
         }
-        if (blocks.size() > 0) {
+        if (!blocks.isEmpty()) {
             for (Block block : blocks) {
                 root.getChildren().add(block.rect);
                 block.rect.setVisible(false);
@@ -210,7 +208,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             gameScene = new Scene(root, sceneWidth, sceneHeight);
             gameScene.getStylesheets().add("style.css");
             gameScene.setOnKeyPressed(this);
-            gameScene.setOnMouseDragged(event -> handleMouseDraggedInBackgroundThread(event));
+            gameScene.setOnMouseDragged(this::handleMouseDraggedInBackgroundThread);
             backgroundMusic = new BackgroundMusic();
             backgroundMusic.setupKeyEvents(gameScene);
 
@@ -265,91 +263,76 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     engine.start();
                 }
 
-                load.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        //SoundEffects sound = new SoundEffects();
-                        //sound.initSoundEffects();
-                        sound.playHitButtonSound();
-                        // Set all Block nodes to be visible again
-                        for (Block block : blocks) {
-                            block.rect.setVisible(true);
-                        }
-
-                        rect.setVisible(true);
-                        ball.setVisible(true);
-                        scoreLabel.setVisible(true);
-                        heartLabel.setVisible(true);
-                        levelLabel.setVisible(true);
-                        loadSaveManager.loadGame();
-
-                        back.setVisible(false);
-                        load.setVisible(false);
-                        levelSelect.setVisible(false);
-                        newGame.setVisible(false);
+                load.setOnAction(event -> {
+                    //SoundEffects sound = new SoundEffects();
+                    //sound.initSoundEffects();
+                    sound.playHitButtonSound();
+                    // Set all Block nodes to be visible again
+                    for (Block block : blocks) {
+                        block.rect.setVisible(true);
                     }
+
+                    rect.setVisible(true);
+                    ball.setVisible(true);
+                    scoreLabel.setVisible(true);
+                    heartLabel.setVisible(true);
+                    levelLabel.setVisible(true);
+                    loadSaveManager.loadGame();
+
+                    back.setVisible(false);
+                    load.setVisible(false);
+                    levelSelect.setVisible(false);
+                    newGame.setVisible(false);
                 });
 
-                newGame.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        //SoundEffects sound = new SoundEffects();
-                        //sound.initSoundEffects();
-                        sound.playHitButtonSound();
-                        // Set all Block nodes to be visible again
-                        for (Block block : blocks) {
-                            block.rect.setVisible(true);
-                        }
+                newGame.setOnAction(event -> {
+                    sound.playHitButtonSound();
 
-                        rect.setVisible(true);
-                        ball.setVisible(true);
-                        scoreLabel.setVisible(true);
-                        heartLabel.setVisible(true);
-                        levelLabel.setVisible(true);
-
-                        engine = new GameEngine();
-                        engine.setOnAction(Main.this);
-                        engine.setFps(120);
-                        engine.start();
-
-                        load.setVisible(false);
-                        newGame.setVisible(false);
-                        levelSelect.setVisible(false);
-                        back.setVisible(false);
+                    for (Block block : blocks) {
+                        block.rect.setVisible(true);
                     }
+                    rect.setVisible(true);
+                    ball.setVisible(true);
+                    scoreLabel.setVisible(true);
+                    heartLabel.setVisible(true);
+                    levelLabel.setVisible(true);
+
+                    engine = new GameEngine();
+                    engine.setOnAction(Main.this);
+                    engine.setFps(120);
+                    engine.start();
+
+                    load.setVisible(false);
+                    newGame.setVisible(false);
+                    levelSelect.setVisible(false);
+                    back.setVisible(false);
                 });
-                levelSelect.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        //SoundEffects sound = new SoundEffects();
-                        //sound.initSoundEffects();
-                        sound.playHitButtonSound();
-                        // Set all Block nodes to be visible again
-                        for (Block block : blocks) {
-                            block.rect.setVisible(true);
-                        }
-
-                        rect.setVisible(true);
-                        ball.setVisible(true);
-                        scoreLabel.setVisible(true);
-                        heartLabel.setVisible(true);
-                        levelLabel.setVisible(true);
-                        switchToLevelSelectionPage();
-
-                        back.setVisible(false);
-                        load.setVisible(false);
-                        levelSelect.setVisible(false);
-                        newGame.setVisible(false);
+                levelSelect.setOnAction(event -> {
+                    //SoundEffects sound = new SoundEffects();
+                    //sound.initSoundEffects();
+                    sound.playHitButtonSound();
+                    // Set all Block nodes to be visible again
+                    for (Block block : blocks) {
+                        block.rect.setVisible(true);
                     }
+
+                    rect.setVisible(true);
+                    ball.setVisible(true);
+                    scoreLabel.setVisible(true);
+                    heartLabel.setVisible(true);
+                    levelLabel.setVisible(true);
+                    switchToLevelSelectionPage();
+
+                    back.setVisible(false);
+                    load.setVisible(false);
+                    levelSelect.setVisible(false);
+                    newGame.setVisible(false);
                 });
-                back.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        //SoundEffects sound = new SoundEffects();
-                        //sound.initSoundEffects();
-                        sound.playHitButtonSound();
-                        switchToMainMenuPage();
-                    }
+                back.setOnAction(event -> {
+                    //SoundEffects sound = new SoundEffects();
+                    //sound.initSoundEffects();
+                    sound.playHitButtonSound();
+                    switchToMainMenuPage();
                 });
             } else {
                 // Set all Block nodes to be visible again
@@ -442,19 +425,17 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     }
 
     public void togglePause(Scene gameScene) {
+
         isPaused = !isPaused;
 
         if (isPaused) {
-            engine.stop();
+            engine.pause();
             pauseMenu = new PauseMenu(this, gameScene);
             root.getChildren().add(pauseMenu);
             pauseMenu.setVisible(true);
 
         } else {
-            engine = new GameEngine();
-            engine.setOnAction(this);
-            engine.setFps(120);
-            engine.start();
+            engine.resume();
 
             if (pauseMenu != null) {
                 pauseMenu.setVisible(false);
@@ -546,7 +527,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     public boolean collideToTopBlock = false;
 
     public double vX = 2.000;
-    private double vY = 2.000;
+    private final double vY = 2.000;
 
     public void resetCollideFlags() {
 
@@ -575,7 +556,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             xBall -= vX;
         }
 
-        if (yBall <= 0 + ballRadius) {
+        if (yBall <= ballRadius) {
             resetCollideFlags();
             goDownBall = true;
             return;

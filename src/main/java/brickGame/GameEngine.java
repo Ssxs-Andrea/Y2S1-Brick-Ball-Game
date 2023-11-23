@@ -6,7 +6,7 @@ public class GameEngine {
 
     private OnAction onAction;
     private int fps = 60;
-    private AnimationTimer animationTimer;
+    private PausableAnimationTimer animationTimer;
     private long lastUpdateTime;
     private long time = 0;
 
@@ -26,7 +26,6 @@ public class GameEngine {
     }
 
     public void start() {
-        time = 0;
         Initialize();
         startGameLoop();
     }
@@ -35,33 +34,76 @@ public class GameEngine {
         animationTimer.stop();
     }
 
+    public void pause() {
+        animationTimer.pause();
+    }
+
+    public void resume() {
+        animationTimer.resume();
+    }
+
     private void startGameLoop() {
-        animationTimer = new AnimationTimer() {
+        animationTimer = new PausableAnimationTimer() {
             @Override
-            public void handle(long now) {
-                if (now - lastUpdateTime >= 1e9 / fps) {
-                    update(now);
-                    onAction.onPhysicsUpdate();
-                    onAction.onTime(time);
-                    lastUpdateTime = now;
-                    time++;
-                }
+            protected void update(long elapsedTime) {
+                onAction.onUpdate();
+                onAction.onPhysicsUpdate();
+            }
+
+            @Override
+            protected void onTime(long currentTime) {
+                onAction.onTime(currentTime);
+                System.out.println(currentTime);
             }
         };
         animationTimer.start();
     }
 
-    private void update(long now) {
-        onAction.onUpdate();
-    }
-
     public interface OnAction {
-        void onUpdate();
-
         void onInit();
+
+        void onUpdate();
 
         void onPhysicsUpdate();
 
         void onTime(long time);
+    }
+
+    private abstract class PausableAnimationTimer extends AnimationTimer {
+
+        private boolean isPaused = false;
+
+        public void pause() {
+            isPaused = true;
+        }
+
+        public void resume() {
+            isPaused = false;
+        }
+
+        @Override
+        public void handle(long now) {
+            if (!isPaused) {
+                if (lastUpdateTime == 0) {
+                    // Initialize lastUpdateTime on the first frame
+                    lastUpdateTime = now;
+                }
+
+                // Calculate elapsed time and update your game logic
+                long elapsedTime = now - lastUpdateTime;
+                update(elapsedTime);
+
+                // Update the time
+                onTime(time);
+                time++;
+
+                lastUpdateTime = now;
+            }
+        }
+
+        // Your update and onTime methods go here
+        protected abstract void update(long elapsedTime);
+
+        protected abstract void onTime(long time);
     }
 }

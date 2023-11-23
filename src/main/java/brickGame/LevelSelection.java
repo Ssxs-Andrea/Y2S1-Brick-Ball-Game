@@ -122,9 +122,7 @@ public class LevelSelection {
                 try {
                     main.vX = 1.000;
 
-                    if (main.engine!=null){
-                        main.engine.stop();
-                    }
+                    if (main.engine!=null) main.engine.stop();
 
                     main.resetCollideFlags();
                     main.goDownBall = true;
