@@ -107,6 +107,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        WindowsFocusManager focusManager = new WindowsFocusManager(this, primaryStage);
         loadSaveManager = new LoadSaveManager(this);
         this.primaryStage = primaryStage;
         backgroundMusic = new BackgroundMusic();
@@ -865,6 +866,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         });
     }
 
+    public Scene getGameScene() {
+        return gameScene;
+    }
     @Override
     public void onTime(long time) {
         this.time = time;

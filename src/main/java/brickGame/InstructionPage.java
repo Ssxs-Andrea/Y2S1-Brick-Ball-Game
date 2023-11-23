@@ -1,7 +1,5 @@
 package brickGame;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,6 +12,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import soundEffects.BackgroundMusic;
 import soundEffects.SoundEffects;
+
+import java.util.Objects;
 
 public class InstructionPage {
     private Scene scene; // Reference to the InstructionPage Scene
@@ -28,32 +28,28 @@ public class InstructionPage {
         VBox instructionsBox = getInstructionsBox();
 
         Button backButton = new Button("Back To Main Menu");
-        backButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                SoundEffects sound = new SoundEffects();
-                sound.initSoundEffects();
-                sound.playHitButtonSound();
-
-                main.switchToMainMenuPage();
-            }
+        backButton.setOnAction(event -> {
+            SoundEffects sound = new SoundEffects();
+            sound.initSoundEffects();
+            sound.playHitButtonSound();
+            main.switchToMainMenuPage();
         });
         backButton.setTranslateX(70);
 
         VBox vbox = new VBox(instructionsBox, backButton);
         scene = new Scene(vbox, 500, 700);
-        scene.getStylesheets().add(getClass().getResource("/instruction/instruction.css").toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/instruction/instruction.css")).toExternalForm());
         BackgroundMusic backgroundMusic = new BackgroundMusic();
         backgroundMusic.setupKeyEvents(scene);
     }
     private VBox getInstructionsBox() {
-        Image leftKeyImage = new Image(getClass().getResource("/instruction/arrow-left.png").toExternalForm());
-        Image rightKeyImage = new Image(getClass().getResource("/instruction/arrow-right.png").toExternalForm());
-        Image mouseImage = new Image(getClass().getResource("/instruction/click.png").toExternalForm());
-        Image rKeyImage = new Image(getClass().getResource("/instruction/letter-r.png").toExternalForm());
-        Image pKeyImage = new Image(getClass().getResource("/instruction/letter-p.png").toExternalForm());
-        Image sKeyImage = new Image(getClass().getResource("/instruction/letter-s.png").toExternalForm());
-        Image mKeyImage = new Image(getClass().getResource("/instruction/letter-m.png").toExternalForm());
+        Image leftKeyImage = new Image(Objects.requireNonNull(getClass().getResource("/instruction/arrow-left.png")).toExternalForm());
+        Image rightKeyImage = new Image(Objects.requireNonNull(getClass().getResource("/instruction/arrow-right.png")).toExternalForm());
+        Image mouseImage = new Image(Objects.requireNonNull(getClass().getResource("/instruction/click.png")).toExternalForm());
+        Image rKeyImage = new Image(Objects.requireNonNull(getClass().getResource("/instruction/letter-r.png")).toExternalForm());
+        Image pKeyImage = new Image(Objects.requireNonNull(getClass().getResource("/instruction/letter-p.png")).toExternalForm());
+        Image sKeyImage = new Image(Objects.requireNonNull(getClass().getResource("/instruction/letter-s.png")).toExternalForm());
+        Image mKeyImage = new Image(Objects.requireNonNull(getClass().getResource("/instruction/letter-m.png")).toExternalForm());
 
         ImageView leftKeyImageView = new ImageView(leftKeyImage);
         ImageView rightKeyImageView = new ImageView(rightKeyImage);

@@ -10,6 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import loadSave.LoadSaveRead;
+import soundEffects.BackgroundMusic;
 import soundEffects.SoundEffects;
 
 public class LevelSelection {
@@ -99,6 +100,8 @@ public class LevelSelection {
 
         scene = new Scene(container, 500, 700);
         scene.getStylesheets().add(getClass().getResource("/level-selection/level-selection.css").toExternalForm());
+        BackgroundMusic backgroundMusic = new BackgroundMusic();
+        backgroundMusic.setupKeyEvents(scene);
     }
 
 

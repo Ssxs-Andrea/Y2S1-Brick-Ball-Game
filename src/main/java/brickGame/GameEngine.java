@@ -9,6 +9,7 @@ public class GameEngine {
     private PausableAnimationTimer animationTimer;
     private long lastUpdateTime;
     private long time = 0;
+    private boolean isRunning = false;
 
     public void setOnAction(OnAction onAction) {
         this.onAction = onAction;
@@ -21,6 +22,10 @@ public class GameEngine {
         this.fps = fps;
     }
 
+    public boolean isRunning() {
+        return isRunning;
+    }
+
     private void Initialize() {
         onAction.onInit();
     }
@@ -28,10 +33,12 @@ public class GameEngine {
     public void start() {
         Initialize();
         startGameLoop();
+        isRunning = true;
     }
 
     public void stop() {
         animationTimer.stop();
+        isRunning = false;
     }
 
     public void pause() {
@@ -40,6 +47,7 @@ public class GameEngine {
 
     public void resume() {
         animationTimer.resume();
+        isRunning = true;
     }
 
     private void startGameLoop() {
@@ -53,7 +61,6 @@ public class GameEngine {
             @Override
             protected void onTime(long currentTime) {
                 onAction.onTime(currentTime);
-                System.out.println(currentTime);
             }
         };
         animationTimer.start();
@@ -101,7 +108,6 @@ public class GameEngine {
             }
         }
 
-        // Your update and onTime methods go here
         protected abstract void update(long elapsedTime);
 
         protected abstract void onTime(long time);
