@@ -13,9 +13,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import brickGame.BlockSerializable;
-import brickGame.Main;
 
-public class LoadSaveRead {
+public class ReadFile {
     public boolean          isExistHeartBlock;
     public boolean          isGoldStatus;
     public boolean          goDownBall;
@@ -42,7 +41,7 @@ public class LoadSaveRead {
     public double           vX;
     public ArrayList<BlockSerializable> blocks = new ArrayList<BlockSerializable>();
 
-    LoadSaveManager loadSave = new LoadSaveManager();
+    SaveGame loadSave = new SaveGame();
     public boolean doesSaveFileExist() {
         Path savePath = Paths.get(loadSave.getSavePath());
         //check if the file exists

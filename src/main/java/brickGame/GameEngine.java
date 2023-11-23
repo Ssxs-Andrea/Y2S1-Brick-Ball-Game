@@ -31,6 +31,7 @@ public class GameEngine {
     }
 
     public void start() {
+        time = 0;
         Initialize();
         startGameLoop();
         isRunning = true;

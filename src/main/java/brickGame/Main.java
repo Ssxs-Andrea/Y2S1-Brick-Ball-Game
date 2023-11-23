@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import loadSave.LoadSaveRead;
+import loadSave.ReadFile;
 import loadSave.LoadGame;
 import loadSave.SaveGame;
 import soundEffects.SoundEffects;
@@ -26,7 +26,8 @@ import soundEffects.BackgroundMusic;
 import initGame.InitBall;
 import initGame.InitBreak;
 import initGame.InitBoard;
-
+import highScore.HighScoreManager;
+import highScore.HighScorePage;
 
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
 
@@ -109,10 +110,10 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        this.primaryStage = primaryStage;
         WindowsFocusManager focusManager = new WindowsFocusManager(this, primaryStage);
         loadGame = new LoadGame(this);
         saveGame = new SaveGame(this);
-        this.primaryStage = primaryStage;
         backgroundMusic = new BackgroundMusic();
         backgroundMusic.playBackgroundMusic();
         highScoreManager = new HighScoreManager();
@@ -190,7 +191,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         if (!loadFromSave) {
             root.getChildren().addAll(rect, ball, scoreLabel, heartLabel, levelLabel, newGame, back);
             //add load to root if save file exists
-            LoadSaveRead loadSave = new LoadSaveRead();
+            ReadFile loadSave = new ReadFile();
             if (loadSave.doesSaveFileExist()) {
                 root.getChildren().add(load);
                 root.getChildren().add(levelSelect);
@@ -216,7 +217,15 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             backgroundMusic = new BackgroundMusic();
             backgroundMusic.setupKeyEvents(gameScene);
 
-            if (level == 1 && !fromMainMenu){
+
+
+            primaryStage.setTitle("Brick Ball Game");
+            primaryStage.getIcons().add(new Image("/game-elements/icon.png"));
+            primaryStage.setScene(gameScene);
+            primaryStage.setResizable(false);
+            primaryStage.show();
+
+            if (level == 1 && !fromMainMenu && !loadFromSave){
                 for (Block block : blocks) {
                     block.rect.setVisible(true);
                 }
@@ -238,12 +247,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 back.setVisible(false);
                 restartCertainLevel = false;
             }
-
-            primaryStage.setTitle("Brick Ball Game");
-            primaryStage.getIcons().add(new Image("/game-elements/icon.png"));
-            primaryStage.setScene(gameScene);
-            primaryStage.setResizable(false);
-            primaryStage.show();
 
             if (!loadFromSave) {
                 if (level > 1 && level < 18) {
@@ -281,8 +284,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     scoreLabel.setVisible(true);
                     heartLabel.setVisible(true);
                     levelLabel.setVisible(true);
-                    loadGame.loadGame();
 
+                    loadGame.loadGame();
 
                     back.setVisible(false);
                     load.setVisible(false);
@@ -313,8 +316,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     back.setVisible(false);
                 });
                 levelSelect.setOnAction(event -> {
-                    //SoundEffects sound = new SoundEffects();
-                    //sound.initSoundEffects();
                     sound.playHitButtonSound();
                     // Set all Block nodes to be visible again
                     for (Block block : blocks) {
@@ -334,23 +335,18 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     newGame.setVisible(false);
                 });
                 back.setOnAction(event -> {
-                    //SoundEffects sound = new SoundEffects();
-                    //sound.initSoundEffects();
                     sound.playHitButtonSound();
                     switchToMainMenuPage();
                 });
             } else {
-                // Set all Block nodes to be visible again
                 for (Block block : blocks) {
                     block.rect.setVisible(true);
                 }
-
                 rect.setVisible(true);
                 ball.setVisible(true);
                 scoreLabel.setVisible(true);
                 heartLabel.setVisible(true);
                 levelLabel.setVisible(true);
-
                 engine = new GameEngine();
                 engine.setOnAction(this);
                 engine.setFps(120);
@@ -575,16 +571,14 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 new Score().show(sceneWidth / 2, sceneHeight / 2, -1, this);
                 //game over
                 if (heart <= 0) {
+                    engine.stop();
                     highScoreManager.checkAndAddHighScore(score, this);
                     new Score().showGameOver(this);
-                    engine.stop();
                 }
             }
         }
 
         if (yBall >= yBreak - ballRadius) {
-
-            //System.out.println("Collide1");
             if (xBall + ballRadius >= xBreak && xBall - ballRadius <= xBreak + breakWidth) {
                 sound.playHitSliderSound();
                 hitTime = time;
@@ -595,15 +589,11 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 double relation = (xBall - centerBreakX) / (breakWidth / 2);
 
                 if (Math.abs(relation) <= 0.3) {
-                    //vX = 0;
                     vX = Math.abs(relation);
-                    //System.out.println("vX " + vX);
                 } else if (Math.abs(relation) > 0.3 && Math.abs(relation) <= 0.7) {
                     vX = (Math.abs(relation) * 1.5) + (level / 3.500);
-                    //System.out.println("vX " + vX);
                 } else {
                     vX = (Math.abs(relation) * 2) + (level / 3.500);
-                    //System.out.println("vX " + vX);
                 }
 
                 if (xBall - centerBreakX > 0) {
@@ -611,19 +601,16 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 } else {
                     collideToBreakAndMoveToRight = false;
                 }
-                //System.out.println("Collide2");
             }
         }
 
         if (xBall >= sceneWidth - ballRadius) {
             resetCollideFlags();
-            //vX = 1.000;
             collideToRightWall = true;
         }
 
         if (xBall <= 0 + ballRadius) {
             resetCollideFlags();
-            //vX = 1.000;
             collideToLeftWall = true;
         }
 

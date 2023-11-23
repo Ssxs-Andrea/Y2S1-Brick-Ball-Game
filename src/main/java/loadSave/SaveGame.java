@@ -18,6 +18,10 @@ public class SaveGame {
         this.main = main;
     }
 
+    public SaveGame() {
+
+    }
+
     public void saveGame() {
         new Thread(() -> {
             new File(savePathDir).mkdirs();
@@ -84,5 +88,9 @@ public class SaveGame {
             }
 
         }).start();
+    }
+
+    public String getSavePath() {
+        return savePath;
     }
 }

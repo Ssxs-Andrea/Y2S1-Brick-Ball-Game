@@ -15,7 +15,7 @@ public class LoadGame {
     }
 
     public void loadGame() {
-        LoadSaveRead loadSave = new LoadSaveRead();
+        ReadFile loadSave = new ReadFile();
         loadSave.read();
 
         main.isExistHeartBlock = loadSave.isExistHeartBlock;

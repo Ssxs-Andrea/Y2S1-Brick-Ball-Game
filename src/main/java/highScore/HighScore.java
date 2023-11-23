@@ -1,4 +1,4 @@
-package brickGame;
+package highScore;
 
 import java.io.Serializable;
 

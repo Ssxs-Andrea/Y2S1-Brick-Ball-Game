@@ -1,4 +1,4 @@
-package brickGame;
+package highScore;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -9,6 +9,7 @@ import java.util.Optional;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextInputDialog;
+import brickGame.Main;
 
 public class HighScoreManager {
     private static final int MAX_HIGH_SCORES = 3;

@@ -1,4 +1,4 @@
-package brickGame;
+package highScore;
 
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -13,6 +13,7 @@ import soundEffects.SoundEffects;
 
 import java.util.HashMap;
 import java.util.Map;
+import brickGame.Main;
 
 public class HighScorePage {
     private Scene scene; // Reference to the HighScorePage Scene

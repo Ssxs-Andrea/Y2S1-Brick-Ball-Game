@@ -9,9 +9,10 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import loadSave.LoadSaveRead;
+
 import soundEffects.BackgroundMusic;
 import soundEffects.SoundEffects;
+import loadSave.ReadFile;
 
 public class LevelSelection {
     private Scene scene;
@@ -31,7 +32,7 @@ public class LevelSelection {
         VBox levelButtons = new VBox(10);
         levelButtons.setAlignment(Pos.CENTER);
 
-        LoadSaveRead loadSave = new LoadSaveRead();
+        ReadFile loadSave = new ReadFile();
         loadSave.read();
 
         Text titleText = new Text("Select a Level" );
