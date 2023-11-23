@@ -3,6 +3,7 @@ package brickGame;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
+import soundEffects.SoundEffects;
 
 
 public class PauseMenu extends StackPane {
@@ -28,17 +29,26 @@ public class PauseMenu extends StackPane {
         mainMenuButton.setTranslateY(390);
 
         resumeButton.setOnAction(event -> {
+            SoundEffects sound = new SoundEffects();
+            sound.initSoundEffects();
+            sound.playHitButtonSound();
             main.togglePause(scene);
             setVisible(false);
         });
 
         restartButton.setOnAction(event -> {
+            SoundEffects sound = new SoundEffects();
+            sound.initSoundEffects();
+            sound.playHitButtonSound();
             main.togglePause(scene);
             main.restartLevel(main.getLevel(),main.getHeart(),main.getScore());
             setVisible(false);
         });
 
         mainMenuButton.setOnAction(event -> {
+            SoundEffects sound = new SoundEffects();
+            sound.initSoundEffects();
+            sound.playHitButtonSound();
             main.switchToMainMenuPage();
             setVisible(false);
         });

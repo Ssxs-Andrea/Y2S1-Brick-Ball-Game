@@ -52,6 +52,9 @@ public class LevelSelection {
             levelButton1.getStyleClass().add("button");
             int level1 = i;
             levelButton1.setOnAction(event -> {
+                SoundEffects sound = new SoundEffects();
+                sound.initSoundEffects();
+                sound.playHitButtonSound();
                 setSelectedLevel(level1);
                 playLevel(level1 - 1 ,3, 0);
                 main.initializeNewGame(false);
@@ -64,6 +67,9 @@ public class LevelSelection {
                 levelButton1.getStyleClass().add("button");
                 int level2 = i + 1;
                 levelButton2.setOnAction(event -> {
+                    SoundEffects sound = new SoundEffects();
+                    sound.initSoundEffects();
+                    sound.playHitButtonSound();
                     setSelectedLevel(level2);
                     playLevel(level2 - 1 ,3, 0);
                     main.initializeNewGame(false);

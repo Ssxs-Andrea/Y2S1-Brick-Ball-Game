@@ -97,7 +97,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     Button levelSelect = null;
     private LevelSelection levelSelection;
 
-    private boolean restartCertainLevel = false;
+    public boolean restartCertainLevel = false;
     public int saveHeart = 3;
     public int saveScore = 0;
     private boolean isPaused = false;
@@ -214,6 +214,29 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             backgroundMusic = new BackgroundMusic();
             backgroundMusic.setupKeyEvents(gameScene);
 
+            if (level == 1 && !fromMainMenu){
+                for (Block block : blocks) {
+                    block.rect.setVisible(true);
+                }
+
+                rect.setVisible(true);
+                ball.setVisible(true);
+                scoreLabel.setVisible(true);
+                heartLabel.setVisible(true);
+                levelLabel.setVisible(true);
+
+                engine = new GameEngine();
+                engine.setOnAction(Main.this);
+                engine.setFps(120);
+                engine.start();
+
+                load.setVisible(false);
+                newGame.setVisible(false);
+                levelSelect.setVisible(false);
+                back.setVisible(false);
+                restartCertainLevel = false;
+            }
+
             primaryStage.setTitle("Brick Ball Game");
             primaryStage.getIcons().add(new Image("/game-elements/icon.png"));
             primaryStage.setScene(gameScene);
@@ -245,6 +268,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 load.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
+                        //SoundEffects sound = new SoundEffects();
+                        //sound.initSoundEffects();
+                        sound.playHitButtonSound();
                         // Set all Block nodes to be visible again
                         for (Block block : blocks) {
                             block.rect.setVisible(true);
@@ -267,6 +293,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 newGame.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
+                        //SoundEffects sound = new SoundEffects();
+                        //sound.initSoundEffects();
+                        sound.playHitButtonSound();
                         // Set all Block nodes to be visible again
                         for (Block block : blocks) {
                             block.rect.setVisible(true);
@@ -292,6 +321,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 levelSelect.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
+                        //SoundEffects sound = new SoundEffects();
+                        //sound.initSoundEffects();
+                        sound.playHitButtonSound();
                         // Set all Block nodes to be visible again
                         for (Block block : blocks) {
                             block.rect.setVisible(true);
@@ -313,6 +345,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 back.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
+                        //SoundEffects sound = new SoundEffects();
+                        //sound.initSoundEffects();
+                        sound.playHitButtonSound();
                         switchToMainMenuPage();
                     }
                 });
@@ -556,7 +591,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 if (heart <= 0) {
                     highScoreManager.checkAndAddHighScore(score, this);
                     new Score().showGameOver(this);
-
                     engine.stop();
                 }
             }

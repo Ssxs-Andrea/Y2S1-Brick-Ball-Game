@@ -3,6 +3,7 @@ package brickGame;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import soundEffects.SoundEffects;
 
 public class Score {
     public void show(final double x, final double y, int score, final Main main) {
@@ -76,11 +77,24 @@ public class Score {
             restart.setTranslateX(70);
             restart.setTranslateY(300);
             restart.setOnAction(event -> {
+                SoundEffects sound = new SoundEffects();
+                sound.initSoundEffects();
+                sound.playHitButtonSound();
                 RestartGame restartGame = new RestartGame();
                 restartGame.restartGame(main);
+
+            });
+            Button mainMenu = new Button("Main Menu");
+            mainMenu.setTranslateX(70);
+            mainMenu.setTranslateY(370);
+            mainMenu.setOnAction(event -> {
+                SoundEffects sound = new SoundEffects();
+                sound.initSoundEffects();
+                sound.playHitButtonSound();
+                main.switchToMainMenuPage();
             });
 
-                main.root.getChildren().addAll(label, restart);
+                main.root.getChildren().addAll(label, restart, mainMenu);
 
         });
     }
@@ -96,8 +110,15 @@ public class Score {
             Button mainMenu = new Button("Main Menu");
             mainMenu.setTranslateX(70);
             mainMenu.setTranslateY(300);
+
+            mainMenu.setOnAction(event -> {
+                SoundEffects sound = new SoundEffects();
+                sound.initSoundEffects();
+                sound.playHitButtonSound();
+                main.switchToMainMenuPage();
+            });
+            main.root.getChildren().clear();
             main.root.getChildren().addAll(label,mainMenu);
-            mainMenu.setOnAction(event -> main.switchToMainMenuPage());
         });
     }
 }
