@@ -1,6 +1,6 @@
 package brickGame;
 
-import highScore.HighScoreController;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -18,15 +18,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import highScore.HighScoreController;
 import loadSave.ReadFile;
 import loadSave.LoadGame;
 import loadSave.SaveGame;
+import mainMenu.MainMenuController;
 import soundEffects.SoundEffects;
 import soundEffects.BackgroundMusic;
 import initGame.InitBall;
 import initGame.InitBreak;
 import initGame.InitBoard;
-
 
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
     private GameState gameState;
@@ -60,6 +61,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private SaveGame saveGame;
     private BreakMovementHandler movementHandler;
     private HighScoreController highScoreController;
+    private MainMenuController mainMenuController;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -262,10 +264,10 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         primaryStage.show();
     }
     public void switchToMainMenuPage() {
-        MainMenuPage mainMenuScene = new MainMenuPage(this);
+        mainMenuController = new MainMenuController(this);
         primaryStage.setTitle("Brick Ball Game");
         primaryStage.getIcons().add(new Image("/game-elements/icon.png"));
-        primaryStage.setScene(mainMenuScene.getScene());
+        primaryStage.setScene(mainMenuController.getMainMenuView().getScene());
         primaryStage.setResizable(false);
         primaryStage.show();
     }
