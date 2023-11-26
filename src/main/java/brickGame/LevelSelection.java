@@ -18,8 +18,10 @@ public class LevelSelection {
     private Scene scene;
     private Main main;
     private int selectedLevel;
+    private GameState gameState;
 
-    public LevelSelection(Main main) {
+    public LevelSelection(Main main, GameState gameState) {
+        this.gameState = gameState;
         this.main = main;
         init();
     }
@@ -92,7 +94,6 @@ public class LevelSelection {
                 SoundEffects sound = new SoundEffects();
                 sound.initSoundEffects();
                 sound.playHitButtonSound();
-
                 main.switchToMainMenuPage();
             }
         });
@@ -114,38 +115,35 @@ public class LevelSelection {
         selectedLevel = level;
     }
 
-    public void playLevel(int level,int heart,int score) {
-        main.level = level-1;
-        main.heart = heart;
-        main.score = score;
-        main.saveScore = score;
-        main.saveHeart = heart;
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    main.vX = 1.000;
+    public void playLevel(int level, int heart, int score) {
+        gameState.setLevel(level - 1);
+        gameState.setHeart(heart);
+        gameState.setScore(score);
+        gameState.setSaveScore(score);
+        gameState.setSaveHeart(heart);
 
-                    if (main.engine!=null) main.engine.stop();
+        Platform.runLater(() -> {
+            try {
+                gameState.setvX(1.000);
 
-                    main.resetCollideFlags();
-                    main.goDownBall = true;
+                if (main.engine != null) main.engine.stop();
 
-                    main.isGoldStatus = false;
-                    main.isExistHeartBlock = false;
+                main.resetCollideFlags();
+                gameState.setGoDownBall(true);
 
-                    main.hitTime = 0;
-                    main.time = 0;
-                    main.goldTime = 0;
+                gameState.setGoldStatus(false);
+                gameState.setExistHeartBlock(false);
 
-                    main.blocks.clear();
-                    main.chocos.clear();
-                    main.destroyedBlockCount = 0;
-                    main.initializeNewGame(false);
+                gameState.setTime(0);
+                gameState.setGoldTime(0);
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                gameState.getBlocks().clear();
+                gameState.getChocos().clear();
+                gameState.setDestroyedBlockCount(0);
+                main.initializeNewGame(false);
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }

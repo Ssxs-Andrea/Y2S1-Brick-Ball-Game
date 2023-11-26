@@ -5,18 +5,19 @@ import java.util.Random;
 
 import brickGame.Block;
 import javafx.scene.paint.Color;
-import brickGame.Main;
+import brickGame.GameState;
 
 public class InitBoard {
-    private Main main;
+    private GameState gameState;
 
-    public InitBoard(Main main) {
-        this.main = main;
+    public InitBoard(GameState gameState) {
+        this.gameState = gameState;
     }
 
-
-    public ArrayList<Block> initBoard(int level, boolean isExistHeartBlock, Color[] colors) {
+    public ArrayList<Block> initBoard() {
         ArrayList<Block> blocks = new ArrayList<>();
+
+        int level = gameState.getLevel();
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < level + 1; j++) {
@@ -28,9 +29,9 @@ public class InitBoard {
                 if (r % 10 == 1) {
                     type = Block.BLOCK_CHOCO;
                 } else if (r % 10 == 2) {
-                    if (!isExistHeartBlock) {
+                    if (!gameState.isExistHeartBlock()) {
                         type = Block.BLOCK_HEART;
-                        isExistHeartBlock = true;
+                        gameState.setExistHeartBlock(true);
                     } else {
                         type = Block.BLOCK_NORMAL;
                     }
@@ -39,7 +40,7 @@ public class InitBoard {
                 } else {
                     type = Block.BLOCK_NORMAL;
                 }
-                blocks.add(new Block(j, i, colors[r % (colors.length)], type));
+                blocks.add(new Block(j, i, gameState.getColors()[r % (gameState.getColors().length)], type));
             }
         }
 

@@ -4,11 +4,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import soundEffects.SoundEffects;
-
-
 public class PauseMenu extends StackPane {
 
-    public PauseMenu(Main main, Scene scene) {
+    public PauseMenu(Main main, Scene scene, GameState gameState) {
 
         Button resumeButton = new Button("Resume");
         resumeButton.getStyleClass().add("button");
@@ -32,7 +30,8 @@ public class PauseMenu extends StackPane {
             SoundEffects sound = new SoundEffects();
             sound.initSoundEffects();
             sound.playHitButtonSound();
-            main.togglePause(scene);
+            TogglePause togglePause = new TogglePause(scene, main);
+            togglePause.togglePause();
             setVisible(false);
         });
 
@@ -40,8 +39,10 @@ public class PauseMenu extends StackPane {
             SoundEffects sound = new SoundEffects();
             sound.initSoundEffects();
             sound.playHitButtonSound();
-            main.togglePause(scene);
-            main.restartLevel(main.getLevel(),main.getHeart(),main.getScore());
+            TogglePause togglePause = new TogglePause(scene, main);
+            togglePause.togglePause();
+            RestartLevel restartLevel = new RestartLevel(gameState,main);
+            restartLevel.restartLevel(gameState.getLevel(),gameState.getHeart(),gameState.getScore());
             setVisible(false);
         });
 

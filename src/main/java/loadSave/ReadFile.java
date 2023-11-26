@@ -4,9 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-
-
-//import packages for files and paths
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;

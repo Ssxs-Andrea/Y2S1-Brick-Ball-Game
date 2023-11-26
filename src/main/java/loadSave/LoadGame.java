@@ -2,15 +2,20 @@ package loadSave;
 
 import brickGame.Block;
 import brickGame.BlockSerializable;
+import brickGame.GameState;
 import brickGame.Main;
 
 import java.util.Random;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class LoadGame {
 
+    private GameState gameState;
     private Main main;
 
-    public LoadGame(Main main) {
+    public LoadGame(GameState gameState, Main main) {
+        this.gameState = gameState;
         this.main = main;
     }
 
@@ -18,44 +23,46 @@ public class LoadGame {
         ReadFile loadSave = new ReadFile();
         loadSave.read();
 
-        main.isExistHeartBlock = loadSave.isExistHeartBlock;
-        main.isGoldStatus = loadSave.isGoldStatus;
-        main.goDownBall = loadSave.goDownBall;
-        main.goRightBall = loadSave.goRightBall;
-        main.collideToBreak = loadSave.collideToBreak;
-        main.collideToBreakAndMoveToRight = loadSave.collideToBreakAndMoveToRight;
-        main.collideToRightWall = loadSave.collideToRightWall;
-        main.collideToLeftWall = loadSave.collideToLeftWall;
-        main.collideToRightBlock = loadSave.collideToRightBlock;
-        main.collideToBottomBlock = loadSave.collideToBottomBlock;
-        main.collideToLeftBlock = loadSave.collideToLeftBlock;
-        main.collideToTopBlock = loadSave.collideToTopBlock;
-        main.level = loadSave.level;
-        main.score = loadSave.score;
-        main.heart = loadSave.heart;
-        main.destroyedBlockCount = loadSave.destroyedBlockCount;
-        main.xBall = loadSave.xBall;
-        main.yBall = loadSave.yBall;
-        main.xBreak = loadSave.xBreak;
-        main.yBreak = loadSave.yBreak;
-        main.centerBreakX = loadSave.centerBreakX;
-        main.time = loadSave.time;
-        main.goldTime = loadSave.goldTime;
-        main.vX = loadSave.vX;
+        gameState.setExistHeartBlock(loadSave.isExistHeartBlock);
+        gameState.setGoldStatus(loadSave.isGoldStatus);
+        gameState.setGoDownBall(loadSave.goDownBall);
+        gameState.setGoRightBall(loadSave.goRightBall);
+        gameState.setCollideToBreak(loadSave.collideToBreak);
+        gameState.setCollideToBreakAndMoveToRight(loadSave.collideToBreakAndMoveToRight);
+        gameState.setCollideToRightWall(loadSave.collideToRightWall);
+        gameState.setCollideToLeftWall(loadSave.collideToLeftWall);
+        gameState.setCollideToRightBlock(loadSave.collideToRightBlock);
+        gameState.setCollideToBottomBlock(loadSave.collideToBottomBlock);
+        gameState.setCollideToLeftBlock(loadSave.collideToLeftBlock);
+        gameState.setCollideToTopBlock(loadSave.collideToTopBlock);
+        gameState.setLevel(loadSave.level);
+        gameState.setScore(loadSave.score);
+        gameState.setHeart(loadSave.heart);
+        gameState.setDestroyedBlockCount(loadSave.destroyedBlockCount);
+        gameState.setxBall(loadSave.xBall);
+        gameState.setyBall(loadSave.yBall);
+        gameState.setxBreak(loadSave.xBreak);
+        gameState.setyBreak(loadSave.yBreak);
+        gameState.setCenterBreakX(loadSave.centerBreakX);
+        gameState.setTime(loadSave.time);
+        gameState.setGoldTime(loadSave.goldTime);
+        gameState.setvX(loadSave.vX);
 
-        main.blocks.clear();
-        main.chocos.clear();
+        gameState.setBlocks(new ArrayList<>());
+        gameState.setChocos(new ArrayList<>());
 
-        main.saveScore = loadSave.score;
-        main.saveHeart = loadSave.heart;
+        gameState.setSaveScore(loadSave.score);
+        gameState.setSaveHeart(loadSave.heart);
 
         for (BlockSerializable ser : loadSave.blocks) {
             int r = new Random().nextInt(200);
-            main.blocks.add(new Block(ser.row, ser.j, main.colors[r % main.colors.length], ser.type));
+            gameState.setBlocks(loadSave.blocks.stream()
+                    .map(blockSerializable -> new Block(blockSerializable.row, blockSerializable.j, gameState.getColors()[new Random().nextInt(200) % gameState.getColors().length], blockSerializable.type))
+                    .collect(Collectors.toCollection(ArrayList::new)));
         }
 
         try {
-            main.loadFromSave = true;
+            gameState.setLoadFromSave(true);
             main.initializeNewGame(false);
         } catch (Exception e) {
             e.printStackTrace();

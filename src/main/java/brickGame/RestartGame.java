@@ -1,25 +1,31 @@
 package brickGame;
 
 public class RestartGame {
+    private GameState gameState;
+    private Main main;
 
-    public void restartGame(Main main) {
+    public RestartGame(GameState gameState, Main main) {
+        this.main = main;
+        this.gameState = gameState;
+    }
+
+    public void restartGame() {
         try {
-            main.level = 0;
-            main.heart = 3;
-            main.score = 0;
-            main.vX = 1.000;
-            main.destroyedBlockCount = 0;
+            gameState.setLevel(0);
+            gameState.setHeart(3);
+            gameState.setScore(0);
+            gameState.setvX(1.000);
+            gameState.setDestroyedBlockCount(0);
             main.resetCollideFlags();
-            main.goDownBall = true;
+            gameState.setGoDownBall(true);
 
-            main.isGoldStatus = false;
-            main.isExistHeartBlock = false;
-            main.hitTime = 0;
-            main.time = 0;
-            main.goldTime = 0;
+            gameState.setGoldStatus(false);
+            gameState.setExistHeartBlock(false);
+            gameState.setTime(0);
+            gameState.setGoldTime(0);
 
-            main.blocks.clear();
-            main.chocos.clear();
+            gameState.getBlocks().clear();
+            gameState.getChocos().clear();
 
             main.initializeNewGame(true);
         } catch (Exception e) {

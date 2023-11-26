@@ -80,8 +80,8 @@ public class Score {
                 SoundEffects sound = new SoundEffects();
                 sound.initSoundEffects();
                 sound.playHitButtonSound();
-                RestartGame restartGame = new RestartGame();
-                restartGame.restartGame(main);
+                RestartGame restartGame = new RestartGame(main.getGameState(),main);
+                restartGame.restartGame();
 
             });
             Button mainMenu = new Button("Main Menu");

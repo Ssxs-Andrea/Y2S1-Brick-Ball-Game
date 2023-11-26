@@ -40,7 +40,7 @@ public class Block implements Serializable {
     public static int BLOCK_CHOCO = 100;
     public static int BLOCK_STAR = 101;
     public static int BLOCK_HEART = 102;
-    public int ballRadius = 10;
+    private int ballRadius = 10;
     private double epsilon = 0.01 * height;
 
 
