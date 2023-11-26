@@ -1,5 +1,6 @@
 package brickGame;
 
+import highScore.HighScoreController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -25,8 +26,7 @@ import soundEffects.BackgroundMusic;
 import initGame.InitBall;
 import initGame.InitBreak;
 import initGame.InitBoard;
-import highScore.HighScoreManager;
-import highScore.HighScorePage;
+
 
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
     private GameState gameState;
@@ -58,12 +58,12 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private Scene gameScene;
     private LoadGame loadGame;
     private SaveGame saveGame;
-    private HighScoreManager highScoreManager;
     private BreakMovementHandler movementHandler;
+    private HighScoreController highScoreController;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        highScoreManager = new HighScoreManager();
+
         gameState = new GameState();
         this.primaryStage = primaryStage;
         WindowsFocusManager focusManager = new WindowsFocusManager(this, primaryStage);
@@ -71,7 +71,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         saveGame = new SaveGame(this,gameState);
         backgroundMusic = new BackgroundMusic();
         backgroundMusic.playBackgroundMusic();
-        highScoreManager = new HighScoreManager();
         switchToMainMenuPage();
     }
 
@@ -103,7 +102,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
             if (gameState.getLevel() == 18 && !restartCertainLevel) {
                 root.getChildren().clear();
-                highScoreManager.checkAndAddHighScore(gameState.getScore(), this);
+                highScoreController = new HighScoreController(this);
+                highScoreController.checkAndAddHighScore(gameState.getScore());
                 new Score().showWin(this);
                 return;
             }
@@ -253,11 +253,11 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         primaryStage.setResizable(false);
         primaryStage.show();
     }
-    public void switchToHighScorePage() {
-        HighScorePage highScoreScene = new HighScorePage(this);
+    public void switchToHighScoreView() {
+        HighScoreController highScoreController = new HighScoreController(this);
         primaryStage.setTitle("Brick Ball Game");
         primaryStage.getIcons().add(new Image("/game-elements/icon.png"));
-        primaryStage.setScene(highScoreScene.getScene());
+        primaryStage.setScene(highScoreController.getHighScoreView().getScene());
         primaryStage.setResizable(false);
         primaryStage.show();
     }
@@ -368,7 +368,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 //game over
                 if (gameState.getHeart() <= 0) {
                     engine.stop();
-                    highScoreManager.checkAndAddHighScore(gameState.getScore(), this);
+                    highScoreController = new HighScoreController(this);
+                    highScoreController.checkAndAddHighScore(gameState.getScore());
                     new Score().showGameOver(this);
                 }
             }
@@ -407,7 +408,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             gameState.setCollideToRightWall(true);
         }
 
-        if (gameState.getxBall() <= 0 + gameState.getBallRadius()) {
+        if (gameState.getxBall() <= gameState.getBallRadius()) {
             resetCollideFlags();
             gameState.setCollideToLeftWall(true);
         }
@@ -464,8 +465,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
             rect.setX((gameState.getxBreak()));
             rect.setY(gameState.getyBreak());
-            //gameState.getRect().setX(gameState.getxBreak());
-            //gameState.getRect().setY(gameState.getyBreak());
             gameState.getBall().setCenterX(gameState.getxBall());
             gameState.getBall().setCenterY(gameState.getyBall());
 

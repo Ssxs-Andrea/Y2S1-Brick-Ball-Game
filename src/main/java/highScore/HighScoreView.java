@@ -8,41 +8,27 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import soundEffects.BackgroundMusic;
-import soundEffects.SoundEffects;
-
 import java.util.HashMap;
 import java.util.Map;
-import brickGame.Main;
 
-public class HighScorePage {
-    private Scene scene; // Reference to the HighScorePage Scene
-    private Main main; // Reference to the Main class for scene switching
+public class HighScoreView {
+    private Scene scene;
+    private Button backButton;
 
-    public HighScorePage(Main main) {
-        this.main = main;
+    public HighScoreView() {
         init();
     }
 
     private void init() {
         VBox highScoresBox = getHighScoresBox();
 
-        Button backButton = new Button("Back To Main Menu");
+        backButton = new Button("Back To Main Menu");
         backButton.getStyleClass().add("button");
-        backButton.setOnAction(event -> {
-            SoundEffects sound = new SoundEffects();
-            sound.initSoundEffects();
-            sound.playHitButtonSound();
-
-            main.switchToMainMenuPage();
-        });
         backButton.setTranslateX(70);
 
         VBox vbox = new VBox(highScoresBox, backButton);
         scene = new Scene(vbox, 500, 700);
         scene.getStylesheets().add(getClass().getResource("/high-score/high-score.css").toExternalForm());
-        BackgroundMusic backgroundMusic = new BackgroundMusic();
-        backgroundMusic.setupKeyEvents(scene);
     }
 
     private VBox getHighScoresBox() {
@@ -88,7 +74,6 @@ public class HighScorePage {
 
                 Label scoreLabel = createLabelWithImage(entryImageView, entry);
                 highScoresContent.getChildren().add(scoreLabel);
-
                 counter++;
             }
         }
@@ -98,7 +83,6 @@ public class HighScorePage {
 
         return highScoresBox;
     }
-
 
     private Label createLabelWithImage(ImageView imageView, String text) {
 
@@ -119,4 +103,8 @@ public class HighScorePage {
     public Scene getScene() {
         return scene;
     }
+    public Button getBackButton() {
+        return backButton;
+    }
+
 }

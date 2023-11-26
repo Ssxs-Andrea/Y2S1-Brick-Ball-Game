@@ -76,7 +76,7 @@ public class MainMenuPage {
                 sound.initSoundEffects();
                 sound.playHitButtonSound();
 
-                main.switchToHighScorePage();
+                main.switchToHighScoreView();
             }
         });
 

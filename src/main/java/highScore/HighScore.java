@@ -3,7 +3,7 @@ package highScore;
 import java.io.Serializable;
 
 public class HighScore implements Serializable {
-    private static final long serialVersionUID = 1L; // Add this line in your HighScore class
+    private static final long serialVersionUID = 1L;
 
     private String playerName;
     private int score;
@@ -15,10 +15,6 @@ public class HighScore implements Serializable {
 
     public String getPlayerName() {
         return playerName;
-    }
-
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
     }
 
     public int getScore() {
