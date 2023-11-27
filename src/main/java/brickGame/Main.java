@@ -19,6 +19,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import highScore.HighScoreController;
+import instruction.InstructionController;
 import loadSave.ReadFile;
 import loadSave.LoadGame;
 import loadSave.SaveGame;
@@ -227,6 +228,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             gameState.setLoadFromSave(false);
         }
     }
+
     private void setGameElementsVisible(){
         for (Block block : gameState.getBlocks()) block.rect.setVisible(true);
         rect.setVisible(true);
@@ -248,10 +250,10 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         engine.start();
     }
     public void switchToInstructionPage() {
-        InstructionPage instructionScene = new InstructionPage(this);
+        InstructionController instructionController = InstructionController.createInstructionPage(this);
         primaryStage.setTitle("Brick Ball Game");
         primaryStage.getIcons().add(new Image("/game-elements/icon.png"));
-        primaryStage.setScene(instructionScene.getScene());
+        primaryStage.setScene(instructionController.getScene());
         primaryStage.setResizable(false);
         primaryStage.show();
     }
