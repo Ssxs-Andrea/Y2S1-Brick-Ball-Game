@@ -1,5 +1,8 @@
-package brickGame;
+package levelLogic;
 
+import ballMovement.CollisionFlagsResetter;
+import brickGame.GameState;
+import brickGame.Main;
 import javafx.application.Platform;
 
 public class NextLevel {
@@ -18,7 +21,7 @@ public class NextLevel {
         Platform.runLater(() -> {
             try {
                 gameState.setvX(1.000);
-                main.resetCollideFlags();
+                CollisionFlagsResetter.resetCollideFlags(gameState);
                 gameState.setGoDownBall(true);
 
                 gameState.setGoldStatus(false);

@@ -1,4 +1,8 @@
-package brickGame;
+package levelLogic;
+
+import ballMovement.CollisionFlagsResetter;
+import brickGame.GameState;
+import brickGame.Main;
 
 public class RestartGame {
     private GameState gameState;
@@ -16,7 +20,7 @@ public class RestartGame {
             gameState.setScore(0);
             gameState.setvX(1.000);
             gameState.setDestroyedBlockCount(0);
-            main.resetCollideFlags();
+            CollisionFlagsResetter.resetCollideFlags(gameState);
             gameState.setGoDownBall(true);
 
             gameState.setGoldStatus(false);

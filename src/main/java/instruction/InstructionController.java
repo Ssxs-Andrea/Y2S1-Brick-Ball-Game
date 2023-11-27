@@ -2,6 +2,7 @@ package instruction;
 
 import javafx.scene.Scene;
 import brickGame.Main;
+import soundEffects.SoundEffects;
 
 public class InstructionController {
     private InstructionView view;
@@ -14,7 +15,13 @@ public class InstructionController {
     }
 
     private void setupActions() {
-        view.getBackButton().setOnAction(event -> main.switchToMainMenuPage());
+
+        view.getBackButton().setOnAction(event -> {
+            SoundEffects sound = new SoundEffects();
+            sound.initSoundEffects();
+            sound.playHitButtonSound();
+            main.switchToMainMenuPage();
+        });
     }
 
     public Scene getScene() {

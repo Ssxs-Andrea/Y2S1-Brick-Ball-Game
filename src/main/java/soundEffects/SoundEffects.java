@@ -44,20 +44,20 @@ public class SoundEffects {
     }
 
     public void playHitBlockSound() {
-        hitBlockSound.stop(); //stop in case it's already playing
+        hitBlockSound.stop();
         hitBlockSound.play();
     }
 
     public void playHitSliderSound() {
-        hitSliderSound.stop(); //stop in case it's already playing
+        hitSliderSound.stop();
         hitSliderSound.play();
     }
     public void playHitBonusSound() {
-        hitBonusSound.stop(); //stop in case it's already playing
+        hitBonusSound.stop();
         hitBonusSound.play();
     }
     public void playHitButtonSound() {
-        hitButtonSound.stop(); //stop in case it's already playing
+        hitButtonSound.stop();
         hitButtonSound.play();
     }
 

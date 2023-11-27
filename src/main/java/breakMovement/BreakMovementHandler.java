@@ -1,4 +1,6 @@
-package brickGame;
+package breakMovement;
+
+import brickGame.GameState;
 
 public class BreakMovementHandler {
     private static final int LEFT = -1;

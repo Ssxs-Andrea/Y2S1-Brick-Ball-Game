@@ -34,7 +34,7 @@ public class BackgroundMusic {
         backgroundMusicPlayer.play();
     }
 
-    public void adjustVolume(double volume) {
+    private void adjustVolume(double volume) {
         if (backgroundMusicPlayer != null) {
             backgroundMusicPlayer.setVolume(volume);
             isMuted = volume == 0.0;
@@ -44,7 +44,7 @@ public class BackgroundMusic {
         }
     }
 
-    public void toggleMute() {
+    private void toggleMute() {
         if (backgroundMusicPlayer != null) {
             if (isMuted) {
                 backgroundMusicPlayer.setVolume(previousVolume);

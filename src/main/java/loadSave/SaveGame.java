@@ -1,6 +1,7 @@
 package loadSave;
 
 import brickGame.*;
+import displayUi.MessageLabelAnimator;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -68,7 +69,8 @@ public class SaveGame {
 
                 outputStream.writeObject(blockSerializables);
 
-                new Score().showMessage("Game Saved", main);
+                //new Score().showMessage("Game Saved", main);
+                MessageLabelAnimator.animateMessageLabel("Game Saved", main);
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

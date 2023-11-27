@@ -1,5 +1,6 @@
-package brickGame;
+package breakMovement;
 
+import brickGame.GameState;
 import javafx.application.Platform;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;

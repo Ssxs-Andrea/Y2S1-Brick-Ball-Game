@@ -1,6 +1,12 @@
 package brickGame;
 
-
+import ballMovement.BallPhysicsHandler;
+import ballMovement.CollisionFlagsResetter;
+import breakMovement.BreakMovementHandler;
+import breakMovement.MouseDragHandler;
+import displayUi.EndGameDisplay;
+import displayUi.MessageLabelAnimator;
+import displayUi.ScoreLabelAnimator;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -20,10 +26,15 @@ import java.util.List;
 
 import highScore.HighScoreController;
 import instruction.InstructionController;
+import levelLogic.NextLevel;
+import levelLogic.RestartLevel;
+import levelSelect.LevelSelectionController;
 import loadSave.ReadFile;
 import loadSave.LoadGame;
 import loadSave.SaveGame;
 import mainMenu.MainMenuController;
+import pauseGame.PauseHandler;
+import pauseGame.WindowsFocusManager;
 import soundEffects.SoundEffects;
 import soundEffects.BackgroundMusic;
 import initGame.InitBall;
@@ -32,7 +43,6 @@ import initGame.InitBoard;
 
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
     private GameState gameState;
-
     private Circle ball;
     private Rectangle rect;
 
@@ -55,14 +65,14 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     Button levelSelect = null;
 
     public static boolean restartCertainLevel = false;
-    public boolean isPaused = false; //use setter
-    private PauseMenu pauseMenu;
     private Scene gameScene;
     private LoadGame loadGame;
     private SaveGame saveGame;
     private BreakMovementHandler movementHandler;
     private HighScoreController highScoreController;
     private MainMenuController mainMenuController;
+    private PauseHandler pauseHandler;
+    private BallPhysicsHandler ballPhysicsHandler;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -75,6 +85,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         backgroundMusic = new BackgroundMusic();
         backgroundMusic.playBackgroundMusic();
         switchToMainMenuPage();
+
+        pauseHandler = new PauseHandler(this);
+
     }
 
     public void initializeNewGame(boolean fromMainMenu) {
@@ -90,7 +103,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             if (blocks != null) blocks.clear();
         }
         if (root != null) root.getChildren().clear();
-        isPaused = false;
+        pauseHandler.setPaused(false);
 
         sound = new SoundEffects();
         sound.initSoundEffects();
@@ -99,7 +112,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             gameState.setLevel(gameState.getLevel() + 1);
 
             if (gameState.getLevel() > 1 && !restartCertainLevel) {
-                new Score().showMessage("Level Up :)", this);
+                //new Score().showMessage("Level Up :)", this);
+                MessageLabelAnimator.animateMessageLabel("Level Up :)", this);
                 System.out.printf("Level " + gameState.getLevel() + "\n");
             }
 
@@ -107,7 +121,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 root.getChildren().clear();
                 highScoreController = new HighScoreController(this);
                 highScoreController.checkAndAddHighScore(gameState.getScore());
-                new Score().showWin(this);
+                //new Score().showWin(this);
+                EndGameDisplay.showWin(this);
                 return;
             }
 
@@ -170,8 +185,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             gameScene = new Scene(root, gameState.getSceneWidth(), gameState.getSceneHeight());
             gameScene.getStylesheets().add("style.css");
             gameScene.setOnKeyPressed(this);
-            MouseDragHandler mouseDragHandler = new MouseDragHandler(gameState, rect);
 
+            MouseDragHandler mouseDragHandler = new MouseDragHandler(gameState, rect);
             gameScene.setOnMouseDragged(event -> mouseDragHandler.handleMouseDragged(event));
 
             backgroundMusic = new BackgroundMusic();
@@ -274,10 +289,10 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         primaryStage.show();
     }
     public void switchToLevelSelectionPage(){
-        LevelSelection levelSelection = new LevelSelection(this, gameState);
+        LevelSelectionController levelSelectionController = new LevelSelectionController(this,gameState);
         primaryStage.setTitle("Brick Ball Game");
         primaryStage.getIcons().add(new Image("/game-elements/icon.png"));
-        primaryStage.setScene(levelSelection.getScene());
+        primaryStage.setScene(levelSelectionController.getLevelSelectionView().getScene());
         primaryStage.setResizable(false);
         primaryStage.show();
     }
@@ -314,143 +329,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     }
 
     public void togglePause(Scene gameScene) {
-
-        isPaused = !isPaused;
-
-        if (isPaused) {
-            if (engine != null) engine.pause();
-            pauseMenu = new PauseMenu(this, gameScene, getGameState());
-            root.getChildren().add(pauseMenu);
-            pauseMenu.setVisible(true);
-
-        } else {
-            if (engine != null) engine.resume();
-            if (pauseMenu != null) {
-                pauseMenu.setVisible(false);
-            }
-        }
+        pauseHandler.togglePause(gameScene);
     }
 
-
-    public void resetCollideFlags() {
-        gameState.setCollideToBreak(false);
-        gameState.setCollideToBreakAndMoveToRight(false);
-        gameState.setCollideToRightWall(false);
-        gameState.setCollideToLeftWall(false);
-        gameState.setCollideToRightBlock(false);
-        gameState.setCollideToBottomBlock(false);
-        gameState.setCollideToLeftBlock(false);
-        gameState.setCollideToTopBlock(false);
-    }
-
-    public void setPhysicsToBall() {
-        if (gameState.isGoDownBall()) {
-            gameState.setyBall(gameState.getyBall() + gameState.getvY());
-        } else {
-            gameState.setyBall(gameState.getyBall() - gameState.getvY());
-        }
-
-        if (gameState.isGoRightBall()) {
-            gameState.setxBall(gameState.getxBall() + gameState.getvX());
-        } else {
-            gameState.setxBall(gameState.getxBall() - gameState.getvX());
-        }
-
-        if (gameState.getyBall() <= gameState.getBallRadius()) {
-            resetCollideFlags();
-            gameState.setGoDownBall(true);
-            return;
-        }
-
-        if (gameState.getyBall() >= (gameState.getSceneHeight() - gameState.getBallRadius()) && gameState.isGoDownBall()) {
-            gameState.setGoDownBall(false);
-            if (!gameState.isGoldStatus()) {
-                gameState.setHeart(gameState.getHeart() - 1);
-                gameState.setGoDownBall(false);
-
-                new Score().show(gameState.getSceneWidth() / 2, gameState.getSceneHeight() / 2, -1, this);
-                //game over
-                if (gameState.getHeart() <= 0) {
-                    engine.stop();
-                    highScoreController = new HighScoreController(this);
-                    highScoreController.checkAndAddHighScore(gameState.getScore());
-                    new Score().showGameOver(this);
-                }
-            }
-        }
-
-        if (gameState.getyBall() >= gameState.getyBreak() - gameState.getBallRadius()) {
-            if (gameState.getxBall() + gameState.getBallRadius() >= gameState.getxBreak() &&
-                    gameState.getxBall() - gameState.getBallRadius() <= gameState.getxBreak() + gameState.getBreakWidth()) {
-
-                sound.playHitSliderSound();
-
-                resetCollideFlags();
-                gameState.setCollideToBreak(true);
-                gameState.setGoDownBall(false);
-
-                double relation = (gameState.getxBall() - gameState.getCenterBreakX()) / (gameState.getBreakWidth() / 2);
-
-                if (Math.abs(relation) <= 0.3) {
-                    gameState.setvX(Math.abs(relation));
-                } else if (Math.abs(relation) > 0.3 && Math.abs(relation) <= 0.7) {
-                    gameState.setvX((Math.abs(relation) * 1.5) + (gameState.getLevel() / 3.500));
-                } else {
-                    gameState.setvX((Math.abs(relation) * 2) + (gameState.getLevel() / 3.500));
-                }
-
-                if (gameState.getxBall() - gameState.getCenterBreakX() > 0) {
-                    gameState.setCollideToBreakAndMoveToRight(true);
-                } else {
-                    gameState.setCollideToBreakAndMoveToRight(false);
-                }
-            }
-        }
-
-        if (gameState.getxBall() >= gameState.getSceneWidth() - gameState.getBallRadius()) {
-            resetCollideFlags();
-            gameState.setCollideToRightWall(true);
-        }
-
-        if (gameState.getxBall() <= gameState.getBallRadius()) {
-            resetCollideFlags();
-            gameState.setCollideToLeftWall(true);
-        }
-
-        if (gameState.isCollideToBreak()) {
-            if (gameState.isCollideToBreakAndMoveToRight()) {
-                gameState.setGoRightBall(true);
-            } else {
-                gameState.setGoRightBall(false);
-            }
-        }
-
-// Wall Collide
-        if (gameState.isCollideToRightWall()) {
-            gameState.setGoRightBall(false);
-        }
-
-        if (gameState.isCollideToLeftWall()) {
-            gameState.setGoRightBall(true);
-        }
-
-// Block Collide
-        if (gameState.isCollideToRightBlock()) {
-            gameState.setGoRightBall(true);
-        }
-
-        if (gameState.isCollideToLeftBlock()) {
-            gameState.setGoRightBall(false);
-        }
-
-        if (gameState.isCollideToTopBlock()) {
-            gameState.setGoDownBall(false);
-        }
-
-        if (gameState.isCollideToBottomBlock()) {
-            gameState.setGoDownBall(true);
-        }
-    }
     private void checkDestroyedCount() {
         if (gameState.getDestroyedBlockCount() == gameState.getBlocks().size()) {
             NextLevel nextLevel = new NextLevel(gameState, this);
@@ -489,12 +370,12 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                         gameState.setScore(gameState.getScore() + 1);
                         sound.playHitBlockSound();
 
-                        new Score().show(block.x, block.y, 1, this);
+                        ScoreLabelAnimator.animateScoreLabel(block.x, block.y, 1, this);
 
                         block.rect.setVisible(false);
                         block.isDestroyed = true;
                         gameState.setDestroyedBlockCount(gameState.getDestroyedBlockCount() + 1);
-                        resetCollideFlags();
+                        CollisionFlagsResetter.resetCollideFlags(gameState);
 
                         if (block.type == Block.BLOCK_CHOCO) {
                             final Bonus choco = new Bonus(block.row, block.column);
@@ -531,8 +412,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                         }
                         iterator.remove();
                     }
-                    //TODO hit to break and some work here....
-                    //System.out.println("Break in row:" + block.row + " and column:" + block.column + " hit");
                 }
             }
         });
@@ -545,14 +424,13 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     @Override
     public void onPhysicsUpdate() {
 
-        if (isPaused) {
+        if (pauseHandler.isPaused()) {
             return;
         }
         checkDestroyedCount();
 
-        //BallPhysicsHandler physicsHandler = new BallPhysicsHandler(gameState,this);
-        //physicsHandler.setPhysicsToBall();
-        setPhysicsToBall();
+        ballPhysicsHandler = new BallPhysicsHandler(gameState,this);
+        ballPhysicsHandler.setPhysicsToBall();
 
         if (time - goldTime > 300) {
 
@@ -580,7 +458,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 choco.taken = true;
                 choco.choco.setVisible(false);
                 gameState.setScore(gameState.getScore() + 3);
-                new Score().show(choco.x, choco.y, 3, this);
+                ScoreLabelAnimator.animateScoreLabel(choco.x, choco.y, 3, this);
                 iterator.remove();
             }
             choco.y += speedFactor * (((time - choco.timeCreated) / 1000.000) + 1.000);
@@ -590,7 +468,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     public GameState getGameState() {
         return gameState;
     }
-
 
     public Scene getGameScene() {
         return gameScene;
