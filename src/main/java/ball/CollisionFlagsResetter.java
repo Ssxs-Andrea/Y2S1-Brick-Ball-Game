@@ -1,4 +1,4 @@
-package ballMovement;
+package ball;
 
 import brickGame.GameState;
 

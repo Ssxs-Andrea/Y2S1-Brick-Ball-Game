@@ -1,9 +1,10 @@
 package brickGame;
 
-import ballMovement.BallPhysicsHandler;
-import ballMovement.CollisionFlagsResetter;
+import ball.BallPhysicsHandler;
+import ball.CollisionFlagsResetter;
 import breakMovement.BreakMovementHandler;
 import breakMovement.MouseDragHandler;
+import block.Block;
 import displayUi.EndGameDisplay;
 import displayUi.MessageLabelAnimator;
 import displayUi.ScoreLabelAnimator;
@@ -37,9 +38,9 @@ import pauseGame.PauseHandler;
 import pauseGame.WindowsFocusManager;
 import soundEffects.SoundEffects;
 import soundEffects.BackgroundMusic;
-import initGame.InitBall;
-import initGame.InitBreak;
-import initGame.InitBoard;
+import ball.InitBall;
+import breakMovement.InitBreak;
+import block.InitBoard;
 
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
     private GameState gameState;
@@ -87,7 +88,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         switchToMainMenuPage();
 
         pauseHandler = new PauseHandler(this);
-
     }
 
     public void initializeNewGame(boolean fromMainMenu) {
@@ -112,7 +112,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             gameState.setLevel(gameState.getLevel() + 1);
 
             if (gameState.getLevel() > 1 && !restartCertainLevel) {
-                //new Score().showMessage("Level Up :)", this);
                 MessageLabelAnimator.animateMessageLabel("Level Up :)", this);
                 System.out.printf("Level " + gameState.getLevel() + "\n");
             }
@@ -121,7 +120,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 root.getChildren().clear();
                 highScoreController = new HighScoreController(this);
                 highScoreController.checkAndAddHighScore(gameState.getScore());
-                //new Score().showWin(this);
                 EndGameDisplay.showWin(this);
                 return;
             }

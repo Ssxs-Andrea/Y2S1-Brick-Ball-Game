@@ -1,4 +1,4 @@
-package initGame;
+package ball;
 
 import brickGame.GameState;
 import javafx.scene.image.Image;

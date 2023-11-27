@@ -1,6 +1,6 @@
 package levelLogic;
 
-import ballMovement.CollisionFlagsResetter;
+import ball.CollisionFlagsResetter;
 import brickGame.GameState;
 import brickGame.Main;
 import javafx.application.Platform;

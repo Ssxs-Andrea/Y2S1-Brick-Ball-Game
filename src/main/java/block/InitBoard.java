@@ -1,10 +1,8 @@
-package initGame;
+package block;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import brickGame.Block;
-import javafx.scene.paint.Color;
 import brickGame.GameState;
 
 public class InitBoard {

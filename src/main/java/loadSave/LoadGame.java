@@ -1,7 +1,9 @@
 package loadSave;
 
-import brickGame.Block;
-import brickGame.BlockSerializable;
+
+
+import block.Block;
+import block.BlockSerializable;
 import brickGame.GameState;
 import brickGame.Main;
 

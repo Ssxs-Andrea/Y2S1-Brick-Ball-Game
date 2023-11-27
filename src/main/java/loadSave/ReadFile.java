@@ -9,7 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-import brickGame.BlockSerializable;
+import block.BlockSerializable;
 
 public class ReadFile {
     public boolean          isExistHeartBlock;

@@ -1,4 +1,4 @@
-package brickGame;
+package block;
 
 
 import javafx.scene.image.Image;
