@@ -1,10 +1,7 @@
 package ball;
 
 import brickGame.*;
-import displayUi.EndGameDisplay;
 import displayUi.ScoreLabelAnimator;
-import highScore.HighScoreController;
-import soundEffects.SoundEffects;
 
 public class BallPhysicsHandler {
     private GameState gameState;
@@ -42,13 +39,6 @@ public class BallPhysicsHandler {
             if (!gameState.isGoldStatus()) {
                 gameState.setHeart(gameState.getHeart() - 1);
                 ScoreLabelAnimator.animateScoreLabel(gameState.getSceneWidth() / 2, gameState.getSceneHeight() / 2, -1, main);
-                //game over
-                if (gameState.getHeart() <= 0) {
-                    main.engine.stop();
-                    HighScoreController highScoreController = new HighScoreController(main);
-                    highScoreController.checkAndAddHighScore(gameState.getScore());
-                    EndGameDisplay.showGameOver(main);
-                }
             }
         }
 
@@ -56,10 +46,6 @@ public class BallPhysicsHandler {
         if (gameState.getyBall() >= gameState.getyBreak() - gameState.getBallRadius()) {
             if (gameState.getxBall() + gameState.getBallRadius() >= gameState.getxBreak() &&
                     gameState.getxBall() - gameState.getBallRadius() <= gameState.getxBreak() + gameState.getBreakWidth()) {
-
-                SoundEffects sound = new SoundEffects();
-                sound.initSoundEffects();
-                sound.playHitSliderSound();
 
                 CollisionFlagsResetter.resetCollideFlags(gameState);
                 gameState.setCollideToBreak(true);

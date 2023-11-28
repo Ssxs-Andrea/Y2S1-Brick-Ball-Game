@@ -75,13 +75,14 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     public void start(Stage primaryStage) throws Exception {
         gameState = new GameState();
         this.primaryStage = primaryStage;
+        pauseHandler = new PauseHandler(this);
         WindowsFocusManager focusManager = new WindowsFocusManager(this, primaryStage);
         keyEventHandler = new KeyEventHandler(this,gameState);
         backgroundMusic = new BackgroundMusic();
         backgroundMusic.playBackgroundMusic();
         switchToMainMenuPage();
 
-        pauseHandler = new PauseHandler(this);
+
     }
 
     public void initializeNewGame(boolean fromMainMenu) {
@@ -107,10 +108,10 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
             if (gameState.getLevel() > 1 && !restartCertainLevel) {
                 MessageLabelAnimator.animateMessageLabel("Level Up :)", this);
-                System.out.printf("Level " + gameState.getLevel() + "\n");
+
             }
 
-            if (gameState.getLevel() == 18 && !restartCertainLevel) {
+            if (gameState.getLevel() == 20 && !restartCertainLevel) {
                 root.getChildren().clear();
                 HighScoreController highScoreController = new HighScoreController(this);
                 highScoreController.checkAndAddHighScore(gameState.getScore());
@@ -127,7 +128,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
             InitBoard initBoard = new InitBoard(gameState);
             gameState.setBlocks(initBoard.initBoard());
-
         }
 
         GameButtons gameButtons = new GameButtons();
@@ -176,7 +176,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             gameScene.setOnKeyPressed(this);
 
             MouseDragHandler mouseDragHandler = new MouseDragHandler(gameState, rect);
-            gameScene.setOnMouseDragged(event -> mouseDragHandler.handleMouseDragged(event));
+            gameScene.setOnMouseDragged(mouseDragHandler::handleMouseDragged);
 
             backgroundMusic = new BackgroundMusic();
             backgroundMusic.setupKeyEvents(gameScene);
@@ -195,7 +195,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             }
 
             if (!gameState.isLoadFromSave()) {
-                if (gameState.getLevel() > 1 && gameState.getLevel() < 18) {
+                if (gameState.getLevel() > 1 && gameState.getLevel() < 20) {
                     setGameElementsVisible();
                     setButtonInvisible();
                     restartEngine();
@@ -289,6 +289,12 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         Platform.runLater(() -> {
             scoreLabel.setText("Score: " + gameState.getScore());
             heartLabel.setText("Heart : " + gameState.getHeart());
+            if (gameState.getHeart() <= 0 || gameState.getScore() < 0 ) {
+                engine.stop();
+                HighScoreController highScoreController = new HighScoreController(this);
+                highScoreController.checkAndAddHighScore(gameState.getScore());
+                EndGameDisplay.showGameOver(this);
+            }
 
             rect.setX((gameState.getxBreak()));
             rect.setY(gameState.getyBreak());

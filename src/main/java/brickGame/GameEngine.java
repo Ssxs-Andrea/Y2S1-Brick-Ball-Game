@@ -44,6 +44,7 @@ public class GameEngine {
 
     public void pause() {
         animationTimer.pause();
+        isRunning = false;
     }
 
     public void resume() {
