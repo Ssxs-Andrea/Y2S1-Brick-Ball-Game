@@ -2,7 +2,6 @@ package brickGame;
 
 import ball.BallPhysicsHandler;
 import ball.CollisionFlagsResetter;
-import breakMovement.BreakMovementHandler;
 import breakMovement.MouseDragHandler;
 import block.Block;
 import displayUi.EndGameDisplay;
@@ -29,11 +28,8 @@ import java.util.List;
 import highScore.HighScoreController;
 import instruction.InstructionController;
 import levelLogic.NextLevel;
-import levelLogic.RestartLevel;
 import levelSelect.LevelSelectionController;
 import loadSave.ReadFile;
-import loadSave.LoadGame;
-import loadSave.SaveGame;
 import mainMenu.MainMenuController;
 import pauseGame.PauseHandler;
 import pauseGame.WindowsFocusManager;
@@ -55,6 +51,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private long goldTime = 0;
 
     public GameEngine engine;
+
     public Pane root;
     private Label scoreLabel;
     private Label heartLabel;
@@ -71,17 +68,15 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     public static boolean restartCertainLevel = false;
     private Scene gameScene;
-    private LoadGame loadGame;
-    private SaveGame saveGame;
     private PauseHandler pauseHandler;
+    private KeyEventHandler keyEventHandler;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         gameState = new GameState();
         this.primaryStage = primaryStage;
         WindowsFocusManager focusManager = new WindowsFocusManager(this, primaryStage);
-
-        saveGame = new SaveGame(this,gameState);
+        keyEventHandler = new KeyEventHandler(this,gameState);
         backgroundMusic = new BackgroundMusic();
         backgroundMusic.playBackgroundMusic();
         switchToMainMenuPage();
@@ -133,23 +128,20 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             InitBoard initBoard = new InitBoard(gameState);
             gameState.setBlocks(initBoard.initBoard());
 
-            levelSelect = new Button("Level Select");
-            levelSelect.setTranslateX(70);
-            levelSelect.setTranslateY(110);
-            levelSelect.setPrefSize(150, 30);
-            load = new Button("Load Game");
-            load.setTranslateX(70);
-            load.setTranslateY(180);
-            load.setPrefSize(150, 30);
-            newGame = new Button("New Game");
-            newGame.setTranslateX(70);
-            newGame.setTranslateY(250);
-            newGame.setPrefSize(150, 30);
-            back = new Button("Back To Main Menu");
-            back.setTranslateX(70);
-            back.setTranslateY(320);
-            back.setPrefSize(150, 30);
         }
+
+        GameButtons gameButtons = new GameButtons();
+        GameButtonHandlers eventHandlers = new GameButtonHandlers(gameState, this);
+
+        levelSelect = gameButtons.levelSelect;
+        load = gameButtons.load;
+        newGame = gameButtons.newGame;
+        back = gameButtons.back;
+
+        load.setOnAction(eventHandlers.loadHandler);
+        newGame.setOnAction(eventHandlers.newGameHandler);
+        levelSelect.setOnAction(eventHandlers.levelSelectHandler);
+        back.setOnAction(eventHandlers.backHandler);
 
         root = new Pane();
         scoreLabel = new Label("Score: " + gameState.getScore());
@@ -209,31 +201,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     restartEngine();
                 }
             }
-            load.setOnAction(event -> {
-                loadGame = new LoadGame(gameState, this);
-                loadGame.loadGame();
-                sound.playHitButtonSound();
-                setGameElementsVisible();
-                restartEngine();
-                setButtonInvisible();
-                gameState.setLoadFromSave(false);
-            });
-            newGame.setOnAction(event -> {
-                sound.playHitButtonSound();
-                setGameElementsVisible();
-                restartEngine();
-                setButtonInvisible();
-            });
-            levelSelect.setOnAction(event -> {
-                sound.playHitButtonSound();
-                setGameElementsVisible();
-                setButtonInvisible();
-                switchToLevelSelectionPage();
-            });
-            back.setOnAction(event -> {
-                sound.playHitButtonSound();
-                switchToMainMenuPage();
-            });
+
         } else {
             setGameElementsVisible();
             restartEngine();
@@ -241,7 +209,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
     }
 
-    private void setGameElementsVisible(){
+    public void setGameElementsVisible(){
         for (Block block : gameState.getBlocks()) block.rect.setVisible(true);
         rect.setVisible(true);
         ball.setVisible(true);
@@ -249,13 +217,13 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         heartLabel.setVisible(true);
         levelLabel.setVisible(true);
     }
-    private void setButtonInvisible(){
+    public void setButtonInvisible(){
         load.setVisible(false);
         newGame.setVisible(false);
         levelSelect.setVisible(false);
         back.setVisible(false);
     }
-    private void restartEngine(){
+    public void restartEngine(){
         engine = new GameEngine();
         engine.setOnAction(this);
         engine.setFps(120);
@@ -299,30 +267,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     @Override
     public void handle(KeyEvent event) {
-        switch (event.getCode()) {
-            case LEFT:
-                BreakMovementHandler movementHandler = new BreakMovementHandler(gameState);
-                movementHandler.moveLeft();
-                break;
-            case RIGHT:
-                movementHandler = new BreakMovementHandler(gameState);
-                movementHandler.moveRight();
-                break;
-            case S:
-                gameState.setGoldTime(goldTime);
-                gameState.setTime(time);
-                saveGame.saveGame();
-                break;
-            case R:
-                RestartLevel restartLevel = new RestartLevel(gameState,this);
-                restartLevel.restartLevel(gameState.getLevel(), gameState.getSaveHeart(), gameState.getSaveScore());
-                time = gameState.getTime();
-                time = gameState.getGoldTime();
-                break;
-            case P:
-                togglePause(gameScene);
-                break;
-        }
+        keyEventHandler.handle(event);
     }
 
     public void togglePause(Scene gameScene) {

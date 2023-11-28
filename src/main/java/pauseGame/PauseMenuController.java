@@ -35,7 +35,7 @@ public class PauseMenuController {
             sound.playHitButtonSound();
             main.togglePause(scene);
             RestartLevel restartLevel = new RestartLevel(gameState, main);
-            restartLevel.restartLevel(gameState.getLevel(), gameState.getHeart(), gameState.getScore());
+            restartLevel.restartLevel(gameState.getLevel(), gameState.getSaveHeart(), gameState.getSaveScore());
             pauseMenuView.setVisible(false);
         });
 
