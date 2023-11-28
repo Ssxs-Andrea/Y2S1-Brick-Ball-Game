@@ -5,6 +5,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import java.util.ArrayList;
 import block.Block;
+import gamePower.Power;
 
 public class GameState {
 

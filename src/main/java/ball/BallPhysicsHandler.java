@@ -41,15 +41,12 @@ public class BallPhysicsHandler {
 
             if (!gameState.isGoldStatus()) {
                 gameState.setHeart(gameState.getHeart() - 1);
-
-                //new Score().show(gameState.getSceneWidth() / 2, gameState.getSceneHeight() / 2, -1, main);
                 ScoreLabelAnimator.animateScoreLabel(gameState.getSceneWidth() / 2, gameState.getSceneHeight() / 2, -1, main);
                 //game over
                 if (gameState.getHeart() <= 0) {
                     main.engine.stop();
                     HighScoreController highScoreController = new HighScoreController(main);
                     highScoreController.checkAndAddHighScore(gameState.getScore());
-                    //new Score().showGameOver(main);
                     EndGameDisplay.showGameOver(main);
                 }
             }

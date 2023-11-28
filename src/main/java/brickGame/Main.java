@@ -8,6 +8,7 @@ import block.Block;
 import displayUi.EndGameDisplay;
 import displayUi.MessageLabelAnimator;
 import displayUi.ScoreLabelAnimator;
+import gamePower.Power;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -42,6 +43,9 @@ import ball.InitBall;
 import breakMovement.InitBreak;
 import block.InitBoard;
 
+import gamePower.Penalty;
+import gamePower.Bonus;
+
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
     private GameState gameState;
     private Circle ball;
@@ -73,7 +77,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
         gameState = new GameState();
         this.primaryStage = primaryStage;
         WindowsFocusManager focusManager = new WindowsFocusManager(this, primaryStage);

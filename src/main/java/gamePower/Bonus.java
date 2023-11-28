@@ -1,4 +1,4 @@
-package brickGame;
+package gamePower;
 
 public class Bonus extends Power {
     public Bonus(int row, int column) {

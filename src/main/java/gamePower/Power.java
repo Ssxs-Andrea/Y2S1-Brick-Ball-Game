@@ -1,4 +1,4 @@
-package brickGame;
+package gamePower;
 
 import block.Block;
 import javafx.scene.image.Image;
@@ -8,7 +8,7 @@ import javafx.scene.shape.Rectangle;
 import java.io.Serializable;
 import java.util.Random;
 
-abstract class Power implements Serializable {
+public abstract class Power implements Serializable {
     public Rectangle PowerShape;
 
     public double x;
