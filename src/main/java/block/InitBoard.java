@@ -35,6 +35,8 @@ public class InitBoard {
                     }
                 } else if (r % 10 == 3) {
                     type = Block.BLOCK_STAR;
+                } else if (r % 10 == 4 && gameState.getLevel() >= 5) {
+                    type = Block.BLOCK_BOOM;
                 } else {
                     type = Block.BLOCK_NORMAL;
                 }

@@ -69,11 +69,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private Scene gameScene;
     private LoadGame loadGame;
     private SaveGame saveGame;
-    private BreakMovementHandler movementHandler;
-    private HighScoreController highScoreController;
-    private MainMenuController mainMenuController;
     private PauseHandler pauseHandler;
-    private BallPhysicsHandler ballPhysicsHandler;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -118,7 +114,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
             if (gameState.getLevel() == 18 && !restartCertainLevel) {
                 root.getChildren().clear();
-                highScoreController = new HighScoreController(this);
+                HighScoreController highScoreController = new HighScoreController(this);
                 highScoreController.checkAndAddHighScore(gameState.getScore());
                 EndGameDisplay.showWin(this);
                 return;
@@ -279,7 +275,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         primaryStage.show();
     }
     public void switchToMainMenuPage() {
-        mainMenuController = new MainMenuController(this);
+        MainMenuController mainMenuController = new MainMenuController(this);
         primaryStage.setTitle("Brick Ball Game");
         primaryStage.getIcons().add(new Image("/game-elements/icon.png"));
         primaryStage.setScene(mainMenuController.getMainMenuView().getScene());
@@ -302,7 +298,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     public void handle(KeyEvent event) {
         switch (event.getCode()) {
             case LEFT:
-                movementHandler = new BreakMovementHandler(gameState);
+                BreakMovementHandler movementHandler = new BreakMovementHandler(gameState);
                 movementHandler.moveLeft();
                 break;
             case RIGHT:
@@ -351,8 +347,12 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             gameState.getBall().setCenterX(gameState.getxBall());
             gameState.getBall().setCenterY(gameState.getyBall());
 
-            for (Bonus choco : gameState.getChocos()) {
-                choco.choco.setY(choco.y);
+            for (Power choco : gameState.getChocos()) {
+                choco.PowerShape.setY(choco.y);
+            }
+
+            for (Power boom : gameState.getBooms()) {
+                boom.PowerShape.setY(boom.y);
             }
 
             synchronized (gameState.getBlocks()) {
@@ -381,7 +381,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
-                                    root.getChildren().add(choco.choco);
+                                    root.getChildren().add(choco.PowerShape);
                                 }
                             });
                             gameState.getChocos().add(choco);
@@ -393,6 +393,18 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                             System.out.println("gold ball");
                             root.getStyleClass().add("goldRoot");
                             gameState.setGoldStatus(true);
+                        }
+
+                        if (block.type == Block.BLOCK_BOOM) {
+                            final Penalty boom = new Penalty(block.row, block.column);
+                            boom.timeCreated = time;
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    root.getChildren().add(boom.PowerShape);
+                                }
+                            });
+                            gameState.getBooms().add(boom);
                         }
 
                         if (block.type == Block.BLOCK_HEART) {
@@ -427,7 +439,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
         checkDestroyedCount();
 
-        ballPhysicsHandler = new BallPhysicsHandler(gameState,this);
+        BallPhysicsHandler ballPhysicsHandler = new BallPhysicsHandler(gameState, this);
         ballPhysicsHandler.setPhysicsToBall();
 
         if (time - goldTime > 300) {
@@ -441,9 +453,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
         double speedFactor = 2.0;
 
-        Iterator<Bonus> iterator = gameState.getChocos().iterator();
+        Iterator<Power> iterator = gameState.getChocos().iterator();
         while (iterator.hasNext()) {
-            Bonus choco = iterator.next();
+            Power choco = iterator.next();
 
             if (choco.y > gameState.getSceneHeight() || choco.taken) {
                 continue;
@@ -454,12 +466,33 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 System.out.println("You Got it and +3 score for you");
                 sound.playHitBonusSound();
                 choco.taken = true;
-                choco.choco.setVisible(false);
+                choco.PowerShape.setVisible(false);
                 gameState.setScore(gameState.getScore() + 3);
                 ScoreLabelAnimator.animateScoreLabel(choco.x, choco.y, 3, this);
                 iterator.remove();
             }
             choco.y += speedFactor * (((time - choco.timeCreated) / 1000.000) + 1.000);
+        }
+
+        Iterator<Power> iteratorBoom = gameState.getBooms().iterator();
+        while (iteratorBoom.hasNext()) {
+            Power boom = iteratorBoom.next();
+
+            if (boom.y > gameState.getSceneHeight() || boom.taken) {
+                continue;
+            }
+
+            if (boom.y >= gameState.getyBreak() && boom.y <= gameState.getyBreak() + gameState.getBreakHeight()
+                    && boom.x >= gameState.getxBreak() && boom.x <= gameState.getxBreak() + gameState.getBreakWidth()) {
+                System.out.println("Boom -2");
+                sound.playHitBombSound();
+                boom.taken = true;
+                boom.PowerShape.setVisible(false);
+                gameState.setScore(gameState.getScore() - 2);
+                ScoreLabelAnimator.animateScoreLabel(boom.x, boom.y, -2, this);
+                iteratorBoom.remove();
+            }
+            boom.y += speedFactor * (((time - boom.timeCreated) / 1000.000) + 1.000);
         }
     }
 

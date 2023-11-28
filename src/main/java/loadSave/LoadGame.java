@@ -52,6 +52,7 @@ public class LoadGame {
 
         gameState.setBlocks(new ArrayList<>());
         gameState.setChocos(new ArrayList<>());
+        gameState.setBooms(new ArrayList<>());
 
         gameState.setSaveScore(loadSave.score);
         gameState.setSaveHeart(loadSave.heart);

@@ -71,7 +71,6 @@ public class SaveGame {
 
                 outputStream.writeObject(blockSerializables);
 
-                //new Score().showMessage("Game Saved", main);
                 MessageLabelAnimator.animateMessageLabel("Game Saved", main);
 
             } catch (FileNotFoundException e) {

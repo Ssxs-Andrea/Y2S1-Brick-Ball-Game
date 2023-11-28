@@ -39,7 +39,8 @@ public class GameState {
 
 
     private ArrayList<Block> blocks = new ArrayList<>();
-    private ArrayList<Bonus> chocos = new ArrayList<>();
+    private ArrayList<Power> chocos = new ArrayList<>();
+    private ArrayList<Power> booms = new ArrayList<>();
     private Color[] colors = new Color[]{
             Color.MAGENTA,
             Color.RED,
@@ -268,11 +269,11 @@ public class GameState {
         this.blocks = blocks;
     }
 
-    public ArrayList<Bonus> getChocos() {
+    public ArrayList<Power> getChocos() {
         return chocos;
     }
 
-    public void setChocos(ArrayList<Bonus> chocos) {
+    public void setChocos(ArrayList<Power> chocos) {
         this.chocos = chocos;
     }
 
@@ -429,5 +430,13 @@ public class GameState {
 
     public void setGoldTime(long goldTime) {
         this.goldTime = goldTime;
+    }
+
+    public ArrayList<Power> getBooms() {
+        return booms;
+    }
+
+    public void setBooms(ArrayList<Power> booms) {
+        this.booms = booms;
     }
 }

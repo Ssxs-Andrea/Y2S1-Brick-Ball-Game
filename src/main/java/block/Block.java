@@ -13,8 +13,6 @@ public class Block implements Serializable {
 
     public int row;
     public int column;
-
-
     public boolean isDestroyed = false;
 
     private Color color;
@@ -40,6 +38,7 @@ public class Block implements Serializable {
     public static int BLOCK_CHOCO = 100;
     public static int BLOCK_STAR = 101;
     public static int BLOCK_HEART = 102;
+    public static int BLOCK_BOOM = 103;
     private int ballRadius = 10;
     private double epsilon = 0.01 * height;
 
@@ -73,6 +72,10 @@ public class Block implements Serializable {
             rect.setFill(pattern);
         } else if (type == BLOCK_STAR) {
             Image image = new Image("game-elements/star.jpg");
+            ImagePattern pattern = new ImagePattern(image);
+            rect.setFill(pattern);
+        } else if (type == BLOCK_BOOM) {
+            Image image = new Image("game-elements/boom.jpg");
             ImagePattern pattern = new ImagePattern(image);
             rect.setFill(pattern);
         } else {
