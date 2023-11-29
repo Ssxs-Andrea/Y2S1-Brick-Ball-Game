@@ -1,5 +1,6 @@
 package displayUi;
 
+import brickGame.GameState;
 import brickGame.Main;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
@@ -9,7 +10,7 @@ import soundEffects.SoundEffects;
 
 public class EndGameDisplay {
 
-    public static void showGameOver(final Main main) {
+    public static void showGameOver(final Main main, GameState gameState) {
         Platform.runLater(() -> {
             Label label = new Label("Game Over :(");
             label.setTranslateX(200);
@@ -24,7 +25,7 @@ public class EndGameDisplay {
                 SoundEffects sound = new SoundEffects();
                 sound.initSoundEffects();
                 sound.playHitButtonSound();
-                RestartGame restartGame = new RestartGame(main.getGameState(), main);
+                RestartGame restartGame = new RestartGame(gameState, main);
                 restartGame.restartGame();
 
             });

@@ -1,32 +1,26 @@
 package block;
 
-
-import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 import java.io.Serializable;
 
 public class Block implements Serializable {
-    private static Block block = new Block(-1, -1, Color.TRANSPARENT, 99);
-
     public int row;
     public int column;
     public boolean isDestroyed = false;
 
-    private Color color;
+    public Color color;
     public int type;
 
     public int x;
     public int y;
 
-    private int width = 100;
-    private int height = 30;
-    private int paddingTop = height * 2;
-    private int paddingH = 50;
+    protected int width = 100;
+    protected int height = 30;
+    protected int paddingTop = height * 2;
+    protected int paddingH = 50;
     public Rectangle rect;
-
 
     public static int NO_HIT = -1;
     public static int HIT_RIGHT = 0;
@@ -42,13 +36,11 @@ public class Block implements Serializable {
     private int ballRadius = 10;
     private double epsilon = 0.01 * height;
 
-
     public Block(int row, int column, Color color, int type) {
         this.row = row;
         this.column = column;
         this.color = color;
         this.type = type;
-
         draw();
     }
 
@@ -61,27 +53,8 @@ public class Block implements Serializable {
         rect.setHeight(height);
         rect.setX(x);
         rect.setY(y);
-
-        if (type == BLOCK_CHOCO) {
-            Image image = new Image("game-elements/choco.jpg");
-            ImagePattern pattern = new ImagePattern(image);
-            rect.setFill(pattern);
-        } else if (type == BLOCK_HEART) {
-            Image image = new Image("game-elements/heart.jpg");
-            ImagePattern pattern = new ImagePattern(image);
-            rect.setFill(pattern);
-        } else if (type == BLOCK_STAR) {
-            Image image = new Image("game-elements/star.jpg");
-            ImagePattern pattern = new ImagePattern(image);
-            rect.setFill(pattern);
-        } else if (type == BLOCK_BOOM) {
-            Image image = new Image("game-elements/boom.jpg");
-            ImagePattern pattern = new ImagePattern(image);
-            rect.setFill(pattern);
-        } else {
-            rect.setFill(color);
-        }
-
+        BlockFiller blockFiller = BlockFillerFactory.createBlockFiller(type);
+        blockFiller.applyFill(rect, color, type);
     }
 
     public int checkHitToBlock(double xBall, double yBall) {
@@ -108,21 +81,4 @@ public class Block implements Serializable {
 
         return NO_HIT;
     }
-
-    public static int getPaddingTop() {
-        return block.paddingTop;
-    }
-
-    public static int getPaddingH() {
-        return block.paddingH;
-    }
-
-    public static int getHeight() {
-        return block.height;
-    }
-
-    public static int getWidth() {
-        return block.width;
-    }
-
 }

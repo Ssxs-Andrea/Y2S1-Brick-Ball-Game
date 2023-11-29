@@ -81,8 +81,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         backgroundMusic = new BackgroundMusic();
         backgroundMusic.playBackgroundMusic();
         switchToMainMenuPage();
-
-
     }
 
     public void initializeNewGame(boolean fromMainMenu) {
@@ -108,7 +106,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
             if (gameState.getLevel() > 1 && !restartCertainLevel) {
                 MessageLabelAnimator.animateMessageLabel("Level Up :)", this);
-
             }
 
             if (gameState.getLevel() == 20 && !restartCertainLevel) {
@@ -116,6 +113,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 HighScoreController highScoreController = new HighScoreController(this);
                 highScoreController.checkAndAddHighScore(gameState.getScore());
                 EndGameDisplay.showWin(this);
+                gameState.getBooms().clear();
+                gameState.getChocos().clear();
                 return;
             }
 
@@ -278,7 +277,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         if (gameState.getDestroyedBlockCount() == gameState.getBlocks().size()) {
             NextLevel nextLevel = new NextLevel(gameState, this);
             nextLevel.nextLevel();
-
             time = gameState.getTime();
             goldTime = gameState.getGoldTime();
         }
@@ -293,7 +291,10 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 engine.stop();
                 HighScoreController highScoreController = new HighScoreController(this);
                 highScoreController.checkAndAddHighScore(gameState.getScore());
-                EndGameDisplay.showGameOver(this);
+                EndGameDisplay.showGameOver(this, gameState);
+                gameState.getBooms().clear();
+                gameState.getChocos().clear();
+
             }
 
             rect.setX((gameState.getxBreak()));
@@ -449,6 +450,10 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             boom.y += speedFactor * (((time - boom.timeCreated) / 1000.000) + 1.000);
         }
     }
+    @Override
+    public void onTime(long time) {
+        this.time = time;
+    }
 
     public GameState getGameState() {
         return gameState;
@@ -456,9 +461,5 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     public Scene getGameScene() {
         return gameScene;
-    }
-    @Override
-    public void onTime(long time) {
-        this.time = time;
     }
 }
