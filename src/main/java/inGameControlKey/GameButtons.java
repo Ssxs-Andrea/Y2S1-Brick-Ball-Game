@@ -1,4 +1,4 @@
-package brickGame;
+package inGameControlKey;
 
 import javafx.scene.control.Button;
 

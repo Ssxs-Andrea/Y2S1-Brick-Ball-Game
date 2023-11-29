@@ -1,5 +1,7 @@
-package brickGame;
+package inGameControlKey;
 
+import brickGame.GameState;
+import brickGame.Main;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import loadSave.LoadGame;

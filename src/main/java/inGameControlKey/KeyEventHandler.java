@@ -1,6 +1,8 @@
-package brickGame;
+package inGameControlKey;
 
 import breakMovement.BreakMovementHandler;
+import brickGame.GameState;
+import brickGame.Main;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 import levelLogic.RestartLevel;

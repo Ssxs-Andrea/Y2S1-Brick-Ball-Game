@@ -1,5 +1,8 @@
 package brickGame;
 
+import inGameControlKey.GameButtonHandlers;
+import inGameControlKey.GameButtons;
+import inGameControlKey.KeyEventHandler;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -130,6 +133,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         if (root != null) {
             root.getChildren().clear();
         }
+        gameState.getBooms().clear();
+        gameState.getChocos().clear();
         pauseHandler.setPaused(false);
     }
     private void initializeSoundEffects() {
@@ -327,8 +332,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         HighScoreController highScoreController = new HighScoreController(this);
         highScoreController.checkAndAddHighScore(gameState.getScore());
         EndGameDisplay.showGameOver(this, gameState);
-        gameState.getBooms().clear();
-        gameState.getChocos().clear();
     }
     private void updateGameElements() {
         synchronized (gameState.getBlocks()) {
