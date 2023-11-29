@@ -16,12 +16,12 @@ public class PauseHandler {
         setPaused(!isPaused());
 
         if (isPaused()) {
-            if (main.engine != null) main.engine.pause();
+            if (main.getEngine() != null) main.getEngine().pause();
             pauseMenu = new PauseMenu(main, gameScene, main.getGameState());
-            main.root.getChildren().add(pauseMenu);
+            main.getRoot().getChildren().add(pauseMenu);
             pauseMenu.setVisible(true);
         } else {
-            if (main.engine != null) main.engine.resume();
+            if (main.getEngine() != null) main.getEngine().resume();
             if (pauseMenu != null) {
                 pauseMenu.setVisible(false);
             }

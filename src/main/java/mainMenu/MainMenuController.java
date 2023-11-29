@@ -4,8 +4,8 @@ import brickGame.Main;
 import soundEffects.SoundEffects;
 
 public class MainMenuController {
-    private Main main;
-    private MainMenuView mainMenuView;
+    private final Main main;
+    private final MainMenuView mainMenuView;
 
     public MainMenuController(Main main) {
         this.main = main;

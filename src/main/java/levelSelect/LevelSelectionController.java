@@ -56,7 +56,7 @@ public class LevelSelectionController {
             try {
                 gameState.setvX(1.000);
 
-                if (main.engine != null) main.engine.stop();
+                if (main.getEngine() != null) main.getEngine().stop();
 
                 CollisionFlagsResetter.resetCollideFlags(gameState);
                 gameState.setGoDownBall(true);

@@ -39,7 +39,7 @@ public class EndGameDisplay {
                 main.switchToMainMenuPage();
             });
 
-            main.root.getChildren().addAll(label, restart, mainMenu);
+            main.getRoot().getChildren().addAll(label, restart, mainMenu);
         });
     }
 
@@ -61,8 +61,8 @@ public class EndGameDisplay {
                 sound.playHitButtonSound();
                 main.switchToMainMenuPage();
             });
-            main.root.getChildren().clear();
-            main.root.getChildren().addAll(label, mainMenu);
+            main.getRoot().getChildren().clear();
+            main.getRoot().getChildren().addAll(label, mainMenu);
         });
     }
 }

@@ -4,8 +4,8 @@ import brickGame.*;
 import displayUi.ScoreLabelAnimator;
 
 public class BallPhysicsHandler {
-    private GameState gameState;
-    private Main main;
+    private final GameState gameState;
+    private final Main main;
 
 
     public BallPhysicsHandler(GameState gameState, Main main) {
@@ -38,7 +38,7 @@ public class BallPhysicsHandler {
 
             if (!gameState.isGoldStatus()) {
                 gameState.setHeart(gameState.getHeart() - 1);
-                ScoreLabelAnimator.animateScoreLabel(gameState.getSceneWidth() / 2, gameState.getSceneHeight() / 2, -1, main);
+                ScoreLabelAnimator.animateScoreLabel((double) gameState.getSceneWidth() / 2, (double) gameState.getSceneHeight() / 2, -1, main);
             }
         }
 
@@ -51,7 +51,7 @@ public class BallPhysicsHandler {
                 gameState.setCollideToBreak(true);
                 gameState.setGoDownBall(false);
 
-                double relation = (gameState.getxBall() - gameState.getCenterBreakX()) / (gameState.getBreakWidth() / 2);
+                double relation = (gameState.getxBall() - gameState.getCenterBreakX()) / ((double) gameState.getBreakWidth() / 2);
 
                 if (Math.abs(relation) <= 0.3) {
                     gameState.setvX(Math.abs(relation));

@@ -30,12 +30,12 @@ public class NextLevel {
                 gameState.setTime(0);
                 gameState.setGoldTime(0);
 
-                main.engine.stop();
+                main.getEngine().stop();
 
                 gameState.getBlocks().clear();
                 gameState.getChocos().clear();
                 gameState.setDestroyedBlockCount(0);
-                main.root.getChildren().clear();
+                main.getRoot().getChildren().clear();
                 main.initializeNewGame(false);
 
             } catch (Exception e) {

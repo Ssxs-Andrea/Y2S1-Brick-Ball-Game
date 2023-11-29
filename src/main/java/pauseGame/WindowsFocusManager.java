@@ -10,7 +10,7 @@ public class WindowsFocusManager {
         pauseHandler = new PauseHandler(main);
         primaryStage.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) {
-                if (main != null && main.engine != null && main.engine.isRunning() && !pauseHandler.isPaused()) {
+                if (main != null && main.getEngine() != null && main.getEngine().isRunning() && !pauseHandler.isPaused()) {
                     main.togglePause(main.getGameScene());
                 }
             }

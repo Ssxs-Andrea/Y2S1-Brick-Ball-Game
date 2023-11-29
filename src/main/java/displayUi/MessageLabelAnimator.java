@@ -11,7 +11,7 @@ public class MessageLabelAnimator {
         label.setTranslateX(220);
         label.setTranslateY(340);
 
-        Platform.runLater(() -> main.root.getChildren().add(label));
+        Platform.runLater(() -> main.getRoot().getChildren().add(label));
 
         new Thread(() -> {
 
@@ -29,7 +29,7 @@ public class MessageLabelAnimator {
                     e.printStackTrace();
                 }
             }
-            Platform.runLater(() -> main.root.getChildren().remove(label));
+            Platform.runLater(() -> main.getRoot().getChildren().remove(label));
         }).start();
     }
 }

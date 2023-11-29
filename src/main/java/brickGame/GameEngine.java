@@ -5,7 +5,6 @@ import javafx.animation.AnimationTimer;
 public class GameEngine {
 
     private OnAction onAction;
-    private int fps = 60;
     private PausableAnimationTimer animationTimer;
     private long lastUpdateTime;
     private long time = 0;
@@ -13,13 +12,6 @@ public class GameEngine {
 
     public void setOnAction(OnAction onAction) {
         this.onAction = onAction;
-    }
-
-    /**
-     * @param fps set fps
-     */
-    public void setFps(int fps) {
-        this.fps = fps;
     }
 
     public boolean isRunning() {

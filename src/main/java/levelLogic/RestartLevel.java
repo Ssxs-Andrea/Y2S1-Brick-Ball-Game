@@ -35,7 +35,7 @@ public class RestartLevel {
                 gameState.setTime(0);
                 gameState.setGoldTime(0);
 
-                main.engine.stop();
+                main.getEngine().stop();
                 gameState.setBlocks(new ArrayList<>());
                 gameState.setChocos(new ArrayList<>());
 
