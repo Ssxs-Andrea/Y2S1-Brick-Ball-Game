@@ -12,6 +12,7 @@ import soundEffects.BackgroundMusic;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class HighScoreView {
     private Scene scene;
@@ -30,7 +31,7 @@ public class HighScoreView {
 
         VBox vbox = new VBox(highScoresBox, backButton);
         scene = new Scene(vbox, 500, 700);
-        scene.getStylesheets().add(getClass().getResource("/high-score/high-score.css").toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/high-score/high-score.css")).toExternalForm());
         BackgroundMusic backgroundMusic = new BackgroundMusic();
         backgroundMusic.setupKeyEvents(scene);
     }
@@ -40,17 +41,17 @@ public class HighScoreView {
 
         VBox highScoresContent = new VBox();
 
-        Image image1 = new Image(getClass().getResource("/high-score/1.png").toExternalForm());
+        Image image1 = new Image(Objects.requireNonNull(getClass().getResource("/high-score/1.png")).toExternalForm());
         ImageView imageView1 = new ImageView(image1);
         imageView1.setFitWidth(40);
         imageView1.setFitHeight(40);
 
-        Image image2 = new Image(getClass().getResource("/high-score/2.png").toExternalForm());
+        Image image2 = new Image(Objects.requireNonNull(getClass().getResource("/high-score/2.png")).toExternalForm());
         ImageView imageView2 = new ImageView(image2);
         imageView2.setFitWidth(40);
         imageView2.setFitHeight(40);
 
-        Image image3 = new Image(getClass().getResource("/high-score/3.png").toExternalForm());
+        Image image3 = new Image(Objects.requireNonNull(getClass().getResource("/high-score/3.png")).toExternalForm());
         ImageView imageView3 = new ImageView(image3);
         imageView3.setFitWidth(40);
         imageView3.setFitHeight(40);

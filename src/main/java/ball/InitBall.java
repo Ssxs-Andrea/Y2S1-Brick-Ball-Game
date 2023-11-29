@@ -8,8 +8,7 @@ import java.util.Random;
 
 public class InitBall {
 
-    private GameState gameState;
-    private Circle ball;
+    private final GameState gameState;
 
     public InitBall(GameState gameState) {
         this.gameState = gameState;
@@ -20,7 +19,7 @@ public class InitBall {
         gameState.setxBall(random.nextInt(gameState.getSceneWidth()) + 1);
         gameState.setyBall(gameState.getSceneHeight() - 200);
 
-        ball = new Circle();
+        Circle ball = new Circle();
         ball.setRadius(gameState.getBallRadius());
         ball.setFill(new ImagePattern(new Image("game-elements/ball.png")));
 

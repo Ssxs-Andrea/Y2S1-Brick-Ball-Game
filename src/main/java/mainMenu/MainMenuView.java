@@ -7,20 +7,20 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import soundEffects.BackgroundMusic;
 
+import java.util.Objects;
+
 public class MainMenuView {
     private Scene scene;
-    private MainMenuController controller;
     private Button newGame;
     private Button instruction;
     private Button highScore;
 
-    public MainMenuView(MainMenuController controller) {
-        this.controller = controller;
+    public MainMenuView() {
         init();
     }
 
     private void init() {
-        Image logoImage = new Image(getClass().getResource("/main-menu/bricksLogo.png").toExternalForm());
+        Image logoImage = new Image(Objects.requireNonNull(getClass().getResource("/main-menu/bricksLogo.png")).toExternalForm());
         ImageView imageView = new ImageView(logoImage);
 
         newGame = new Button("START");
@@ -47,7 +47,7 @@ public class MainMenuView {
         root.getChildren().addAll(imageView, newGame, instruction, highScore);
 
         scene = new Scene(root, 500, 700);
-        scene.getStylesheets().add(getClass().getResource("/main-menu/main-menu.css").toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/main-menu/main-menu.css")).toExternalForm());
         BackgroundMusic backgroundMusic = new BackgroundMusic();
         backgroundMusic.setupKeyEvents(scene);
     }

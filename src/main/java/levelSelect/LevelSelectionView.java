@@ -8,10 +8,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import loadSave.ReadFile;
 
+import java.util.Objects;
+
 public class LevelSelectionView {
     private Scene scene;
 
-    private LevelSelectionController controller;
+    private final LevelSelectionController controller;
 
     public LevelSelectionView(LevelSelectionController controller) {
 
@@ -70,7 +72,7 @@ public class LevelSelectionView {
         container.getChildren().add(back);
 
         scene = new Scene(container, 500, 700);
-        scene.getStylesheets().add(getClass().getResource("/level-selection/level-selection.css").toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/level-selection/level-selection.css")).toExternalForm());
     }
 
     public Scene getScene() {

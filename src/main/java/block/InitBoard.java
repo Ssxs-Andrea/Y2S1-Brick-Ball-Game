@@ -6,7 +6,7 @@ import java.util.Random;
 import brickGame.GameState;
 
 public class InitBoard {
-    private GameState gameState;
+    private final GameState gameState;
 
     public InitBoard(GameState gameState) {
         this.gameState = gameState;

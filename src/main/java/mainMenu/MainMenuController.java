@@ -9,7 +9,7 @@ public class MainMenuController {
 
     public MainMenuController(Main main) {
         this.main = main;
-        this.mainMenuView = new MainMenuView(this);
+        this.mainMenuView = new MainMenuView();
         handleNewGameButton();
         handleInstructionButton();
         handleHighScoreButton();

@@ -9,10 +9,10 @@ import javafx.event.EventHandler;
 import soundEffects.SoundEffects;
 
 public class LevelSelectionController {
-    private LevelSelectionModel model;
-    private LevelSelectionView view;
-    private GameState gameState;
-    private Main main;
+    private final LevelSelectionModel model;
+    private final LevelSelectionView view;
+    private final GameState gameState;
+    private final Main main;
 
     public LevelSelectionController(Main main,GameState gameState) {
         this.main = main;

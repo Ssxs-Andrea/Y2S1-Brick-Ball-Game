@@ -6,8 +6,8 @@ import brickGame.Main;
 import javafx.application.Platform;
 
 public class NextLevel {
-    private GameState gameState;
-    private Main main;
+    private final GameState gameState;
+    private final Main main;
 
     public NextLevel(GameState gameState, Main main) {
         this.gameState = gameState;

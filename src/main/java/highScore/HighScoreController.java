@@ -9,9 +9,9 @@ import java.util.Optional;
 import soundEffects.SoundEffects;
 
 public class HighScoreController {
-    private HighScoreManager highScoreManager;
-    private HighScoreView highScoreView;
-    private Main main;
+    private final HighScoreManager highScoreManager;
+    private final HighScoreView highScoreView;
+    private final Main main;
 
     public HighScoreController(Main main) {
         this.main = main;
