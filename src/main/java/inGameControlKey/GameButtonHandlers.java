@@ -2,6 +2,7 @@ package inGameControlKey;
 
 import brickGame.GameState;
 import brickGame.Main;
+import brickGame.ViewSwitcher;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import loadSave.LoadGame;
@@ -38,12 +39,14 @@ public class GameButtonHandlers {
             sound.playHitButtonSound();
             main.setGameElementsVisible();
             main.setButtonInvisible();
-            main.switchToLevelSelectionPage();
+            ViewSwitcher viewSwitcher = new ViewSwitcher(main);
+            viewSwitcher.switchToLevelSelectionPage();
         };
 
         backHandler = event -> {
             sound.playHitButtonSound();
-            main.switchToMainMenuPage();
+            ViewSwitcher viewSwitcher = new ViewSwitcher(main);
+            viewSwitcher.switchToMainMenuPage();
         };
     }
 }

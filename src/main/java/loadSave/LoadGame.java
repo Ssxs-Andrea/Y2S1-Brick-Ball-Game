@@ -1,7 +1,5 @@
 package loadSave;
 
-
-
 import block.Block;
 import block.BlockSerializable;
 import brickGame.GameState;
@@ -66,6 +64,9 @@ public class LoadGame {
 
         try {
             gameState.setLoadFromSave(true);
+
+            //GameInitializer gameInitializer = new GameInitializer(main);
+            //gameInitializer.initializeNewGame(false);
             main.initializeNewGame(false);
         } catch (Exception e) {
             e.printStackTrace();

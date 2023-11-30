@@ -21,15 +21,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import highScore.HighScoreController;
-import instruction.InstructionController;
 import levelLogic.NextLevel;
-import levelSelect.LevelSelectionController;
 import loadSave.ReadFile;
-import mainMenu.MainMenuController;
 import pauseGame.PauseHandler;
 import pauseGame.WindowsFocusManager;
 import soundEffects.SoundEffects;
-import soundEffects.BackgroundMusic;
+import soundEffects.VolumeController;
 import breakMovement.InitBreak;
 import ball.InitBall;
 import ball.BallPhysicsHandler;
@@ -45,6 +42,7 @@ import gamePower.Penalty;
 import gamePower.Bonus;
 
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
+
     private GameState gameState;
     private Circle ball;
     private Rectangle rect;
@@ -59,7 +57,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private Label levelLabel;
 
     private SoundEffects sound;
-    private BackgroundMusic backgroundMusic;
+    private VolumeController volumeController;
     Stage primaryStage;
 
     Button load = null;
@@ -76,12 +74,16 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     public void start(Stage primaryStage) {
         gameState = new GameState();
         this.primaryStage = primaryStage;
+
         pauseHandler = new PauseHandler(this);
         new WindowsFocusManager(this, primaryStage);
         keyEventHandler = new KeyEventHandler(this,gameState);
-        backgroundMusic = new BackgroundMusic();
-        backgroundMusic.playBackgroundMusic();
-        switchToMainMenuPage();
+
+        volumeController = new VolumeController();
+        volumeController.playBackgroundMusic();
+
+        ViewSwitcher viewSwitcher = new ViewSwitcher(this);
+        viewSwitcher.switchToMainMenuPage();
     }
 
     //initialize new game
@@ -182,8 +184,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         MouseDragHandler mouseDragHandler = new MouseDragHandler(gameState, rect);
         gameScene.setOnMouseDragged(mouseDragHandler::handleMouseDragged);
 
-        backgroundMusic = new BackgroundMusic();
-        backgroundMusic.setupKeyEvents(gameScene);
+        volumeController = new VolumeController();
+        volumeController.setupKeyEvents(gameScene);
 
         primaryStage.setTitle("Brick Ball Game");
         primaryStage.getIcons().add(new Image("/game-elements/icon.png"));
@@ -249,39 +251,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         engine.start();
     }
 
-    //page switch
-    public void switchToInstructionPage() {
-        InstructionController instructionController = InstructionController.createInstructionPage(this);
-        primaryStage.setTitle("Brick Ball Game");
-        primaryStage.getIcons().add(new Image("/game-elements/icon.png"));
-        primaryStage.setScene(instructionController.getScene());
-        primaryStage.setResizable(false);
-        primaryStage.show();
-    }
-    public void switchToHighScoreView() {
-        HighScoreController highScoreController = new HighScoreController(this);
-        primaryStage.setTitle("Brick Ball Game");
-        primaryStage.getIcons().add(new Image("/game-elements/icon.png"));
-        primaryStage.setScene(highScoreController.getHighScoreView().getScene());
-        primaryStage.setResizable(false);
-        primaryStage.show();
-    }
-    public void switchToMainMenuPage() {
-        MainMenuController mainMenuController = new MainMenuController(this);
-        primaryStage.setTitle("Brick Ball Game");
-        primaryStage.getIcons().add(new Image("/game-elements/icon.png"));
-        primaryStage.setScene(mainMenuController.getMainMenuView().getScene());
-        primaryStage.setResizable(false);
-        primaryStage.show();
-    }
-    public void switchToLevelSelectionPage(){
-        LevelSelectionController levelSelectionController = new LevelSelectionController(this,gameState);
-        primaryStage.setTitle("Brick Ball Game");
-        primaryStage.getIcons().add(new Image("/game-elements/icon.png"));
-        primaryStage.setScene(levelSelectionController.getLevelSelectionView().getScene());
-        primaryStage.setResizable(false);
-        primaryStage.show();
-    }
     public static void main(String[] args) {
         launch(args);
     }
@@ -486,6 +455,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     public void onTime(long time) {
         this.time = time;
     }
+
+    //getter class
     public GameState getGameState() {
         return gameState;
     }
@@ -497,5 +468,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     }
     public Pane getRoot() {
         return root;
+    }
+    public Stage getPrimaryStage() {
+        return primaryStage;
     }
 }

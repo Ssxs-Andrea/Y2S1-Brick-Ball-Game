@@ -36,6 +36,8 @@ public class NextLevel {
                 gameState.getChocos().clear();
                 gameState.setDestroyedBlockCount(0);
                 main.getRoot().getChildren().clear();
+                //GameInitializer gameInitializer = new GameInitializer(main);
+                //gameInitializer.initializeNewGame(false);
                 main.initializeNewGame(false);
 
             } catch (Exception e) {

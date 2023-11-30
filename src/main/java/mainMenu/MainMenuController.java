@@ -1,6 +1,8 @@
 package mainMenu;
 
+
 import brickGame.Main;
+import brickGame.ViewSwitcher;
 import soundEffects.SoundEffects;
 
 public class MainMenuController {
@@ -20,6 +22,9 @@ public class MainMenuController {
             SoundEffects sound = new SoundEffects();
             sound.initSoundEffects();
             sound.playHitButtonSound();
+
+            //GameInitializer gameInitializer = new GameInitializer(main);
+            //gameInitializer.initializeNewGame(true);
             main.initializeNewGame(true);
         });
     }
@@ -28,7 +33,8 @@ public class MainMenuController {
             SoundEffects sound = new SoundEffects();
             sound.initSoundEffects();
             sound.playHitButtonSound();
-            main.switchToInstructionPage();
+            ViewSwitcher viewSwitcher = new ViewSwitcher(main);
+            viewSwitcher.switchToInstructionPage();
         });
     }
     private void handleHighScoreButton() {
@@ -36,7 +42,8 @@ public class MainMenuController {
             SoundEffects sound = new SoundEffects();
             sound.initSoundEffects();
             sound.playHitButtonSound();
-            main.switchToHighScoreView();
+            ViewSwitcher viewSwitcher = new ViewSwitcher(main);
+            viewSwitcher.switchToHighScoreView();
         });
     }
     public MainMenuView getMainMenuView(){

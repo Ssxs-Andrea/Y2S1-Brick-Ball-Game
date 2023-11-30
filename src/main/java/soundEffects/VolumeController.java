@@ -8,35 +8,25 @@ import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
-import java.io.File;
-import java.net.URI;
 import java.util.Objects;
 
-public class BackgroundMusic {
+public class VolumeController {
 
-    private static MediaPlayer backgroundMusicPlayer;
+    private final BackgroundMusicPlayer backgroundMusicPlayer = new BackgroundMusicPlayer();
     private Popup volumePopup;
     private boolean isMuted = false;
     private double previousVolume = 1.0;
 
     public void playBackgroundMusic() {
-        File backgroundMusicFile = new File("src/main/resources/sound-effects/bg-music.m4a");
-        URI backgroundMusicURI = backgroundMusicFile.toURI();
-        Media backgroundMusicMedia = new Media(backgroundMusicURI.toString());
-        backgroundMusicPlayer = new MediaPlayer(backgroundMusicMedia);
-        backgroundMusicPlayer.setOnEndOfMedia(() -> backgroundMusicPlayer.seek(Duration.ZERO));
-        backgroundMusicPlayer.play();
+        backgroundMusicPlayer.playBackgroundMusic();
     }
 
     private void adjustVolume(double volume) {
-        if (backgroundMusicPlayer != null) {
-            backgroundMusicPlayer.setVolume(volume);
+        if (BackgroundMusicPlayer.backgroundMusicPlayer != null) {
+            BackgroundMusicPlayer.backgroundMusicPlayer.setVolume(volume);
             isMuted = volume == 0.0;
             if (!isMuted) {
                 previousVolume = volume;
@@ -45,13 +35,13 @@ public class BackgroundMusic {
     }
 
     private void toggleMute() {
-        if (backgroundMusicPlayer != null) {
+        if (BackgroundMusicPlayer.backgroundMusicPlayer != null) {
             if (isMuted) {
-                backgroundMusicPlayer.setVolume(previousVolume);
+                BackgroundMusicPlayer.backgroundMusicPlayer.setVolume(previousVolume);
                 isMuted = false;
             } else {
-                previousVolume = backgroundMusicPlayer.getVolume();
-                backgroundMusicPlayer.setVolume(0.0);
+                previousVolume = BackgroundMusicPlayer.backgroundMusicPlayer.getVolume();
+                BackgroundMusicPlayer.backgroundMusicPlayer.setVolume(0.0);
                 isMuted = true;
             }
         }
@@ -86,7 +76,7 @@ public class BackgroundMusic {
 
             VBox popupContent = new VBox();
             Label volumeLabel = new Label("Volume:");
-            Slider volumeSlider = new Slider(0, 1, backgroundMusicPlayer.getVolume());
+            Slider volumeSlider = new Slider(0, 1, BackgroundMusicPlayer.backgroundMusicPlayer.getVolume());
             volumeSlider.valueProperty().addListener((observable, oldValue, newValue) ->
                     adjustVolume(newValue.doubleValue()));
 
@@ -94,7 +84,7 @@ public class BackgroundMusic {
             muteCheckBox.setSelected(isMuted);
             muteCheckBox.setOnAction(event -> {
                 toggleMute();
-                volumeSlider.setValue(isMuted ? 0.0 : backgroundMusicPlayer.getVolume());
+                volumeSlider.setValue(isMuted ? 0.0 : BackgroundMusicPlayer.backgroundMusicPlayer.getVolume());
             });
 
             popupContent.getChildren().addAll(volumeLabel, volumeSlider, muteCheckBox);

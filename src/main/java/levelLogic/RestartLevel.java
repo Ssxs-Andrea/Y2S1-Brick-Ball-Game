@@ -40,6 +40,9 @@ public class RestartLevel {
                 gameState.setChocos(new ArrayList<>());
 
                 gameState.setDestroyedBlockCount(0);
+
+                //GameInitializer gameInitializer = new GameInitializer(main);
+                //gameInitializer.initializeNewGame(false);
                 main.initializeNewGame(false);
 
             } catch (Exception e) {

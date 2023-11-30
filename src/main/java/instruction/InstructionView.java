@@ -11,7 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import soundEffects.BackgroundMusic;
+import soundEffects.VolumeController;
 
 
 import java.util.Objects;
@@ -33,8 +33,8 @@ public class InstructionView {
         VBox vbox = new VBox(instructionsBox, backButton);
         scene = new Scene(vbox, 500, 700);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/instruction/instruction.css")).toExternalForm());
-        BackgroundMusic backgroundMusic = new BackgroundMusic();
-        backgroundMusic.setupKeyEvents(scene);
+        VolumeController volumeController = new VolumeController();
+        volumeController.setupKeyEvents(scene);
     }
 
     private VBox getInstructionsBox() {

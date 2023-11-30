@@ -1,5 +1,6 @@
 package instruction;
 
+import brickGame.ViewSwitcher;
 import javafx.scene.Scene;
 import brickGame.Main;
 import soundEffects.SoundEffects;
@@ -20,7 +21,8 @@ public class InstructionController {
             SoundEffects sound = new SoundEffects();
             sound.initSoundEffects();
             sound.playHitButtonSound();
-            main.switchToMainMenuPage();
+            ViewSwitcher viewSwitcher = new ViewSwitcher(main);
+            viewSwitcher.switchToMainMenuPage();
         });
     }
 

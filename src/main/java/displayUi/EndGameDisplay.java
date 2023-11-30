@@ -2,6 +2,7 @@ package displayUi;
 
 import brickGame.GameState;
 import brickGame.Main;
+import brickGame.ViewSwitcher;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -36,7 +37,8 @@ public class EndGameDisplay {
                 SoundEffects sound = new SoundEffects();
                 sound.initSoundEffects();
                 sound.playHitButtonSound();
-                main.switchToMainMenuPage();
+                ViewSwitcher viewSwitcher = new ViewSwitcher(main);
+                viewSwitcher.switchToMainMenuPage();
             });
 
             main.getRoot().getChildren().addAll(label, restart, mainMenu);
@@ -59,7 +61,8 @@ public class EndGameDisplay {
                 SoundEffects sound = new SoundEffects();
                 sound.initSoundEffects();
                 sound.playHitButtonSound();
-                main.switchToMainMenuPage();
+                ViewSwitcher viewSwitcher = new ViewSwitcher(main);
+                viewSwitcher.switchToMainMenuPage();
             });
             main.getRoot().getChildren().clear();
             main.getRoot().getChildren().addAll(label, mainMenu);

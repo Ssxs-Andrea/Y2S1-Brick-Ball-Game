@@ -1,6 +1,7 @@
 package levelLogic;
 
 import ball.CollisionFlagsResetter;
+
 import brickGame.GameState;
 import brickGame.Main;
 
@@ -31,6 +32,8 @@ public class RestartGame {
             gameState.getBlocks().clear();
             gameState.getChocos().clear();
 
+            //GameInitializer gameInitializer = new GameInitializer(main);
+            //gameInitializer.initializeNewGame(true);
             main.initializeNewGame(true);
         } catch (Exception e) {
             e.printStackTrace();

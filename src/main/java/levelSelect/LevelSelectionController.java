@@ -3,6 +3,7 @@ package levelSelect;
 import ball.CollisionFlagsResetter;
 import brickGame.GameState;
 import brickGame.Main;
+import brickGame.ViewSwitcher;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -33,6 +34,9 @@ public class LevelSelectionController {
         sound.playHitButtonSound();
         model.setSelectedLevel(level);
         playLevel(level - 1, 3, 0);
+
+        //GameInitializer gameInitializer = new GameInitializer(main);
+        //gameInitializer.initializeNewGame(false);
         main.initializeNewGame(false);
     }
 
@@ -41,7 +45,8 @@ public class LevelSelectionController {
             SoundEffects sound = new SoundEffects();
             sound.initSoundEffects();
             sound.playHitButtonSound();
-            main.switchToMainMenuPage();
+            ViewSwitcher viewSwitcher = new ViewSwitcher(main);
+            viewSwitcher.switchToMainMenuPage();
         };
     }
 
@@ -70,6 +75,9 @@ public class LevelSelectionController {
                 gameState.getBlocks().clear();
                 gameState.getChocos().clear();
                 gameState.setDestroyedBlockCount(0);
+
+                //GameInitializer gameInitializer = new GameInitializer(main);
+                //gameInitializer.initializeNewGame(false);
                 main.initializeNewGame(false);
 
             } catch (Exception e) {

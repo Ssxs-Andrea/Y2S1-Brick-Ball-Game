@@ -1,6 +1,7 @@
 package highScore;
 
 import brickGame.Main;
+import brickGame.ViewSwitcher;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextInputDialog;
@@ -29,7 +30,8 @@ public class HighScoreController {
         });
     }
     private void switchToMainMenu() {
-        main.switchToMainMenuPage();
+        ViewSwitcher viewSwitcher = new ViewSwitcher(main);
+        viewSwitcher.switchToMainMenuPage();
     }
 
     public void checkAndAddHighScore(final int score) {

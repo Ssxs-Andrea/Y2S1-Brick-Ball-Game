@@ -2,6 +2,7 @@ package pauseGame;
 
 import brickGame.GameState;
 import brickGame.Main;
+import brickGame.ViewSwitcher;
 import levelLogic.RestartLevel;
 import soundEffects.SoundEffects;
 import javafx.scene.Scene;
@@ -43,7 +44,8 @@ public class PauseMenuController {
             SoundEffects sound = new SoundEffects();
             sound.initSoundEffects();
             sound.playHitButtonSound();
-            main.switchToMainMenuPage();
+            ViewSwitcher viewSwitcher = new ViewSwitcher(main);
+            viewSwitcher.switchToMainMenuPage();
             pauseMenuView.setVisible(false);
         });
     }

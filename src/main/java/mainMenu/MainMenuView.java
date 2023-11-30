@@ -5,7 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import soundEffects.BackgroundMusic;
+import soundEffects.VolumeController;
 
 import java.util.Objects;
 
@@ -48,8 +48,8 @@ public class MainMenuView {
 
         scene = new Scene(root, 500, 700);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/main-menu/main-menu.css")).toExternalForm());
-        BackgroundMusic backgroundMusic = new BackgroundMusic();
-        backgroundMusic.setupKeyEvents(scene);
+        VolumeController volumeController = new VolumeController();
+        volumeController.setupKeyEvents(scene);
     }
 
     public Scene getScene() {
