@@ -4,7 +4,6 @@ import inGameControlKey.GameButtonHandlers;
 import inGameControlKey.GameButtons;
 import inGameControlKey.KeyEventHandler;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,16 +11,13 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import java.util.ArrayList;
-import java.util.Iterator;
+
 import java.util.List;
 
 import highScore.HighScoreController;
-import levelLogic.NextLevel;
 import loadSave.ReadFile;
 import pauseGame.PauseHandler;
 import pauseGame.WindowsFocusManager;
@@ -29,26 +25,18 @@ import soundEffects.SoundEffects;
 import soundEffects.VolumeController;
 import breakMovement.InitBreak;
 import ball.InitBall;
-import ball.BallPhysicsHandler;
-import ball.CollisionFlagsResetter;
 import breakMovement.MouseDragHandler;
 import block.InitBoard;
 import block.Block;
 import displayUi.EndGameDisplay;
 import displayUi.MessageLabelAnimator;
-import displayUi.ScoreLabelAnimator;
-import gamePower.Power;
-import gamePower.Penalty;
-import gamePower.Bonus;
 
-public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
+public class Main extends Application implements EventHandler<KeyEvent>{
 
+    private final OnAction onAction = new OnAction(this);
     private GameState gameState;
     private Circle ball;
     private Rectangle rect;
-
-    private long time = 0;
-    private long goldTime = 0;
 
     private GameEngine engine;
     private Pane root;
@@ -66,9 +54,10 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     Button levelSelect = null;
 
     public static boolean restartCertainLevel = false;
-    private Scene gameScene;
-    private PauseHandler pauseHandler;
+    public static PauseHandler pauseHandler;
     private KeyEventHandler keyEventHandler;
+
+    private Scene gameScene;
 
     @Override
     public void start(Stage primaryStage) {
@@ -247,7 +236,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     }
     public void restartEngine(){
         engine = new GameEngine();
-        engine.setOnAction(this);
+        engine.setOnAction(onAction);
         engine.start();
     }
 
@@ -262,198 +251,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     public void togglePause(Scene gameScene) {
         pauseHandler.togglePause(gameScene);
-    }
-
-    //on update
-    @Override
-    public void onUpdate() {
-        Platform.runLater(() -> {
-            updateUI();
-            checkGameOver();
-            updateGameElements();
-        });
-    }
-    private void updateUI() {
-        scoreLabel.setText("Score: " + gameState.getScore());
-        heartLabel.setText("Heart : " + gameState.getHeart());
-
-        rect.setX(gameState.getxBreak());
-        rect.setY(gameState.getyBreak());
-
-        gameState.getBall().setCenterX(gameState.getxBall());
-        gameState.getBall().setCenterY(gameState.getyBall());
-
-        updatePowerUpsUI(gameState.getChocos());
-        updatePowerUpsUI(gameState.getBooms());
-    }
-    private void updatePowerUpsUI(List<Power> powerUps) {
-        for (Power powerUp : powerUps) {
-            powerUp.PowerShape.setY(powerUp.y);
-        }
-    }
-    private void checkGameOver() {
-        if (gameState.getHeart() <= 0 || gameState.getScore() < 0) {
-            engine.stop();
-            handleGameOver();
-        }
-    }
-    private void handleGameOver() {
-        HighScoreController highScoreController = new HighScoreController(this);
-        highScoreController.checkAndAddHighScore(gameState.getScore());
-        EndGameDisplay.showGameOver(this, gameState);
-    }
-    private void updateGameElements() {
-        synchronized (gameState.getBlocks()) {
-            ArrayList<Block> blocksCopy = new ArrayList<>(gameState.getBlocks());
-
-            Iterator<Block> iterator = blocksCopy.iterator();
-
-            while (iterator.hasNext()) {
-                Block block = iterator.next();
-                int hitCode = block.checkHitToBlock(gameState.getxBall(), gameState.getyBall());
-
-                if (hitCode != Block.NO_HIT) {
-                    handleBlockHit(block, hitCode);
-                    iterator.remove();
-                }
-            }
-        }
-    }
-    private void handleBlockHit(Block block, int hitCode) {
-        gameState.setScore(gameState.getScore() + 1);
-        sound.playHitBlockSound();
-        ScoreLabelAnimator.animateScoreLabel(block.x, block.y, 1, this);
-
-        block.rect.setVisible(false);
-        block.isDestroyed = true;
-        gameState.setDestroyedBlockCount(gameState.getDestroyedBlockCount() + 1);
-        CollisionFlagsResetter.resetCollideFlags(gameState);
-
-        handleBlockType(block);
-        handleCollisionCode(hitCode);
-    }
-
-    private void handleChocoBlock(Block block) {
-        Bonus choco = new Bonus(block.row, block.column);
-        choco.timeCreated = time;
-        Platform.runLater(() -> root.getChildren().add(choco.PowerShape));
-        gameState.getChocos().add(choco);
-    }
-
-    private void handleStarBlock() {
-        goldTime = time;
-        gameState.getBall().setFill(new ImagePattern(new Image("game-elements/goldBall.png")));
-        System.out.println("gold ball");
-        root.getStyleClass().add("goldRoot");
-        gameState.setGoldStatus(true);
-    }
-
-    private void handleBoomBlock(Block block) {
-        Penalty boom = new Penalty(block.row, block.column);
-        boom.timeCreated = time;
-        Platform.runLater(() -> root.getChildren().add(boom.PowerShape));
-        gameState.getBooms().add(boom);
-    }
-
-    private void handleBlockType(Block block) {
-        if (block.type == Block.BLOCK_CHOCO) {
-            handleChocoBlock(block);
-        } else if (block.type == Block.BLOCK_STAR) {
-            handleStarBlock();
-        } else if (block.type == Block.BLOCK_BOOM) {
-            handleBoomBlock(block);
-        } else if (block.type == Block.BLOCK_HEART) {
-            gameState.setHeart(gameState.getHeart() + 1);
-        }
-    }
-    private void handleCollisionCode(int hitCode) {
-        if (hitCode == Block.HIT_RIGHT) {
-            gameState.setCollideToRightBlock(true);
-        } else if (hitCode == Block.HIT_BOTTOM) {
-            gameState.setCollideToBottomBlock(true);
-        } else if (hitCode == Block.HIT_LEFT) {
-            gameState.setCollideToLeftBlock(true);
-        } else if (hitCode == Block.HIT_TOP) {
-            gameState.setCollideToTopBlock(true);
-        }
-    }
-    @Override
-    public void onInit() {
-    }
-
-    //on physics update
-    @Override
-    public void onPhysicsUpdate() {
-        if (pauseHandler.isPaused()) return;
-        checkDestroyedCount();
-        applyBallPhysics();
-        updateGoldStatus();
-        updatePowerUps(gameState.getChocos(), +3, sound::playHitBonusSound);
-        updatePowerUps(gameState.getBooms(), -2, sound::playHitBombSound);
-    }
-    private void checkDestroyedCount() {
-        if (gameState.getDestroyedBlockCount() == gameState.getBlocks().size()) {
-            NextLevel nextLevel = new NextLevel(gameState, this);
-            nextLevel.nextLevel();
-            time = gameState.getTime();
-            goldTime = gameState.getGoldTime();
-        }
-    }
-
-    private void applyBallPhysics() {
-        BallPhysicsHandler ballPhysicsHandler = new BallPhysicsHandler(gameState, this);
-        ballPhysicsHandler.setPhysicsToBall();
-    }
-
-    private void updateGoldStatus() {
-        if (time - goldTime > 300) {
-            gameState.getBall().setFill(new ImagePattern(new Image("game-elements/ball.png")));
-            if (root != null) {
-                root.getStyleClass().remove("goldRoot");
-            }
-            gameState.setGoldStatus(false);
-        }
-    }
-
-    private void updatePowerUps(List<Power> powerUps, int scoreChange, Runnable soundEffect) {
-        double speedFactor = 2.0;
-
-        Iterator<Power> iterator = powerUps.iterator();
-        while (iterator.hasNext()) {
-            Power powerUp = iterator.next();
-
-            if (powerUp.y > gameState.getSceneHeight() || powerUp.taken) {
-                continue;
-            }
-
-            if (isPowerUpHitBreak(powerUp)) {
-                handlePowerUpHit(powerUp, scoreChange, soundEffect);
-                iterator.remove();
-            }
-
-            powerUp.y += speedFactor * (((time - powerUp.timeCreated) / 1000.000) + 1.000);
-        }
-    }
-
-    private boolean isPowerUpHitBreak(Power powerUp) {
-        return powerUp.y >= gameState.getyBreak() &&
-                powerUp.y <= gameState.getyBreak() + gameState.getBreakHeight() &&
-                powerUp.x >= gameState.getxBreak() &&
-                powerUp.x <= gameState.getxBreak() + gameState.getBreakWidth();
-    }
-
-    private void handlePowerUpHit(Power powerUp, int scoreChange, Runnable soundEffect) {
-        System.out.println("You Got it and " + scoreChange + " score for you");
-        soundEffect.run();
-        powerUp.taken = true;
-        powerUp.PowerShape.setVisible(false);
-        gameState.setScore(gameState.getScore() + scoreChange);
-        ScoreLabelAnimator.animateScoreLabel(powerUp.x, powerUp.y, scoreChange, this);
-    }
-
-    @Override
-    public void onTime(long time) {
-        this.time = time;
     }
 
     //getter class
@@ -471,5 +268,19 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     }
     public Stage getPrimaryStage() {
         return primaryStage;
+    }
+
+    public Label getHeartLabel() {
+        return heartLabel;
+    }
+    public Label getScoreLabel() {
+        return scoreLabel;
+    }
+
+    public SoundEffects getSound() {
+        return sound;
+    }
+    public Rectangle getRect() {
+        return rect;
     }
 }
