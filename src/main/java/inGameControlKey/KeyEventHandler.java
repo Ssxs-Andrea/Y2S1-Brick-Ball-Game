@@ -1,6 +1,7 @@
 package inGameControlKey;
 
 import breakMovement.BreakMovementHandler;
+import brickGame.GameInitializer;
 import brickGame.GameState;
 import brickGame.Main;
 import javafx.event.EventHandler;
@@ -8,13 +9,17 @@ import javafx.scene.input.KeyEvent;
 import levelLogic.RestartLevel;
 import loadSave.SaveGame;
 
+import static brickGame.Main.pauseHandler;
+
 public class KeyEventHandler implements EventHandler<KeyEvent> {
     private Main main;
     private GameState gameState;
+    private GameInitializer gameInitializer;
 
     public KeyEventHandler(Main main, GameState gameState) {
         this.main = main;
         this.gameState = gameState;
+        gameInitializer = new GameInitializer(main);
     }
 
     @Override
@@ -41,7 +46,7 @@ public class KeyEventHandler implements EventHandler<KeyEvent> {
                 gameState.setTime(gameState.getGoldTime());
                 break;
             case P:
-                main.togglePause(main.getGameScene());
+                pauseHandler.togglePause(gameInitializer.getGameScene());
                 break;
         }
     }

@@ -1,5 +1,6 @@
 package inGameControlKey;
 
+import brickGame.GameInitializer;
 import brickGame.GameState;
 import brickGame.Main;
 import brickGame.ViewSwitcher;
@@ -14,7 +15,7 @@ public class GameButtonHandlers {
     public EventHandler<ActionEvent> levelSelectHandler;
     public EventHandler<ActionEvent> backHandler;
 
-    public GameButtonHandlers(GameState gameState, Main main) {
+    public GameButtonHandlers(GameState gameState, Main main, GameInitializer gameInitializer) {
 
         SoundEffects sound = new SoundEffects();
         sound.initSoundEffects();
@@ -22,23 +23,23 @@ public class GameButtonHandlers {
             LoadGame loadGame = new LoadGame(gameState, main);
             loadGame.loadGame();
             sound.playHitButtonSound();
-            main.setGameElementsVisible();
-            main.restartEngine();
-            main.setButtonInvisible();
+            gameInitializer.setGameElementsVisible();
+            gameInitializer.restartEngine();
+            gameInitializer.setButtonInvisible();
             gameState.setLoadFromSave(false);
         };
 
         newGameHandler = event -> {
             sound.playHitButtonSound();
-            main.setGameElementsVisible();
-            main.restartEngine();
-            main.setButtonInvisible();
+            gameInitializer.setGameElementsVisible();
+            gameInitializer.restartEngine();
+            gameInitializer.setButtonInvisible();
         };
 
         levelSelectHandler = event -> {
             sound.playHitButtonSound();
-            main.setGameElementsVisible();
-            main.setButtonInvisible();
+            gameInitializer.setGameElementsVisible();
+            gameInitializer.setButtonInvisible();
             ViewSwitcher viewSwitcher = new ViewSwitcher(main);
             viewSwitcher.switchToLevelSelectionPage();
         };

@@ -7,6 +7,8 @@ import levelLogic.RestartLevel;
 import soundEffects.SoundEffects;
 import javafx.scene.Scene;
 
+import static brickGame.Main.pauseHandler;
+
 public class PauseMenuController {
     private Main main;
     private Scene scene;
@@ -26,7 +28,7 @@ public class PauseMenuController {
             SoundEffects sound = new SoundEffects();
             sound.initSoundEffects();
             sound.playHitButtonSound();
-            main.togglePause(scene);
+            pauseHandler.togglePause(scene);
             pauseMenuView.setVisible(false);
         });
 
@@ -34,7 +36,7 @@ public class PauseMenuController {
             SoundEffects sound = new SoundEffects();
             sound.initSoundEffects();
             sound.playHitButtonSound();
-            main.togglePause(scene);
+            pauseHandler.togglePause(scene);
             RestartLevel restartLevel = new RestartLevel(gameState, main);
             restartLevel.restartLevel(gameState.getLevel(), gameState.getSaveHeart(), gameState.getSaveScore());
             pauseMenuView.setVisible(false);
