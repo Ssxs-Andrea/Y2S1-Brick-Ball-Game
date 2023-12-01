@@ -14,6 +14,15 @@ public class BallPhysicsHandler {
     }
 
     public void setPhysicsToBall() {
+        updateBallPosition();
+        handleTopBottomCollision();//screen top bottom
+        handleBreakCollision();
+        handleLeftRightWallCollision();
+        checkWallCollisions();
+        checkBlockCollisions();
+    }
+
+    private void updateBallPosition(){
         if (gameState.isGoDownBall()) {
             gameState.setyBall(gameState.getyBall() + gameState.getvY());
         } else {
@@ -25,7 +34,9 @@ public class BallPhysicsHandler {
         } else {
             gameState.setxBall(gameState.getxBall() - gameState.getvX());
         }
+    }
 
+    private void handleTopBottomCollision(){
         if (gameState.getyBall() <= gameState.getBallRadius()) {
             CollisionFlagsResetter.resetCollideFlags(gameState);
             gameState.setGoDownBall(true);
@@ -41,8 +52,21 @@ public class BallPhysicsHandler {
                 ScoreLabelAnimator.animateScoreLabel((double) gameState.getSceneWidth() / 2, (double) gameState.getSceneHeight() / 2, -1, main);
             }
         }
+    }
 
+    private void handleLeftRightWallCollision(){
+        if (gameState.getxBall() >= gameState.getSceneWidth() - gameState.getBallRadius()) {
+            CollisionFlagsResetter.resetCollideFlags(gameState);
+            gameState.setCollideToRightWall(true);
+        }
 
+        if (gameState.getxBall() <= gameState.getBallRadius()) {
+            CollisionFlagsResetter.resetCollideFlags(gameState);
+            gameState.setCollideToLeftWall(true);
+        }
+    }
+
+    private void handleBreakCollision() {
         if (gameState.getyBall() >= gameState.getyBreak() - gameState.getBallRadius()) {
             if (gameState.getxBall() + gameState.getBallRadius() >= gameState.getxBreak() &&
                     gameState.getxBall() - gameState.getBallRadius() <= gameState.getxBreak() + gameState.getBreakWidth()) {
@@ -69,16 +93,6 @@ public class BallPhysicsHandler {
             }
         }
 
-        if (gameState.getxBall() >= gameState.getSceneWidth() - gameState.getBallRadius()) {
-            CollisionFlagsResetter.resetCollideFlags(gameState);
-            gameState.setCollideToRightWall(true);
-        }
-
-        if (gameState.getxBall() <= gameState.getBallRadius()) {
-            CollisionFlagsResetter.resetCollideFlags(gameState);
-            gameState.setCollideToLeftWall(true);
-        }
-
         if (gameState.isCollideToBreak()) {
             if (gameState.isCollideToBreakAndMoveToRight()) {
                 gameState.setGoRightBall(true);
@@ -86,17 +100,9 @@ public class BallPhysicsHandler {
                 gameState.setGoRightBall(false);
             }
         }
+    }
 
-        // Wall Collide
-        if (gameState.isCollideToRightWall()) {
-            gameState.setGoRightBall(false);
-        }
-
-        if (gameState.isCollideToLeftWall()) {
-            gameState.setGoRightBall(true);
-        }
-
-        // Block Collide
+    private void checkBlockCollisions() {
         if (gameState.isCollideToRightBlock()) {
             gameState.setGoRightBall(true);
         }
@@ -111,6 +117,17 @@ public class BallPhysicsHandler {
 
         if (gameState.isCollideToBottomBlock()) {
             gameState.setGoDownBall(true);
+        }
+    }
+
+    private void checkWallCollisions() {
+        // Wall Collide
+        if (gameState.isCollideToRightWall()) {
+            gameState.setGoRightBall(false);
+        }
+
+        if (gameState.isCollideToLeftWall()) {
+            gameState.setGoRightBall(true);
         }
     }
 }

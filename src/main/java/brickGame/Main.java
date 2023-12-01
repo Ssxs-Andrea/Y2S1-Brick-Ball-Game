@@ -1,12 +1,12 @@
 package brickGame;
 
-import inGameControlKey.KeyEventHandler;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import inGameControlKey.KeyEventHandler;
 import pauseGame.PauseHandler;
 import pauseGame.WindowsFocusManager;
 import soundEffects.VolumeController;

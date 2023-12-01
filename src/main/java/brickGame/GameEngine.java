@@ -18,13 +18,8 @@ public class GameEngine {
         return isRunning;
     }
 
-    private void Initialize() {
-        onAction.onInit();
-    }
-
     public void start() {
         time = 0;
-        Initialize();
         startGameLoop();
         isRunning = true;
     }
@@ -61,8 +56,6 @@ public class GameEngine {
     }
 
     public interface OnAction {
-        void onInit();
-
         void onUpdate();
 
         void onPhysicsUpdate();
