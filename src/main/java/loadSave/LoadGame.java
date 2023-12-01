@@ -64,9 +64,6 @@ public class LoadGame {
 
         try {
             gameState.setLoadFromSave(true);
-
-            //GameInitializer gameInitializer = new GameInitializer(main);
-            //gameInitializer.initializeNewGame(false);
             main.initializeNewGame(false);
         } catch (Exception e) {
             e.printStackTrace();

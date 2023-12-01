@@ -71,7 +71,6 @@ public class GameEngine {
     }
 
     private abstract class PausableAnimationTimer extends AnimationTimer {
-
         private boolean isPaused = false;
 
         public void pause() {

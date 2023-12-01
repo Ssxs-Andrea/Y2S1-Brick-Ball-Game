@@ -22,9 +22,6 @@ public class MainMenuController {
             SoundEffects sound = new SoundEffects();
             sound.initSoundEffects();
             sound.playHitButtonSound();
-
-            //GameInitializer gameInitializer = new GameInitializer(main);
-            //gameInitializer.initializeNewGame(true);
             main.initializeNewGame(true);
         });
     }

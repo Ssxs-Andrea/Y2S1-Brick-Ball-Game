@@ -34,9 +34,6 @@ public class LevelSelectionController {
         sound.playHitButtonSound();
         model.setSelectedLevel(level);
         playLevel(level - 1, 3, 0);
-
-        //GameInitializer gameInitializer = new GameInitializer(main);
-        //gameInitializer.initializeNewGame(false);
         main.initializeNewGame(false);
     }
 
@@ -75,9 +72,6 @@ public class LevelSelectionController {
                 gameState.getBlocks().clear();
                 gameState.getChocos().clear();
                 gameState.setDestroyedBlockCount(0);
-
-                //GameInitializer gameInitializer = new GameInitializer(main);
-                //gameInitializer.initializeNewGame(false);
                 main.initializeNewGame(false);
 
             } catch (Exception e) {
