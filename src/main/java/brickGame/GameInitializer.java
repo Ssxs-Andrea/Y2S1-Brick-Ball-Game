@@ -42,10 +42,9 @@ public class GameInitializer {
 
     public GameInitializer(Main main) {
         this.main = main;
-        this.onAction = new OnAction(main);
+        this.onAction = new OnAction(main, this);
     }
 
-    //initialize new game
     public void initializeNewGame(boolean fromMainMenu) {
 
         if (fromMainMenu) resetGameForMainMenu();

@@ -3,19 +3,15 @@ package brickGame;
 import inGameControlKey.KeyEventHandler;
 import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import pauseGame.PauseHandler;
 import pauseGame.WindowsFocusManager;
-import soundEffects.SoundEffects;
 import soundEffects.VolumeController;
 
 public class Main extends Application implements EventHandler<KeyEvent>{
-
     final GameInitializer gameInitializer = new GameInitializer(this);
     private GameState gameState;
     KeyEventHandler keyEventHandler;
@@ -53,7 +49,7 @@ public class Main extends Application implements EventHandler<KeyEvent>{
     public void handle(KeyEvent event) {
         keyEventHandler.handle(event);
     }
-    //getter class
+    //getter class to access methods from main
     public GameState getGameState() {
         return gameState;
     }
@@ -65,17 +61,5 @@ public class Main extends Application implements EventHandler<KeyEvent>{
     }
     public Stage getPrimaryStage() {
         return primaryStage;
-    }
-    public Label getHeartLabel() {
-        return gameInitializer.getHeartLabel();
-    }
-    public Label getScoreLabel() {
-        return gameInitializer.getScoreLabel();
-    }
-    public SoundEffects getSound() {
-        return gameInitializer.getSound();
-    }
-    public Rectangle getRect() {
-        return gameInitializer.getRect();
     }
 }

@@ -24,9 +24,11 @@ public class OnAction implements GameEngine.OnAction {
     private final Main main;
     private long time = 0;
     private long goldTime = 0;
+    private GameInitializer gameInitializer;
 
-    public OnAction(Main main) {
+    public OnAction(Main main, GameInitializer gameInitializer) {
         this.main = main;
+        this.gameInitializer = gameInitializer;
     }
 
     //on update
@@ -40,11 +42,11 @@ public class OnAction implements GameEngine.OnAction {
     }
 
     void updateUI() {
-        main.getScoreLabel().setText("Score: " + main.getGameState().getScore());
-        main.getHeartLabel().setText("Heart : " + main.getGameState().getHeart());
+        gameInitializer.getScoreLabel().setText("Score: " + main.getGameState().getScore());
+        gameInitializer.getHeartLabel().setText("Heart : " + main.getGameState().getHeart());
 
-        main.getRect().setX(main.getGameState().getxBreak());
-        main.getRect().setY(main.getGameState().getyBreak());
+        gameInitializer.getRect().setX(main.getGameState().getxBreak());
+        gameInitializer.getRect().setY(main.getGameState().getyBreak());
 
         main.getGameState().getBall().setCenterX(main.getGameState().getxBall());
         main.getGameState().getBall().setCenterY(main.getGameState().getyBall());
@@ -92,7 +94,7 @@ public class OnAction implements GameEngine.OnAction {
 
     void handleBlockHit(Block block, int hitCode) {
         main.getGameState().setScore(main.getGameState().getScore() + 1);
-        main.getSound().playHitBlockSound();
+        gameInitializer.getSound().playHitBlockSound();
         ScoreLabelAnimator.animateScoreLabel(block.x, block.y, 1, main);
 
         block.rect.setVisible(false);
@@ -160,8 +162,8 @@ public class OnAction implements GameEngine.OnAction {
         checkDestroyedCount();
         applyBallPhysics();
         updateGoldStatus();
-        updatePowerUps(main.getGameState().getChocos(), +3, main.getSound()::playHitBonusSound);
-        updatePowerUps(main.getGameState().getBooms(), -2, main.getSound()::playHitBombSound);
+        updatePowerUps(main.getGameState().getChocos(), +3, gameInitializer.getSound()::playHitBonusSound);
+        updatePowerUps(main.getGameState().getBooms(), -2, gameInitializer.getSound()::playHitBombSound);
     }
 
     void checkDestroyedCount() {
