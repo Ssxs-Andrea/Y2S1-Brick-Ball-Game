@@ -1,4 +1,4 @@
-package brickGame;
+package gameAction;
 
 import ball.CollisionFlagsResetter;
 import block.Block;
@@ -58,7 +58,7 @@ public class OnUpdate {
 
     void updateGameElements() {
         synchronized (onAction.getMain().getGameState().getBlocks()) {
-            ArrayList<Block> blocksCopy = new ArrayList<Block>(onAction.getMain().getGameState().getBlocks());
+            ArrayList<Block> blocksCopy = new ArrayList<>(onAction.getMain().getGameState().getBlocks());
 
             Iterator<Block> iterator = blocksCopy.iterator();
 

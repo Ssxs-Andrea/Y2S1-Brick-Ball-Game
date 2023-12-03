@@ -3,7 +3,7 @@ package block;
 import javafx.scene.paint.Color;
 
 public class BlockSizeGetter {
-    private static Block block = new Block(-1, -1, Color.TRANSPARENT, 99);
+    private static final Block block = new Block(-1, -1, Color.TRANSPARENT, 99);
 
     public static int getPaddingTop() {
         return block.paddingTop;

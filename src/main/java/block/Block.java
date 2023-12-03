@@ -33,8 +33,7 @@ public class Block implements Serializable {
     public static int BLOCK_STAR = 101;
     public static int BLOCK_HEART = 102;
     public static int BLOCK_BOOM = 103;
-    private int ballRadius = 10;
-    private double epsilon = 0.01 * height;
+    private final double epsilon = 0.01 * height;
 
     public Block(int row, int column, Color color, int type) {
         this.row = row;
@@ -63,6 +62,7 @@ public class Block implements Serializable {
             return NO_HIT;
         }
 
+        int ballRadius = 10;
         if (yBall  >= y - epsilon && yBall  <= y + height + epsilon && xBall >= x + width && xBall - ballRadius <= x + width ) {
             return HIT_RIGHT;
         }
@@ -75,7 +75,7 @@ public class Block implements Serializable {
             return HIT_TOP;
         }
 
-        if (xBall  + ballRadius >= x  && xBall - ballRadius <= x + width  && yBall  <= y + height + epsilon && yBall + ballRadius>= y + height ) {
+        if (xBall  + ballRadius >= x  && xBall - ballRadius <= x + width  && yBall  <= y + height + epsilon && yBall + ballRadius >= y + height ) {
             return HIT_BOTTOM;
         }
 

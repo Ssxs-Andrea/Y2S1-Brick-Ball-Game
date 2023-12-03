@@ -1,4 +1,4 @@
-package brickGame;
+package gameAction;
 
 import javafx.animation.AnimationTimer;
 

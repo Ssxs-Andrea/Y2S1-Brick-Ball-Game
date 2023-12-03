@@ -6,8 +6,8 @@ import brickGame.GameState;
 import brickGame.Main;
 
 public class RestartGame {
-    private GameState gameState;
-    private Main main;
+    private final GameState gameState;
+    private final Main main;
 
     public RestartGame(GameState gameState, Main main) {
         this.main = main;

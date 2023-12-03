@@ -3,15 +3,17 @@ package pauseGame;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 
+import java.util.Objects;
+
 public class PauseMenuView extends StackPane {
     private Button resumeButton;
     private Button restartButton;
     private Button mainMenuButton;
 
-    public PauseMenuView(PauseMenuController controller) {
+    public PauseMenuView() {
         initializeButtons();
         getChildren().addAll(resumeButton, restartButton, mainMenuButton);
-        getStylesheets().add(getClass().getResource("/pause-menu/pause-menu.css").toExternalForm());
+        getStylesheets().add(Objects.requireNonNull(getClass().getResource("/pause-menu/pause-menu.css")).toExternalForm());
     }
 
     private void initializeButtons() {

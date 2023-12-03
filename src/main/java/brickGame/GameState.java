@@ -8,37 +8,23 @@ import block.Block;
 import gamePower.Power;
 
 public class GameState {
-
     private int level;
     private double xBreak;
     private double centerBreakX;
     private double yBreak;
-    private final int breakWidth = 130;
-    private final int breakHeight = 30;
     private final int halfBreakWidth = getBreakWidth() / 2;
-
-    private final int sceneWidth = 500;
-    private final int sceneHeight = 700;
-
     private Circle ball;
     private double xBall;
     private double yBall;
-
     private boolean isGoldStatus = false;
     private boolean isExistHeartBlock = false;
-
     private Rectangle rect;
     private int ballRadius = 10;
-
     private int destroyedBlockCount = 0;
-
     private int heart = 3;
     private int score = 0;
-    private boolean isPaused;
     private long time = 0;
     private long goldTime = 0;
-
-
     private ArrayList<Block> blocks = new ArrayList<>();
     private ArrayList<Power> chocos = new ArrayList<>();
     private ArrayList<Power> booms = new ArrayList<>();
@@ -59,11 +45,8 @@ public class GameState {
     };
 
     private boolean loadFromSave = false;
-
     private int saveHeart = 3;
     private int saveScore = 0;
-
-
     private boolean goDownBall = true;
     private boolean goRightBall = true;
     private boolean collideToBreak = false;
@@ -76,7 +59,6 @@ public class GameState {
     private boolean collideToTopBlock = false;
 
     private double vX = 2.000;
-    private final double vY = 2.000;
 
     public GameState() {
 
@@ -84,19 +66,19 @@ public class GameState {
         this.setxBreak(0.0);
         this.setCenterBreakX(0.0);
         this.setyBreak(640.0);
-        this.setBall(new Circle()); // Initialize the ball (you might want to set its properties)
+        this.setBall(new Circle());
         this.setxBall(0.0);
         this.setyBall(0.0);
         this.setGoldStatus(false);
         this.setExistHeartBlock(false);
-        this.setRect(new Rectangle()); // Initialize the rectangle (you might want to set its properties)
+        this.setRect(new Rectangle());
         this.setBallRadius(10);
         this.setDestroyedBlockCount(0);
         this.setHeart(3);
         this.setScore(0);
 
-        this.setBlocks(new ArrayList<>()); // Initialize the ArrayList
-        this.setChocos(new ArrayList<>()); // Initialize the ArrayList
+        this.setBlocks(new ArrayList<>());
+        this.setChocos(new ArrayList<>());
         this.setColors(new Color[]{
                 Color.MAGENTA,
                 Color.RED,
@@ -128,7 +110,6 @@ public class GameState {
         this.setCollideToTopBlock(false);
         this.setvX(2.000);
     }
-
 
     public int getLevel() {
         return level;
@@ -163,11 +144,11 @@ public class GameState {
     }
 
     public int getBreakWidth() {
-        return breakWidth;
+        return 130;
     }
 
     public int getBreakHeight() {
-        return breakHeight;
+        return 30;
     }
 
     public int getHalfBreakWidth() {
@@ -175,11 +156,11 @@ public class GameState {
     }
 
     public int getSceneWidth() {
-        return sceneWidth;
+        return 500;
     }
 
     public int getSceneHeight() {
-        return sceneHeight;
+        return 700;
     }
 
     public Circle getBall() {
@@ -286,19 +267,13 @@ public class GameState {
         this.colors = colors;
     }
 
-
-
-
     public boolean isLoadFromSave() {
-        return loadFromSave;
+        return !loadFromSave;
     }
 
     public void setLoadFromSave(boolean loadFromSave) {
         this.loadFromSave = loadFromSave;
     }
-
-
-
 
     public int getSaveHeart() {
         return saveHeart;
@@ -315,7 +290,6 @@ public class GameState {
     public void setSaveScore(int saveScore) {
         this.saveScore = saveScore;
     }
-
 
     public boolean isGoDownBall() {
         return goDownBall;
@@ -406,15 +380,7 @@ public class GameState {
     }
 
     public double getvY() {
-        return vY;
-    }
-
-    public boolean isPaused() {
-        return isPaused;
-    }
-
-    public void setPaused(boolean paused) {
-        isPaused = paused;
+        return 2.000;
     }
 
     public long getTime() {

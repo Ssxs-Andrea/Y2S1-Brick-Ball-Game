@@ -1,7 +1,7 @@
 package highScore;
 
 import brickGame.Main;
-import brickGame.ViewSwitcher;
+import displayUi.ViewSwitcher;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextInputDialog;

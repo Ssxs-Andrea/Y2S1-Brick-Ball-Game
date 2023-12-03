@@ -6,7 +6,7 @@ public class BreakMovementHandler {
     private static final int LEFT = -1;
     private static final int RIGHT = 1;
 
-    private GameState gameState;
+    private final GameState gameState;
 
     public BreakMovementHandler(GameState gameState) {
         this.gameState = gameState;

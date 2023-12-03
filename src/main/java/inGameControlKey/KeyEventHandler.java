@@ -12,25 +12,25 @@ import loadSave.SaveGame;
 import static brickGame.Main.pauseHandler;
 
 public class KeyEventHandler implements EventHandler<KeyEvent> {
-    private Main main;
-    private GameState gameState;
-    private GameInitializer gameInitializer;
+    private final Main main;
+    private final GameState gameState;
+    private final GameInitializer gameInitializer;
+    private BreakMovementHandler movementHandler;
 
     public KeyEventHandler(Main main, GameState gameState) {
         this.main = main;
         this.gameState = gameState;
         gameInitializer = new GameInitializer(main);
+        movementHandler = new BreakMovementHandler(main.getGameState());
     }
 
     @Override
     public void handle(KeyEvent event) {
         switch (event.getCode()) {
             case LEFT:
-                BreakMovementHandler movementHandler = new BreakMovementHandler(main.getGameState());
                 movementHandler.moveLeft();
                 break;
             case RIGHT:
-                movementHandler = new BreakMovementHandler(main.getGameState());
                 movementHandler.moveRight();
                 break;
             case S:

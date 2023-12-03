@@ -3,7 +3,7 @@ package levelSelect;
 import ball.CollisionFlagsResetter;
 import brickGame.GameState;
 import brickGame.Main;
-import brickGame.ViewSwitcher;
+import displayUi.ViewSwitcher;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -33,7 +33,7 @@ public class LevelSelectionController {
         sound.initSoundEffects();
         sound.playHitButtonSound();
         model.setSelectedLevel(level);
-        playLevel(level - 1, 3, 0);
+        playLevel(level - 1);
         main.initializeNewGame(false);
     }
 
@@ -47,12 +47,12 @@ public class LevelSelectionController {
         };
     }
 
-    private void playLevel(int level, int heart, int score) {
+    private void playLevel(int level) {
         gameState.setLevel(level - 1);
-        gameState.setHeart(heart);
-        gameState.setScore(score);
-        gameState.setSaveScore(score);
-        gameState.setSaveHeart(heart);
+        gameState.setHeart(3);
+        gameState.setScore(0);
+        gameState.setSaveScore(0);
+        gameState.setSaveHeart(3);
 
         Platform.runLater(() -> {
             try {

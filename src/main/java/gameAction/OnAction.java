@@ -1,5 +1,7 @@
-package brickGame;
+package gameAction;
 
+import brickGame.GameInitializer;
+import brickGame.Main;
 import javafx.application.Platform;
 
 import static brickGame.Main.pauseHandler;

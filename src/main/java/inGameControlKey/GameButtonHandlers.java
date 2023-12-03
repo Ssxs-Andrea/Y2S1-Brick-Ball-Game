@@ -3,7 +3,7 @@ package inGameControlKey;
 import brickGame.GameInitializer;
 import brickGame.GameState;
 import brickGame.Main;
-import brickGame.ViewSwitcher;
+import displayUi.ViewSwitcher;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import loadSave.LoadGame;

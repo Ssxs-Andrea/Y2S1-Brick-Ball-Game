@@ -7,7 +7,6 @@ public class BallPhysicsHandler {
     private final GameState gameState;
     private final Main main;
 
-
     public BallPhysicsHandler(GameState gameState, Main main) {
         this.gameState = gameState;
         this.main = main;
@@ -15,7 +14,7 @@ public class BallPhysicsHandler {
 
     public void setPhysicsToBall() {
         updateBallPosition();
-        handleTopBottomCollision();//screen top bottom
+        handleTopBottomCollision();
         handleBreakCollision();
         handleLeftRightWallCollision();
         checkWallCollisions();
@@ -121,7 +120,6 @@ public class BallPhysicsHandler {
     }
 
     private void checkWallCollisions() {
-        // Wall Collide
         if (gameState.isCollideToRightWall()) {
             gameState.setGoRightBall(false);
         }

@@ -2,7 +2,6 @@ package displayUi;
 
 import brickGame.GameState;
 import brickGame.Main;
-import brickGame.ViewSwitcher;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

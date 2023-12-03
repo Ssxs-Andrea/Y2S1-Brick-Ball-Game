@@ -2,7 +2,7 @@ package mainMenu;
 
 
 import brickGame.Main;
-import brickGame.ViewSwitcher;
+import displayUi.ViewSwitcher;
 import soundEffects.SoundEffects;
 
 public class MainMenuController {

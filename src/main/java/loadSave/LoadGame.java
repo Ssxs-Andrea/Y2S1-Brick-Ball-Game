@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
 
 public class LoadGame {
 
-    private GameState gameState;
-    private Main main;
+    private final GameState gameState;
+    private final Main main;
 
     public LoadGame(GameState gameState, Main main) {
         this.gameState = gameState;

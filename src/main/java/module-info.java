@@ -11,4 +11,8 @@ module brickGame {
     exports displayUi;
     exports pauseGame;
     exports soundEffects;
+    exports gamePower;
+    opens displayUi to javafx.fxml;
+    exports gameAction;
+    opens gameAction to javafx.fxml;
 }

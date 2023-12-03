@@ -1,5 +1,6 @@
-package brickGame;
+package displayUi;
 
+import brickGame.Main;
 import highScore.HighScoreController;
 import instruction.InstructionController;
 import levelSelect.LevelSelectionController;
@@ -10,7 +11,7 @@ import javafx.stage.Stage;
 
 public class ViewSwitcher {
     private final Main main;
-    private Stage primaryStage;
+    private final Stage primaryStage;
 
     public ViewSwitcher(Main main) {
         this.main = main;

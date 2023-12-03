@@ -7,7 +7,6 @@ import javafx.scene.shape.Circle;
 import java.util.Random;
 
 public class InitBall {
-
     private final GameState gameState;
 
     public InitBall(GameState gameState) {

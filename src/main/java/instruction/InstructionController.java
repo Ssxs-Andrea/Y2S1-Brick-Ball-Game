@@ -1,13 +1,13 @@
 package instruction;
 
-import brickGame.ViewSwitcher;
+import displayUi.ViewSwitcher;
 import javafx.scene.Scene;
 import brickGame.Main;
 import soundEffects.SoundEffects;
 
 public class InstructionController {
-    private InstructionView view;
-    private Main main;
+    private final InstructionView view;
+    private final Main main;
 
     private InstructionController(InstructionView view, Main main) {
         this.view = view;

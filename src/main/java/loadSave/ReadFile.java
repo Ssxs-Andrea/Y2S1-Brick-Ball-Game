@@ -1,6 +1,5 @@
 package loadSave;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -36,9 +35,14 @@ public class ReadFile {
     public long             time;
     public long             goldTime;
     public double           vX;
-    public ArrayList<BlockSerializable> blocks = new ArrayList<BlockSerializable>();
+    public ArrayList<BlockSerializable> blocks;
 
     SaveGame loadSave = new SaveGame();
+
+    public ReadFile() {
+        blocks = new ArrayList<>();
+    }
+
     public boolean doesSaveFileExist() {
         Path savePath = Paths.get(loadSave.getSavePath());
         //check if the file exists
@@ -55,7 +59,7 @@ public class ReadFile {
     public void read() {
 
         try {
-            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(new File(loadSave.getSavePath())));
+            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(loadSave.getSavePath()));
 
             level = inputStream.readInt();
             score = inputStream.readInt();

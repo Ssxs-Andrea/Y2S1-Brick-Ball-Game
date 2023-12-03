@@ -1,13 +1,12 @@
 package breakMovement;
 
 import brickGame.GameState;
-import javafx.application.Platform;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 
 public class MouseDragHandler {
-    private GameState gameState;
-    private Rectangle rect;
+    private final GameState gameState;
+    private final Rectangle rect;
 
     public MouseDragHandler(GameState gameState, Rectangle rect) {
         this.gameState = gameState;

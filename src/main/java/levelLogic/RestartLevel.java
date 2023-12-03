@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 
 public class RestartLevel {
-    private GameState gameState;
-    private Main main;
+    private final GameState gameState;
+    private final Main main;
 
     public RestartLevel(GameState gameState, Main main) {
         this.main = main;
@@ -17,7 +17,7 @@ public class RestartLevel {
     }
 
     public void restartLevel(int level1, int heart1, int score1) {
-        main.restartCertainLevel = true;
+        Main.restartCertainLevel = true;
         gameState.setLevel(level1 - 1);
         gameState.setHeart(heart1);
         gameState.setScore(score1);

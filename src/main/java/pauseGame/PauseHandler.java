@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 public class PauseHandler {
     private boolean isPaused;
     private PauseMenu pauseMenu;
-    private Main main;
+    private final Main main;
 
     public PauseHandler(Main main) {
         this.main = main;

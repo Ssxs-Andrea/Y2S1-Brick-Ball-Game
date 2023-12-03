@@ -2,7 +2,7 @@ package pauseGame;
 
 import brickGame.GameState;
 import brickGame.Main;
-import brickGame.ViewSwitcher;
+import displayUi.ViewSwitcher;
 import levelLogic.RestartLevel;
 import soundEffects.SoundEffects;
 import javafx.scene.Scene;
@@ -10,16 +10,16 @@ import javafx.scene.Scene;
 import static brickGame.Main.pauseHandler;
 
 public class PauseMenuController {
-    private Main main;
-    private Scene scene;
-    private GameState gameState;
-    private PauseMenuView pauseMenuView;
+    private final Main main;
+    private final Scene scene;
+    private final GameState gameState;
+    private final PauseMenuView pauseMenuView;
 
     public PauseMenuController(Main main, Scene scene, GameState gameState) {
         this.main = main;
         this.scene = scene;
         this.gameState = gameState;
-        this.pauseMenuView = new PauseMenuView(this);
+        this.pauseMenuView = new PauseMenuView();
         initializeButtons();
     }
 

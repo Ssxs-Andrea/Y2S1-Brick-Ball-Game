@@ -8,7 +8,7 @@ import brickGame.GameState; // Import GameState
 
 public class InitBreak {
 
-    private GameState gameState; // Change the reference type to GameState
+    private final GameState gameState;
 
     public InitBreak(GameState gameState) {
         this.gameState = gameState;

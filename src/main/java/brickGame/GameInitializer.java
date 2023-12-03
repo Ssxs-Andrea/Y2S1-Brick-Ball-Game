@@ -7,6 +7,8 @@ import breakMovement.InitBreak;
 import breakMovement.MouseDragHandler;
 import displayUi.EndGameDisplay;
 import displayUi.MessageLabelAnimator;
+import gameAction.GameEngine;
+import gameAction.OnAction;
 import highScore.HighScoreController;
 import inGameControlKey.GameButtonHandlers;
 import inGameControlKey.GameButtons;
@@ -24,6 +26,7 @@ import soundEffects.VolumeController;
 import java.util.List;
 
 public class GameInitializer {
+
     private final Main main;
     private Scene gameScene;
     final OnAction onAction;
@@ -50,20 +53,20 @@ public class GameInitializer {
         if (fromMainMenu) resetGameForMainMenu();
         clearRootAndPauseHandler();
         initializeSoundEffects();
-        if (!main.getGameState().isLoadFromSave()) handleGameSetup();
+        if (main.getGameState().isLoadFromSave()) handleGameSetup();
         setupGameButtonsAndHandlers();
         initializeRootAndLabels();
 
         if (!main.getGameState().getBlocks().isEmpty()) {
             setupGameSceneAndKeyEvents();
 
-            if (main.getGameState().getLevel() == 1 && !fromMainMenu && !main.getGameState().isLoadFromSave()) {
+            if (main.getGameState().getLevel() == 1 && !fromMainMenu && main.getGameState().isLoadFromSave()) {
                 setGameElementsVisible();
                 setButtonInvisible();
                 restartEngine();
                 Main.restartCertainLevel = false;
             }
-            if (!main.getGameState().isLoadFromSave()) {
+            if (main.getGameState().isLoadFromSave()) {
                 if (main.getGameState().getLevel() > 1 && main.getGameState().getLevel() < 20) {
                     setGameElementsVisible();
                     setButtonInvisible();
@@ -179,7 +182,7 @@ public class GameInitializer {
         levelLabel.setTranslateY(20);
         heartLabel = new Label("Heart : " + main.getGameState().getHeart());
         heartLabel.setTranslateX(main.getGameState().getSceneWidth() - 75);
-        if (!main.getGameState().isLoadFromSave()) {
+        if (main.getGameState().isLoadFromSave()) {
             root.getChildren().addAll(rect, main.getGameState().getBall(), scoreLabel, heartLabel, levelLabel, newGame, back);
             ReadFile loadSave = new ReadFile();
             if (loadSave.doesSaveFileExist()) {
