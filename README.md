@@ -119,6 +119,7 @@ Added mouse control functionality to the game, allowing the player to interact w
 
 Break Movement:
 The player can drag and move the break using the mouse.
+Statements added to ensure the break is not out of bounds.
 ### j. Restart Level
 
 Implemented the ability for the player to restart the current level.
@@ -129,9 +130,11 @@ The player can press the "R" key to initiate the restart of the current level.
 Pause Menu Option:
 Added a "Restart Level" option in the Pause Menu.
 Provides an alternative method for restarting the level during gameplay.
+
+The level now begins with the initial heart count and score when the player first enters this level.
 ### k. Penalty Block Implementation
 
-Introduced a new block type that, when hit, triggers a penalty in the form of a falling bomb.
+Introduced a new block type that, when hit, triggers a penalty in the form of a falling bomb which will only be generated starting from level 5.
 
 Implemented the animation that when the penalty block is hit, the bomb will start falling from the block to the bottom of the screen.
 
@@ -159,12 +162,13 @@ Adds a strategic challenge for players to navigate through without receiving pen
 
 Addressed the bug where initially, the game could be saved but not loaded.
 
-Save File Existence Check:
-Implemented a statement to check if the save.mdds file exists at the beginning of the game.
+- Implemented a statement to check if the save.mdds file exists at the beginning of the game.
 
-Display Load Game Button:
-If the save.mdds file exists, the "Load Game" button is displayed on the game scene start page.
-This provides players with the option to resume from their saved progress.
+- If the save.mdds file exists, the "Load Game" button is displayed on the game scene start page to resume from saved progress.
+
+Initially, the saved destroy block count was not initialized to 0. 
+- When loading the game, the destroy count remains but the block size is recalculated, leading to errors when proceeding to the next level. 
+- To resolve this issue, the destroy block count is now explicitly set to 0 during the save game process.
 ### b. Ball Hit Mechanism
 
 Addressed the bug where initially, the ball failed to hit and destroy blocks sometimes as only the central point of the ball's circumference triggered block destruction.
@@ -188,3 +192,10 @@ Initially, the stage was resizable, leading to an unsightly display of the game 
 Maintained a default setting throughout all scene to prevent resizing of the game stage.
 
 Ensures that the game stage remains fixed in size to prevent incomplete game visuals.
+### e. Animation Timer 
+
+Initially, utilizing threads for the game engine resulted in numerous errors. 
+
+To address this issue, the implementation has been updated to use an animation timer instead. 
+
+This change avoids concurrent execution of threads, preventing collisions and associated errors in the game.
