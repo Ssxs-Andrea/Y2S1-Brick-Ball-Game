@@ -10,22 +10,18 @@ Provide a clear, step-by-step guide on how to compile the code to produce the ap
 
 ### a. Pause Function
 
-Player can press "P" key to manually pause the game.
+Press "P" key to pause the game.
+
 Upon pressing "P," a pause menu appears.
 
 Pause Menu Options:
 - Resume: Allows the player to continue the game from where it was paused.
-- Restart Level: Restarts the current level from the beginning.
+- Restart Level: Restarts the current level.
 - Back To Main Menu: Takes the player back to the main menu.
 
-Resume Functionality:
 Player can also press "P" key again while in the pause menu to resume the game.
 
-Auto-Pause on Frame Loss: 
-The game detects frame loss or window focus loss and automatically pauses the game.
-
-#### The related class and methods can be found in package pauseGame.
-
+Auto-Pause on Frame Loss: The game detects frame loss or window focus loss and automatically pauses the game.
 ### b. Sound Effects
 
 Sound effects will be triggers when the condition occurs.
@@ -103,7 +99,6 @@ In the initial implementation there is only a button "New Game" which allows use
 
 - Back to Main Menu
 
-Saved Process Check:
 If there is a saved game process, displays two additional buttons.
 
 - Level Selection
@@ -199,3 +194,25 @@ Initially, utilizing threads for the game engine resulted in numerous errors.
 To address this issue, the implementation has been updated to use an animation timer instead. 
 
 This change avoids concurrent execution of threads, preventing collisions and associated errors in the game.
+### f. Score Animation
+
+The score label may not completely disappear from the screen initially. 
+
+Remove the score label from the root after it appears.
+### g. Break Out of Bounds
+
+The break may extend beyond the bounds of the screen when moving left and right, causing it to disappear. 
+
+To address this issue, incorporate statements that ensure the break remains within the specified boundaries.
+### h. Time Factor Related Bugs
+
+When the pause feature is integrated, issues arise, such as the game's timer continuing to run even when paused. 
+
+This can result in abnormal behavior for the gold root and bonus, causing extended gold root times, as well as bonuses moving in the opposite direction (towards the top of the screen) instead of falling down.
+
+To address this issue, pause the execution of the timer when the game is paused and resume it when the game is resumed. 
+
+This ensure proper synchronization and prevent unexpected behavior associated with the gold root and bonus elements.
+### Section 3: Refactor
+
+### a. Spelling Mistakes
