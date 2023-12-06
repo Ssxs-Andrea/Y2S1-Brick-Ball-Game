@@ -26,6 +26,8 @@ Player can also press "P" key again while in the pause menu to resume the game.
 Auto-Pause on Frame Loss: The game detects frame loss or window focus loss and automatically pauses the game.
 
 Reason: Allowing players to pause the game which will give them control over their gaming experience. 
+
+
 ### b. Sound Effects
 
 Sound effects will be triggers when the condition occurs.
@@ -362,6 +364,23 @@ Reason: After winning a game, players might naturally want to return to the main
 Renaming classes with more descriptive names that reflect their purpose.
 
 Reason: To create a clean and maintainable code.
+### Use Design Patterns
+
+#### Factory Design Pattern for Block
+
+- Created an interface BlockFiller that defines a method applyFill, and concrete implementations for different block types.
+- The BlockFillerFactory class is responsible for creating instances of the appropriate BlockFiller based on the block type.
+-  By centralizing the creation logic in the factory, you can easily add new block types without modifying existing code. 
+- This makes the system adaptable to changes and additions in the future.
+
+#### Form Template Pattern for Bonus and Penalty
+
+- Create 'Power' class, which is an abstract class that defines a template for creating instances of power-ups in the game. 
+- Extract the common functionality into a base class for penalty and bonus.
+- The template method outlines the steps for creating a power-up, and it delegates the implementation of certain steps to subclasses.
+- This can avoid duplicated codes since bonus and penalty have similiar structure.
+
+#### MVC Pattern for New Scenes
 ### 3. Implemented but Not Working Properly
 
 List any features that have been implemented but are not working correctly. Explain the issues you encountered, and if possible, the steps you took to address them.
@@ -402,3 +421,4 @@ List the Java classes you modified from the provided code base. Describe the cha
 ### 7. Unexpected Problems
 
 Communicate any unexpected challenges or issues you encountered during the assignment. Describe how you addressed or attempted to resolve them.
+
