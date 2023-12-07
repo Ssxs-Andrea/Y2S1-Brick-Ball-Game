@@ -190,42 +190,6 @@ Introduced another new level (19) with a unique challenge: 10 rows of penalty el
 Adds a strategic challenge for players to navigate through without receiving penalties.
 
 Reason: Providing players with fresh content and challenges beyond the initial levels.
-### Section 2: Fixing Bugs
-### a. Load Game
-
-Addressed the bug where initially, the game could be saved but not loaded.
-
-- Implemented a statement to check if the save.mdds file exists at the beginning of the game.
-
-- If the save.mdds file exists, the "Load Game" button is displayed on the game scene start page to resume from saved progress.
-
-Initially, the saved destroy block count was not initialized to 0. 
-- When loading the game, the destroy count remains but the block size is recalculated, leading to errors when proceeding to the next level. 
-- To resolve this issue, the destroy block count is now explicitly set to 0 during the save game process.
-
-Reason: Enable player to to resume from saved progress.
-### b. Ball Hit Mechanism
-
-Addressed the bug where initially, the ball failed to hit and destroy blocks sometimes as only the central point of the ball's circumference triggered block destruction.
-
-Modified the block destruction mechanism to consider the entire ball radius for collision detection.
-Blocks are now destroyed when any part of the ball, within its radius, hits the block.
-
-Adjusted the collision detection for the ball's interaction with the screen boundary (wall).
-Ensures that the entire ball is displayed within the screen, preventing parts of the ball from being outside the visible area.
-
-Correct logic error for collideToLeftBlock, set the goRightBall to false.
-
-Reason: Ensures a more accurate and consistent gameplay experience.
-### c. Initialize Ball Position
-
-Addressed the issue of ball initialization outside the screen.
-
-Implemented a solution to ensure consistent ball generation.
-The ball is now consistently generated at a fixed x-position.
-Ensures the ball no longer goes out of bounds upon initialization.
-
-Reason: Prevent the ball fall out of bound.
 ### d. Game Stage Size
 
 Initially, the stage was resizable, leading to an unsightly display of the game when resized.
@@ -233,37 +197,16 @@ Initially, the stage was resizable, leading to an unsightly display of the game 
 Maintained a default setting throughout all scene to prevent resizing of the game stage.
 
 Reason: Ensures that the game stage remains fixed in size to prevent incomplete game visuals.
-### e. Animation Timer 
-
-Initially, utilizing threads for the game engine resulted in numerous errors. 
-
-To address this issue, the implementation has been updated to use an animation timer instead. 
-
-Reason: Avoids concurrent execution of threads, preventing collisions and associated errors in the game.
-### f. Score Animation
-
-The score label may not completely disappear from the screen initially. 
-
-Remove the score label from the root after it appears.
-
-Reason: Maintain a tidy and focused game interface, preventing unnecessary visual elements from lingering on the screen.
-### g. Break Out of Bounds
-
-The break may extend beyond the bounds of the screen when moving left and right, causing it to disappear. 
-
-To address this issue, incorporate statements that ensure the break remains within the specified boundaries.
-
-Reason: Preventing unintended consequences, such as losing control of the break.
 ### h. Time Factor Related Bugs
 
-When the pause feature is integrated, issues arise, such as the game's timer continuing to run even when paused. 
+When the pause feature is integrated, the game's timer continuing to run even when paused. 
 
 This can result in abnormal behavior for the gold root and bonus, causing extended gold root times, as well as bonuses moving in the opposite direction (towards the top of the screen) instead of falling down.
 
 To address this issue, pause the execution of the timer when the game is paused and resume it when the game is resumed. 
 
 Reason: This ensure proper synchronization and prevent unexpected behavior associated with the gold root and bonus elements.
-### Section 3: Refactor
+### Section 3: Refactor In General
 
 ### a. Spelling Mistakes
 
@@ -280,13 +223,13 @@ Declare some of the variabes as final, as its value cannot be changed once it's 
 
 Reason: This promotes immutability, making the code more predictable and preventing unintended modifications to the variable.
 
-### Delete unused statement
+### c. Delete unused statement
 
 - Delete unused import libraries and variables.
 
 - For example: the method setFps in GameEngine is deleted as animation timer is used to control the time.
 
-### c. Resources
+### d. Resources
 
 Split the images and css files into different folders based on their usage.
 
@@ -304,6 +247,13 @@ This provides a clear and organized structure to the project.
 
 
 
+### e. Use Design Patterns
+
+#### MVC Pattern for New Scenes
+
+- High Score, Main Menu, Pause Menu, Level Select are split into MVC pattern.
+- Enforces a clear separation of concerns, dividing the scene into three main components: the Model (data), the View (user interface), and the Controller (input and interaction).
+- This separation makes the codebase more modular and easier to maintain.
 
 ### Breaking into smaller parts
 
@@ -315,15 +265,11 @@ This provides a clear and organized structure to the project.
 
 - Break the methods into different class based on their usage.
 
-
 #### Breaking into Packages
 
 - Initially there is only one package brickGame.
-
 - Break the classes in brickGame into different packages based on their usages.
-
 - To search for the relevent class easily.
-
 
 Reason: Organizing and structuring the code in a modular and maintainable way.
 ### Iterator
@@ -349,38 +295,6 @@ Reason: To enhance the visual appeal and user experience of the game.
 Add null check (!= null) in statements that might produce null pointer exception before executing it.
 
 Reason: To prevent potential errors when working with objects that might be null. 
-
-
-### Win Page
-
-Change the button at the win page to "Back To Main Menu" button from "Restart" button.
-
-Removing the contents in the root for a clearer page.
-
-Reason: After winning a game, players might naturally want to return to the main menu to explore other options instead of starting a new game. 
-
-### Rename classes
-
-Renaming classes with more descriptive names that reflect their purpose.
-
-Reason: To create a clean and maintainable code.
-### Use Design Patterns
-
-#### Factory Design Pattern for Block
-
-- Created an interface BlockFiller that defines a method applyFill, and concrete implementations for different block types.
-- The BlockFillerFactory class is responsible for creating instances of the appropriate BlockFiller based on the block type.
--  By centralizing the creation logic in the factory, you can easily add new block types without modifying existing code. 
-- This makes the system adaptable to changes and additions in the future.
-
-#### Form Template Pattern for Bonus and Penalty
-
-- Create 'Power' class, which is an abstract class that defines a template for creating instances of power-ups in the game. 
-- Extract the common functionality into a base class for penalty and bonus.
-- The template method outlines the steps for creating a power-up, and it delegates the implementation of certain steps to subclasses.
-- This can avoid duplicated codes since bonus and penalty have similiar structure.
-
-#### MVC Pattern for New Scenes
 ### 3. Implemented but Not Working Properly
 
 List any features that have been implemented but are not working correctly. Explain the issues you encountered, and if possible, the steps you took to address them.
@@ -414,11 +328,240 @@ Reason on why they are left out:
 - The implementation of a time-based mode remains a potential feature for inclusion in future projects with extended timelines.
 ### 5. New Java Classes
 
-Enumerate any new Java classes that you introduced for the assignment. Include a brief description of each class's purpose and its location in the code.
+Created a new highScore package.
+
+New Class added in highScore package:
+
+- HighScoreView: Represents the graphical user interface for displaying high scores, providing a visual representation of scores along with a back button for navigation.
+- HighScoreManager: Manages the storage, retrieval, and updating of high scores, utilizing serialization to persistently store scores in a file, and providing methods to check, update, and format high scores.
+- HighScoreController: Handles user interactions and events for the high scores, including checking and adding new high scores, linking to the main menu, and displaying relevant alerts and dialogs.
+- HighScore: Represents a high score entry, storing the player's name and score, and implementing serialization for efficient storage and retrieval.
+---
+Created a new soundEffects package. 
+
+New Class added in soundEffects package:
+
+- BackgroundMusicPlayer: Manages the background music for the game, allowing for continuous playback and automatic restart when reaching the end.
+- SoundEffects: Handles the initialization and playback of various sound effects used in the game, including block hits, bonus events, button presses, and bomb explosions.
+- VolumeController: Provides functionality to control the volume of the background music, allowing users to toggle a popup for volume adjustments, mute the music, and set the volume level using a slider.
+---
+Created a new pauseGame package.
+
+New Class added in pauseGame package:
+
+- PauseHandler: Manages the pausing and resuming of the game, including handling the creation and visibility of the pause menu.
+- PauseMenu: Serves as a container for the graphical user interface components related to the pause menu, utilizing the PauseMenuController to manage user interactions.
+- PauseMenuController: Handles user interactions with the pause menu buttons.
+- PauseMenuView: Defines the visual components of the pause menu, including buttons for resume, restart, and main menu.
+- WindowsFocusManager: Monitors the focus of the game window and automatically pauses the game when the window loses focus, preventing unintended gameplay interactions.
+
+---
+Created a new mainMenu package:
+
+New Class added in mainMenu package:
+
+- MainMenuController: Manages user interactions with the main menu buttons, initiating actions for starting a new game, navigating to instructions, and accessing high scores.
+- MainMenuView: Represents the graphical user interface for the main menu, providing buttons for starting a new game, viewing instructions, and checking high scores, along with associated styling.
+---
+Created a new levelSelect package:
+
+New Class added in levelSelect package:
+
+- LevelSelectionController: Manages the interactions and logic for the level selection screen, including handling button clicks, initializing the game state for selected levels.
+- LevelSelectionView: Represents the graphical user interface for the level selection screen, providing buttons for each playable level, displaying level information, and option to return to the main menu.
+- LevelSelectionModel: Stores and manages the selected level for the level selection screen, allowing for communication between the controller and the view components.
+---
+Created a new instruction package:
+
+New Class added in instruction package:
+
+- InstructionController: Manages user interactions and navigation for the instruction page, handling button click.
+- InstructionView: Represents the graphical user interface for the instruction page, displaying game instructions with images and providing a button to return to the main menu.
+---
+Created a new levelLogic package.
+
+New Class added in levelLogic package:
+- RestartLevel: Handles the restart of a specific game level, resetting relevant parameters, and initializing a new game instance for the specified level.
+
+---
+Created a new gamePower package.
+
+New Class added in gamePower package:
+
+- Penalty class: Represents a penalty power-up (bomb) in the game, extending the abstract Power class, with specific image URLs.
+
+---
+Created a new displayUi package.
+
+New Class added in displayUi package:
+
+- ViewSwitcher: Facilitates the switching of views between various game screens, such as the main menu, high score view, level selection, and instruction pages, managing the associated controllers and scene transitions.
+
+---
+Created a new breakMovement package.
+
+New Class added in breakMovement package:
+
+- MouseDragHandler: Handles mouse-drag events to update the position of the break based on the mouse's x-coordinate, ensuring it stays within the scene bounds.
+
+---
+New Class added in brickGame package:
+
+- GameState: Serves as a container for storing and managing the state of the brick game, including information such as the current level, positions of the break and ball, game statistics (score, hearts), block configurations, power-ups, and various flags and parameters that control the game's behavior and interactions.
+
+- By using the GameState class, object is created to encapsulate and manage the state of the brick game, allowing easy access and manipulation of various game parameters by passing the object instance.
+
 ### 6. Modified Java Classes
 
 List the Java classes you modified from the provided code base. Describe the changes you made and explain why these modifications were necessary.
+
+Created a new loadSave package.
+
+- Rename LoadSave to ReadFile, and move into the new package loadSave.
+
+Reason: Renaming classes with more descriptive names that reflect their purpose.
+
+- Move saveGame method in Main to a new class SaveGame.
+- Move loadGame method in Main to a new class LoadGame.
+
+Reason: Enhances code organization by renaming and relocating the class responsible for reading saved game data to the loadSave package. Improves code structure by segregating the responsibility of saving and loading into separate class.
+
+
+- Addressed the bug where initially, the game could be saved but not loaded.
+- In ReadFile, implemented a statement to check if the save.mdds file exists at the beginning of the game.
+- If the save.mdds file exists, the "Load Game" button is displayed on the game scene start page to resume from saved progress.
+
+Reason: Enable player to to resume from saved progress.
+
+- Initially, the saved destroy block count was not initialized to 0. 
+- When loading the game, the destroy count remains but the block size is recalculated, leading to errors when proceeding to the next level. 
+- To resolve this issue, in saveGame method, the destroy block count is now explicitly set to 0 during the save game process.
+
+----------------------------------------
+In the a new levelLogic package:
+
+- Move nextLevel method in Main to a new class NextLevel.
+- Move restartGame method in Main to a new class RestartGame.
+
+Reason: To improve code organization and maintain a modular structure, thus splitting methods regarding to the level logic into new package.
+
+-------------------------------------------
+In the new gamePower package:
+
+- Move Bonus into new package gamePower.
+- Create a new 'Power' class, which is an abstract class that defines a template for creating instances of power-ups in the game. 
+- Extract the common functionality into a base class for penalty and bonus.
+- The Bonus class has been refactored to extend the abstract Power class, centralizing common power-up functionalities.
+
+Reason: The form template method outlines the steps for creating a power-up, and it delegates the implementation of certain steps to subclasses. This can avoid duplicated codes since bonus and penalty have similiar structure. This also facilitates future additions or modifications to the game elements.
+
+-------------------------------------------
+In the new displayUi package:
+
+- Split the method in Score class into different class.
+
+- Move method showWin and showGameOver into EndGameDisplay.
+- Move method show into ScoreLabelAnimator.
+- Move methos showMessage into MessageLabelAnimator.
+
+Reason: To maintain the Single Responsibility Principle, where each new class has a distinct responsibility.
+
+- The score label may not completely disappear from the screen initially. 
+- In method show and showMessage, remove the label from the root after it appears.
+
+Reason: Maintain a tidy and focused game interface, preventing unnecessary visual elements from lingering on the screen.
+
+- Change the button at the win page in showWin method to "Back To Main Menu" button from "Restart" button.
+- Removing the contents in the root for a clearer page.
+
+Reason: After winning a game, players might naturally want to return to the main menu to explore other options instead of starting a new game. 
+
+-------------------------------------------
+Created a new ball package.
+
+- Move method initBall in Main to a new class InitBall.
+- Move method setPhysicsToBall in Main to new class BallPhysicsHandler.
+- Move method resetCollideFlags in Main to new class CollisionFlagsResetter.
+- Break the long setPhysicsToBall method into smaller methods and call in setPhysicsToBall, which includes
+
+        updateBallPosition();
+        handleTopBottomCollision();
+        handleBreakCollision();
+        handleLeftRightWallCollision();
+        checkWallCollisions();
+        checkBlockCollisions();
+
+Reason: Group ball-related functions in a new package, enhances code organization and adheres to the Single Responsibility Principle, promoting maintainability and clarity in the ball-related functionalities.
+
+
+- Adjusted the collision detection for the ball's interaction with the screen boundary (wall).
+- Correct logic error for collideToLeftBlock, set the goRightBall to false.
+
+Reason: To ensure that the entire ball is displayed within the screen, preventing parts of the ball from being outside the visible area.
+
+- Addressed the issue of ball initialization outside the screen.
+- In initBall method in InitBall class, set the yBall to a fixed x-position to ensure consistent ball generation.
+
+Reason: Ensures the ball no longer goes out of bounds upon initialization. Prevent the ball fall out of bound.
+
+-------------------------------------------
+In the new breakMovement package:
+
+- Move method move in Main to a new class BreakMovementHandler.
+- Move method initBreak in Main to a new class InitBreak.
+
+Reason: Grouping break-related functions in a new package enhances code organization and maintainability, promoting a modular and structured design.
+
+- The break may extend beyond the bounds of the screen when moving left and right, causing it to disappear. 
+- To address this issue, add statements in method move to ensure the break remains within the specified boundaries.
+
+Reason: Preventing unintended consequences, such as losing control of the break.
+
+-------------------------------------------
+Create a new gameAction package.
+
+- Move GameEngine into the package gameAction.
+- Move the implementation of OnAction interface in Main to a new class OnAction.
+- Split the OnUpdate method in OnAction into smaller methods and move the methods into a new class OnUpdate.
+- Split the OnPhysicsUpdate method in OnAction into smaller methods and move the methods into a new class OnPhysicsUpdate.
+
+Reason: Improves code organization, reduces clutter in the Main class, and adheres to the principle of single responsibility, enhancing maintainability and readability.
+
+- Initially, utilizing threads for the GameEngine resulted in numerous errors. 
+- To address this issue, the implementation has been updated to use an animation timer instead. 
+
+Reason: Avoids concurrent execution of threads, preventing collisions and associated errors in the game.
+
+-------------------------------------------
+Create a new inGameControlKey package.
+
+- Move method handle in Main into a new class KeyEventHandler.
+- Move the buttons in Main into a new class GameButtons.
+- Move the action event of the buttons above into a new class GameButtonHandler, which act as a controller for the buttons.
+
+Reason: Improves code modularity by separating the handling mechanisms in the game scene, enhancing maintainability, and adhering to the single responsibility principle.
+
+-------------------------------------------
+Create a new block package.
+
+- Move method initBoard in Main to a new class InitBoard.
+- Move the methods to get the block size in Block into a new class BlockSizeGetter.
+- Extract out the method draw in Block into a new interface BlockFiller, to apply the factory design pattern for block type.
+- Interface BlockFiller defines a method applyFill, and concrete implementations for different block types.
+- The BlockFillerFactory class is responsible for creating instances of the appropriate BlockFiller based on the block type, which includes ChocoBlockFiller, HeartBlockFiller, BoomBlockFiller, StarBlockFiller, and NormalBlockFiller.
+
+Reason: By centralizing the creation logic in the factory, can easily add new block types without modifying existing code. This makes the system adaptable to changes and additions in the future.
+
+- Addressed the bug where initially, the ball failed to hit and destroy blocks sometimes as only the central point of the ball's circumference triggered block destruction.
+- Modified the block destruction mechanism in method checkHitToBlock in Block class to consider the entire ball radius for collision detection.
+
+Reason: Ensure that block can be destroyed when any part of the ball, within its radius, hits the block. Ensures a more consistent gameplay experience.
+
+-------------------------------------------
+In the brickGame package: 
+
+- Move the game start scene in Main to a new class GameInitializer.
+- Make the Main class simple with only the start stage and some getter methods.
 ### 7. Unexpected Problems
 
 Communicate any unexpected challenges or issues you encountered during the assignment. Describe how you addressed or attempted to resolve them.
-
