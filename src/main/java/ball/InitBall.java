@@ -8,6 +8,7 @@ import java.util.Random;
 /**
  * The {@code InitBall} class is responsible for initializing the game ball when the game level starts.
  * It generates a random starting position within the game scene and creates a Circle representing the ball.
+ * @see GameState
  */
 public class InitBall {
     /**

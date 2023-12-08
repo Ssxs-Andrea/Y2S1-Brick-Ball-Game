@@ -5,6 +5,12 @@ import displayUi.ScoreLabelAnimator;
 /**
  * The {@code BallPhysicsHandler} class manages the physics and collision behaviors of the ball in the brick game.
  * It handles interactions such as ball movement, collisions with walls, breaks, and blocks.
+ *
+ * @see GameState
+ * @see Main
+ * @see CollisionFlagsResetter
+ * @see ScoreLabelAnimator
+ * @see GameInitializer
  */
 public class BallPhysicsHandler {
     /**

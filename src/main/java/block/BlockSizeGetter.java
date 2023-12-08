@@ -4,6 +4,8 @@ import javafx.scene.paint.Color;
 /**
  * The {@code BlockSizeGetter} class provides static methods to retrieve standard dimensions and padding
  * values related to game blocks. These values are based on a placeholder block used for measurement.
+ *
+ * @see Block
  */
 public class BlockSizeGetter {
     /**

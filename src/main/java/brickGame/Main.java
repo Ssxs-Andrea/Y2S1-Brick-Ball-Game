@@ -17,7 +17,7 @@ import soundEffects.VolumeController;
  * {@link Application} class and implements the {@link EventHandler} interface for handling keyboard events.
  * It initializes the game state, manages the game engine, and controls the switching of views.
  *
- * @see <a href="https://github.com/kooitt/CourseworkGame/blob/master/src/main/java/brickGame/Main.java">The original source code for Main </a>
+ *
  */
 public class Main extends Application implements EventHandler<KeyEvent>{
     /**

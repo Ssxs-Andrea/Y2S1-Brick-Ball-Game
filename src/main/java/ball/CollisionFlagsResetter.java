@@ -4,6 +4,8 @@ import brickGame.GameState;
 /**
  * The {@code CollisionFlagsResetter} class is responsible for resetting collision flags for the ball in the GameState.
  * These flags indicate various collision states such as collisions with breaks, walls, and blocks.
+ *
+ * @see GameState
  */
 public class CollisionFlagsResetter {
     /**

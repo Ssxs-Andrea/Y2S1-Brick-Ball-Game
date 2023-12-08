@@ -5,7 +5,7 @@ import java.io.Serializable;
  * The {@code BlockSerializable} class represents a serializable version of a game block.
  * It stores essential information about the block's position and type.
  *
- * @see <a href="https://github.com/kooitt/CourseworkGame/blob/master/src/main/java/brickGame/BlockSerializable.java">The original source code for BlockSerializable </a>
+ * @see Serializable
  *
  */
 public class BlockSerializable implements Serializable {

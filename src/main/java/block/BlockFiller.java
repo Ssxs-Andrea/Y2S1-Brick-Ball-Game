@@ -9,6 +9,8 @@ import static block.Block.*;
 /**
  * The {@code BlockFiller} interface defines the contract for classes responsible for applying
  * specific visual fills to game blocks based on their type.
+ * @see Rectangle
+ * @see Color
  */
 public interface BlockFiller {
     /**
@@ -23,6 +25,8 @@ public interface BlockFiller {
 /**
  * The {@code ChocoBlockFiller} class implements the BlockFiller interface
  * to apply a chocolate-themed visual fill to blocks.
+ *
+ * @see BlockFiller
  */
 class ChocoBlockFiller implements BlockFiller {
     @Override
@@ -35,6 +39,8 @@ class ChocoBlockFiller implements BlockFiller {
 /**
  * The {@code HeartBlockFiller} class implements the BlockFiller interface
  * to apply a heart-themed visual fill to blocks.
+ *
+ * @see BlockFiller
  */
 class HeartBlockFiller implements BlockFiller {
     @Override
@@ -47,6 +53,8 @@ class HeartBlockFiller implements BlockFiller {
 /**
  * The {@code BoomBlockFiller} class implements the BlockFiller interface
  * to apply a bomb-themed visual fill to blocks.
+ *
+ * @see BlockFiller
  */
 class BoomBlockFiller implements BlockFiller {
     @Override
@@ -59,6 +67,8 @@ class BoomBlockFiller implements BlockFiller {
 /**
  * The {@code StarBlockFiller} class implements the BlockFiller interface
  * to apply a star-themed visual fill to blocks.
+ *
+ * @see BlockFiller
  */
 class StarBlockFiller implements BlockFiller {
     @Override
@@ -71,6 +81,8 @@ class StarBlockFiller implements BlockFiller {
 /**
  * The {@code NormalBlockFiller} class implements the BlockFiller interface
  * to apply random colour fill to blocks.
+ *
+ * @see BlockFiller
  */
 class NormalBlockFiller implements BlockFiller {
     @Override
@@ -88,6 +100,12 @@ class BlockFillerFactory {
      *
      * @param type The type of the game block.
      * @return The corresponding BlockFiller instance.
+     *
+     * @see ChocoBlockFiller
+     * @see HeartBlockFiller
+     * @see BoomBlockFiller
+     * @see StarBlockFiller
+     * @see NormalBlockFiller
      */
     public static BlockFiller createBlockFiller(int type) {
         if (type == BLOCK_CHOCO) {

@@ -13,10 +13,9 @@ import block.BlockSerializable;
  * The ReadFile class is responsible for reading saved game data from a file using an {@code ObjectInputStream}. It
  * retrieves various game-related parameters, such as game state, level, score, and ball/block positions, from the
  * saved file. This class collaborates with the {@code SaveGame} class to determine the path of the save file.
- *
  * This class is used by the {@code LoadGame} class to load the saved game state and update the game accordingly.
  *
- * @see <a href ="https://github.com/kooitt/CourseworkGame/blob/master/src/main/java/brickGame/LoadSave.java">The original source code LoadSave</a>
+ *
  */
 public class ReadFile {
     /** Indicates whether a heart block exists in the game state loaded from the file. */
