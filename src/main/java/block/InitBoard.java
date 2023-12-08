@@ -4,13 +4,26 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import brickGame.GameState;
-
+/**
+ * The {@code InitBoard} class is responsible for initializing the game board by generating a configuration of blocks based on the current game state.
+ */
 public class InitBoard {
     private final GameState gameState;
 
+    /**
+     * Constructs an InitBoard object with the specified game state.
+     *
+     * @param gameState The current game state.
+     */
     public InitBoard(GameState gameState) {
         this.gameState = gameState;
     }
+
+    /**
+     * Initializes the game board by generating an ArrayList of blocks.
+     *
+     * @return An ArrayList of Block objects representing the initial configuration of the game board.
+     */
 
     public ArrayList<Block> initBoard() {
         ArrayList<Block> blocks = new ArrayList<>();

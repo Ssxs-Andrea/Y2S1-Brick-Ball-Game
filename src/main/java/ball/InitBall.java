@@ -5,14 +5,26 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import java.util.Random;
-
+/**
+ * The {@code InitBall} class is responsible for initializing the game ball when the game level starts.
+ * It generates a random starting position within the game scene and creates a Circle representing the ball.
+ */
 public class InitBall {
     private final GameState gameState;
-
+    /**
+     * Constructs an InitBall object with the provided GameState.
+     *
+     * @param gameState The GameState instance associated with the ball initialization.
+     */
     public InitBall(GameState gameState) {
         this.gameState = gameState;
     }
-
+    /**
+     * Initializes and returns a Circle representing the game ball.
+     * The ball is given a random starting position within the game scene and an image pattern.
+     *
+     * @return A Circle object representing the game ball.
+     */
     public Circle initBall() {
         Random random = new Random();
         gameState.setxBall(random.nextInt(gameState.getSceneWidth()) + 1);

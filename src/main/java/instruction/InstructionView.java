@@ -1,6 +1,5 @@
 package instruction;
 
-
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,15 +14,33 @@ import soundEffects.VolumeController;
 
 
 import java.util.Objects;
-
+/**
+ * The InstructionView class represents the graphical user interface for the game's instruction page.
+ * It includes a set of instructions for playing the game, along with corresponding images and a back button.
+ *
+ * <p>The class initializes a JavaFX scene containing a VBox with instructions and a back button. Instructions
+ * are presented with images to illustrate various actions in the game, such as moving the break, restarting the level,
+ * pausing the game, saving the game, and controlling music volume. The back button allows users to return to the main menu.</p>
+ *
+ * <p>Images used for instructions include arrow keys, mouse click, and letter keys (R, P, S, M). The scene's styling is
+ * defined by an external CSS file. Additionally, it incorporates the VolumeController for handling volume control key events.</p>
+ *
+ */
 public class InstructionView {
+    /** The JavaFX scene associated with the InstructionView. */
     private Scene scene;
+    /** The back button used for navigating back to the main menu. */
     private Button backButton;
-
+    /**
+     * Initializes the InstructionView by calling init method.
+     */
     public InstructionView() {
         init();
     }
-
+    /**
+     * Initializes the JavaFX scene, creating a VBox with instructions and a back button.
+     * The scene is styled using an external CSS file, and volume control key events are handled by the VolumeController.
+     */
     private void init() {
         VBox instructionsBox = getInstructionsBox();
 
@@ -36,7 +53,13 @@ public class InstructionView {
         VolumeController volumeController = new VolumeController();
         volumeController.setupKeyEvents(scene);
     }
-
+    /**
+     * Creates a VBox containing instructions with images.
+     * The instructions include actions such as moving the break, restarting the level, pausing the game,
+     * saving the game, and controlling music volume. Each instruction is accompanied by a corresponding image.
+     *
+     * @return The VBox containing instructions and images.
+     */
     private VBox getInstructionsBox() {
         Image leftKeyImage = new Image(Objects.requireNonNull(getClass().getResource("/instruction/arrow-left.png")).toExternalForm());
         Image rightKeyImage = new Image(Objects.requireNonNull(getClass().getResource("/instruction/arrow-right.png")).toExternalForm());
@@ -95,6 +118,14 @@ public class InstructionView {
 
         return instructionsBox;
     }
+    /**
+     * Creates a Label with an associated image.
+     * The Label includes a graphic (image), and text providing additional details.
+     *
+     * @param imageView The ImageView associated with the instruction image.
+     * @param text The text providing details about the instruction.
+     * @return The created Label with image and text.
+     */
     private Label createLabelWithImage(ImageView imageView, String text) {
         Label label = new Label();
         label.setGraphic(imageView);
@@ -109,11 +140,19 @@ public class InstructionView {
 
         return label;
     }
-
+    /**
+     * Gets the JavaFX Scene associated with the InstructionView.
+     *
+     * @return The JavaFX Scene of the InstructionView.
+     */
     public Scene getScene() {
         return scene;
     }
-
+    /**
+     * Gets the back button used for navigating back to the main menu.
+     *
+     * @return The back button.
+     */
     public Button getBackButton() {
         return backButton;
     }

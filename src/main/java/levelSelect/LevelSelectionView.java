@@ -9,18 +9,34 @@ import javafx.scene.text.Text;
 import loadSave.ReadFile;
 
 import java.util.Objects;
-
+/**
+ * The LevelSelectionView class represents the graphical user interface for the level selection feature in the game. It provides
+ * a scene with buttons for selecting different game levels, along with additional information such as the title and instructions.
+ *
+ * <p>The scene is styled using an external CSS file, and the layout is organized in a vertical box (VBox) structure to ensure
+ * proper alignment and spacing.</p>
+ *
+ * @see LevelSelectionController
+ */
 public class LevelSelectionView {
+    /** The scene representing the level selection graphical user interface. */
     private Scene scene;
-
+    /** The controller responsible for handling user interactions related to level selection. */
     private final LevelSelectionController controller;
-
+    /**
+     * Constructs a new instance of the LevelSelectionView class with the specified controller.
+     *
+     * @param controller The controller associated with the level selection view.
+     */
     public LevelSelectionView(LevelSelectionController controller) {
 
         this.controller = controller;
         init();
     }
-
+    /**
+     * Initializes the graphical user interface for the level selection feature. This includes creating and arranging buttons,
+     * setting up the title and instructions, and associating actions with the corresponding controller methods.
+     */
     public void init() {
         VBox container = new VBox(10);
         container.setAlignment(Pos.CENTER);
@@ -74,7 +90,11 @@ public class LevelSelectionView {
         scene = new Scene(container, 500, 700);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/level-selection/level-selection.css")).toExternalForm());
     }
-
+    /**
+     * Retrieves the scene representing the level selection graphical user interface.
+     *
+     * @return The scene associated with the level selection view.
+     */
     public Scene getScene() {
         return scene;
     }

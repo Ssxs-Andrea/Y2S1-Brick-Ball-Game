@@ -24,30 +24,86 @@ import soundEffects.SoundEffects;
 import soundEffects.VolumeController;
 
 import java.util.List;
-
+/**
+ * The {@code GameInitializer} class is responsible for initializing and setting up the game components,
+ * including the game scene, buttons, labels, and sound effects. It handles the creation of the game engine
+ * and manages the visibility of game elements based on the game state.
+ */
 public class GameInitializer {
-
+    /**
+     * The Main class instance for accessing the game state and managing the primary stage.
+     */
     private final Main main;
+    /**
+     * The Scene object representing the game scene.
+     */
     private Scene gameScene;
+    /**
+     * The OnAction instance for handling game actions.
+     */
     final OnAction onAction;
+    /**
+     * The Circle representing the game ball.
+     */
     Circle ball;
+    /**
+     * The Rectangle representing the breakout paddle (break).
+     */
     Rectangle rect;
+    /**
+     * The GameEngine instance responsible for controlling the game loop.
+     */
     private GameEngine engine;
+    /**
+     * The Pane serving as the root node for the game scene.
+     */
     Pane root;
+    /**
+     * The Label displaying the player's score.
+     */
     Label scoreLabel;
+    /**
+     * The Label displaying the player's remaining hearts.
+     */
     Label heartLabel;
+    /**
+     * The Label displaying the current level.
+     */
     Label levelLabel;
+    /**
+     * The SoundEffects instance for managing sound effects in the game.
+     */
     SoundEffects sound;
+    /**
+     * The Button used for loading a saved game.
+     */
     Button load = null;
+    /**
+     * The Button used for starting a new game.
+     */
     Button newGame = null;
+    /**
+     * The Button used for navigating to the level select screen.
+     */
     Button back = null;
+    /**
+     * The Button used for navigating back to the main menu.
+     */
     Button levelSelect = null;
-
+    /**
+     * Constructs a GameInitializer object with the specified Main instance.
+     *
+     * @param main The Main instance representing the main class of the game.
+     */
     public GameInitializer(Main main) {
         this.main = main;
         this.onAction = new OnAction(main, this);
     }
-
+    /**
+     * Initializes a new game or resumes from a saved state, setting up the game scene and associated components.
+     *
+     * @param fromMainMenu A boolean indicating whether the game is entering from the main menu.
+     */
     public void initializeNewGame(boolean fromMainMenu) {
 
         if (fromMainMenu) resetGameForMainMenu();
@@ -79,7 +135,9 @@ public class GameInitializer {
             main.getGameState().setLoadFromSave(false);
         }
     }
-
+    /**
+     * Resets the game state to its initial values when entering the game from the main menu.
+     */
     void resetGameForMainMenu() {
         main.getGameState().setLevel(0);
         main.getGameState().setScore(0);
@@ -92,7 +150,9 @@ public class GameInitializer {
             blocks.clear();
         }
     }
-
+    /**
+     * Clears the root pane and resets the pause handler, removing any existing game elements.
+     */
     void clearRootAndPauseHandler() {
         if (root != null) {
             root.getChildren().clear();
@@ -101,12 +161,16 @@ public class GameInitializer {
         main.getGameState().getChocos().clear();
         Main.pauseHandler.setPaused(false);
     }
-
+    /**
+     * Initializes the sound effects for the game.
+     */
     void initializeSoundEffects() {
         sound = new SoundEffects();
         sound.initSoundEffects();
     }
-
+    /**
+     * Handles the setup of the game state, including increasing the level and initializing game elements.
+     */
     void handleGameSetup() {
         main.getGameState().setLevel(main.getGameState().getLevel() + 1);
 
@@ -128,7 +192,9 @@ public class GameInitializer {
         InitBoard initBoard = new InitBoard(main.getGameState());
         main.getGameState().setBlocks(initBoard.initBoard());
     }
-
+    /**
+     * Handles the game win scenario by displaying the end game screen and checking for a high score.
+     */
     void handleGameWin() {
         root.getChildren().clear();
         HighScoreController highScoreController = new HighScoreController(main);
@@ -137,7 +203,9 @@ public class GameInitializer {
         main.getGameState().getBooms().clear();
         main.getGameState().getChocos().clear();
     }
-
+    /**
+     * Sets up the game scene, key events, and visibility of blocks.
+     */
     void setupGameSceneAndKeyEvents() {
         for (Block block : main.getGameState().getBlocks()) {
             root.getChildren().add(block.rect);
@@ -159,7 +227,9 @@ public class GameInitializer {
         main.getPrimaryStage().setResizable(false);
         main.getPrimaryStage().show();
     }
-
+    /**
+     * Sets up game buttons and their associated event handlers.
+     */
     void setupGameButtonsAndHandlers() {
         GameButtons gameButtons = new GameButtons();
         GameButtonHandlers eventHandlers = new GameButtonHandlers(main.getGameState(), main, this);
@@ -174,7 +244,9 @@ public class GameInitializer {
         levelSelect.setOnAction(eventHandlers.levelSelectHandler);
         back.setOnAction(eventHandlers.backHandler);
     }
-
+    /**
+     * Initializes the root pane and labels, configuring their visibility based on the game state.
+     */
     void initializeRootAndLabels() {
         root = new Pane();
         scoreLabel = new Label("Score: " + main.getGameState().getScore());
@@ -199,7 +271,9 @@ public class GameInitializer {
             root.getChildren().addAll(rect, main.getGameState().getBall(), scoreLabel, heartLabel, levelLabel);
         }
     }
-
+    /**
+     * Sets the visibility of game elements, including blocks, break, ball, and labels.
+     */
     public void setGameElementsVisible() {
         for (Block block : main.getGameState().getBlocks()) block.rect.setVisible(true);
         rect.setVisible(true);
@@ -208,44 +282,76 @@ public class GameInitializer {
         heartLabel.setVisible(true);
         levelLabel.setVisible(true);
     }
-
+    /**
+     * Sets the visibility of buttons used in the game.
+     */
     public void setButtonInvisible() {
         load.setVisible(false);
         newGame.setVisible(false);
         levelSelect.setVisible(false);
         back.setVisible(false);
     }
-
+    /**
+     * Restarts the game engine to resume gameplay.
+     */
     public void restartEngine() {
         engine = new GameEngine();
         engine.setOnAction(onAction);
         engine.start();
     }
-
+    /**
+     * Retrieves the game engine responsible for controlling the game's logic and progression.
+     *
+     * @return The {@code GameEngine} instance.
+     */
     public GameEngine getEngine() {
         return engine;
     }
-
+    /**
+     * Retrieves the root pane of the game, which contains all visual elements.
+     *
+     * @return The root {@code Pane} of the game.
+     */
     public Pane getRoot() {
         return root;
     }
-
+    /**
+     * Retrieves the label displaying the current number of remaining hearts in the game.
+     *
+     * @return The {@code Label} for the heart count.
+     */
     public Label getHeartLabel() {
         return heartLabel;
     }
-
+    /**
+     * Retrieves the label displaying the current score achieved in the game.
+     *
+     * @return The {@code Label} for the score.
+     */
     public Label getScoreLabel() {
         return scoreLabel;
     }
-
+    /**
+     * Retrieves the sound effects manager used for controlling game audio.
+     *
+     * @return The {@code SoundEffects} instance.
+     */
     public SoundEffects getSound() {
         return sound;
     }
-
+    /**
+     * Retrieves the rectangle representing the break in the game.
+     *
+     * @return The {@code Rectangle} instance for the break.
+     */
     public Rectangle getRect() {
         return rect;
     }
-
+    /**
+     * Retrieves the game scene containing all visual elements and handling user interactions.
+     *
+     * @return The {@code Scene} instance for the game.
+     */
     public Scene getGameScene() {
         return gameScene;
     }

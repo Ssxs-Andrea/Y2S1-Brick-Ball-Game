@@ -2,16 +2,33 @@ package ball;
 
 import brickGame.*;
 import displayUi.ScoreLabelAnimator;
-
+/**
+ * The {@code BallPhysicsHandler} class manages the physics and collision behaviors of the ball in the brick game.
+ * It handles interactions such as ball movement, collisions with walls, breaks, and blocks.
+ */
 public class BallPhysicsHandler {
+    /**
+     * The GameState instance that holds the current state of the game.
+     */
     private final GameState gameState;
+    /**
+     * The Main class instance that serves as the entry point for the JavaFX application.
+     */
     private final Main main;
-
+    /**
+     * Constructs a new BallPhysicsHandler with the provided GameState and Main instances.
+     *
+     * @param gameState The GameState instance representing the current state of the game.
+     * @param main      The Main instance serving as the entry point for the JavaFX application.
+     */
     public BallPhysicsHandler(GameState gameState, Main main) {
         this.gameState = gameState;
         this.main = main;
     }
 
+    /**
+     * Sets the physics behavior for the ball, including updating its position and handling various collisions.
+     */
     public void setPhysicsToBall() {
         updateBallPosition();
         handleTopBottomCollision();
@@ -21,6 +38,9 @@ public class BallPhysicsHandler {
         checkBlockCollisions();
     }
 
+    /**
+     * Updates the position of the ball based on its current direction status.
+     */
     private void updateBallPosition(){
         if (gameState.isGoDownBall()) {
             gameState.setyBall(gameState.getyBall() + gameState.getvY());
@@ -35,13 +55,15 @@ public class BallPhysicsHandler {
         }
     }
 
+    /**
+     * Handles top and bottom collisions of the ball with the game screen.
+     */
     private void handleTopBottomCollision(){
         if (gameState.getyBall() <= gameState.getBallRadius()) {
             CollisionFlagsResetter.resetCollideFlags(gameState);
             gameState.setGoDownBall(true);
             return;
         }
-
         if (gameState.getyBall() >= (gameState.getSceneHeight() - gameState.getBallRadius())) {
             CollisionFlagsResetter.resetCollideFlags(gameState);
             gameState.setGoDownBall(false);
@@ -53,6 +75,9 @@ public class BallPhysicsHandler {
         }
     }
 
+    /**
+     * Handles left and right wall collisions of the ball with the game screen.
+     */
     private void handleLeftRightWallCollision(){
         if (gameState.getxBall() >= gameState.getSceneWidth() - gameState.getBallRadius()) {
             CollisionFlagsResetter.resetCollideFlags(gameState);
@@ -65,6 +90,9 @@ public class BallPhysicsHandler {
         }
     }
 
+    /**
+     * Handles collisions between the ball and the break element.
+     */
     private void handleBreakCollision() {
         if (gameState.getyBall() >= gameState.getyBreak() - gameState.getBallRadius()) {
             if (gameState.getxBall() + gameState.getBallRadius() >= gameState.getxBreak() &&
@@ -101,6 +129,9 @@ public class BallPhysicsHandler {
         }
     }
 
+    /**
+     * Checks for collisions between the ball and the blocks.
+     */
     private void checkBlockCollisions() {
         if (gameState.isCollideToRightBlock()) {
             gameState.setGoRightBall(true);
@@ -118,7 +149,10 @@ public class BallPhysicsHandler {
             gameState.setGoDownBall(true);
         }
     }
-
+    
+    /**
+     * Checks for collisions between the ball with the left and right walls.
+     */
     private void checkWallCollisions() {
         if (gameState.isCollideToRightWall()) {
             gameState.setGoRightBall(false);

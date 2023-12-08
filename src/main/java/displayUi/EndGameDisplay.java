@@ -7,9 +7,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import levelLogic.RestartGame;
 import soundEffects.SoundEffects;
-
+/**
+ * The {@code EndGameDisplay} class provides methods for displaying end-game messages and options on the game screen.
+ * It includes methods to show messages for both game over and game win scenarios, allowing players to restart the game
+ * or return to the main menu.
+ */
 public class EndGameDisplay {
-
+    /**
+     * Displays the "Game Over" message along with restart and main menu buttons. The buttons trigger corresponding actions
+     * when clicked, such as restarting the game or returning to the main menu.
+     *
+     * @param main      The main application instance.
+     * @param gameState The current game state.
+     */
     public static void showGameOver(final Main main, GameState gameState) {
         Platform.runLater(() -> {
             Label label = new Label("Game Over :(");
@@ -43,7 +53,11 @@ public class EndGameDisplay {
             main.getRoot().getChildren().addAll(label, restart, mainMenu);
         });
     }
-
+    /**
+     * Displays the "You Win" message along with the main menu button. The button triggers an action to return to the main menu.
+     *
+     * @param main The main application instance.
+     */
     public static void showWin(final Main main) {
         Platform.runLater(() -> {
             Label label = new Label("You Win :)");

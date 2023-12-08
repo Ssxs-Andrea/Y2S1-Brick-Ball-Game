@@ -13,15 +13,39 @@ import soundEffects.VolumeController;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
+/**
+ * The HighScoreView class represents the graphical user interface (GUI) for displaying
+ * the high scores in the game. It creates a scene containing a VBox with the high scores
+ * and a back button to return to the main menu. The high scores are retrieved from the
+ * HighScoreManager, and the scene is styled using an external CSS file.
+ *
+ * <p>The high scores are presented in a vertical box (VBox) along with corresponding
+ * images representing the top three positions (1st, 2nd, and 3rd). Each high score entry
+ * includes a player's name and score. If there are no high scores recorded, a message
+ * indicating the absence of records is displayed.</p>
+ *
+ * <p>The class also defines methods to create labels with images, set up the initial
+ * scene, and obtain references to the scene and back button.</p>
+ *
+ * @see HighScoreManager
+ */
 public class HighScoreView {
+    /** The JavaFX scene displaying the high scores. */
     private Scene scene;
+    /** The JavaFX button for returning to the main menu. */
     private Button backButton;
-
+    /**
+     * Constructs a new HighScoreView and initializes the high scores scene by calling
+     * the init() method.
+     */
     public HighScoreView() {
         init();
     }
-
+    /**
+     * Initializes the high scores scene by creating a VBox with high scores content
+     * and a back button. The scene is styled using an external CSS file, and key events
+     * for volume control are set up using the VolumeController class.
+     */
     private void init() {
         VBox highScoresBox = getHighScoresBox();
 
@@ -35,7 +59,15 @@ public class HighScoreView {
         VolumeController volumeController = new VolumeController();
         volumeController.setupKeyEvents(scene);
     }
-
+    /**
+     * Creates a VBox containing the high scores content. It includes images for the
+     * top three positions, a header label, and the actual high scores retrieved from
+     * the HighScoreManager. If there are no high scores recorded, a message indicating
+     * the absence of records is displayed.
+     *
+     * @return The VBox containing the high scores content.
+     * @see HighScoreManager
+     */
     private VBox getHighScoresBox() {
         HighScoreManager highScoreManager = new HighScoreManager();
 
@@ -88,7 +120,13 @@ public class HighScoreView {
 
         return highScoresBox;
     }
-
+    /**
+     * Creates a label with an image to represent a high score entry.
+     *
+     * @param imageView The ImageView representing the position image (1st, 2nd, or 3rd).
+     * @param text The text to be displayed alongside the image (player's name and score).
+     * @return The Label with the specified image and text.
+     */
     private Label createLabelWithImage(ImageView imageView, String text) {
 
         Label label = new Label();
@@ -104,10 +142,19 @@ public class HighScoreView {
 
         return label;
     }
-
+    /**
+     * Gets the JavaFX scene displaying the high scores.
+     *
+     * @return The JavaFX scene for the high scores.
+     */
     public Scene getScene() {
         return scene;
     }
+    /**
+     * Gets the JavaFX button for returning to the main menu.
+     *
+     * @return The JavaFX back button.
+     */
     public Button getBackButton() {
         return backButton;
     }

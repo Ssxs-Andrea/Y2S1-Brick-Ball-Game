@@ -12,18 +12,29 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import java.util.Objects;
-
+/**
+ * The VolumeController class manages the volume control functionality for the background music in the game.
+ * It provides the ability to adjust the volume, mute or unmute the background music, and toggle a popup for volume control.
+ * The class uses JavaFX's {@link Slider}, {@link CheckBox}, and {@link Popup} for the volume control UI.
+ */
 public class VolumeController {
 
     private final BackgroundMusicPlayer backgroundMusicPlayer = new BackgroundMusicPlayer();
     private Popup volumePopup;
     private boolean isMuted = false;
     private double previousVolume = 1.0;
-
+    /**
+     * Plays the background music by calling the {@link BackgroundMusicPlayer#playBackgroundMusic()} method.
+     */
     public void playBackgroundMusic() {
         backgroundMusicPlayer.playBackgroundMusic();
     }
-
+    /**
+     * Adjusts the volume of the background music based on the specified volume.
+     * If the background music player is not null, it sets the volume and updates the mute status.
+     *
+     * @param volume The new volume value.
+     */
     private void adjustVolume(double volume) {
         if (BackgroundMusicPlayer.backgroundMusicPlayer != null) {
             BackgroundMusicPlayer.backgroundMusicPlayer.setVolume(volume);
@@ -33,7 +44,10 @@ public class VolumeController {
             }
         }
     }
-
+    /**
+     * Toggles the mute status of the background music.
+     * If the background music player is not null, it either mutes or unmute based on the current mute status.
+     */
     private void toggleMute() {
         if (BackgroundMusicPlayer.backgroundMusicPlayer != null) {
             if (isMuted) {
@@ -46,7 +60,11 @@ public class VolumeController {
             }
         }
     }
-
+    /**
+     * Sets up key events on the provided scene, allowing users to toggle the volume popup by pressing the 'M' key.
+     *
+     * @param scene The scene on which to set up key events.
+     */
     public void setupKeyEvents(Scene scene) {
         EventHandler<KeyEvent> existingHandler = (EventHandler<KeyEvent>) scene.getOnKeyPressed();
 
@@ -60,7 +78,12 @@ public class VolumeController {
             }
         });
     }
-
+    /**
+     * Toggles the visibility of the volume popup on the specified scene.
+     * If the popup is not created or not showing, it shows the volume popup; otherwise, it hides the popup.
+     *
+     * @param scene The scene on which to toggle the volume popup.
+     */
     private void toggleVolumePopup(Scene scene) {
         if (volumePopup == null || !volumePopup.isShowing()) {
             showVolumePopup(scene);
@@ -68,7 +91,13 @@ public class VolumeController {
             volumePopup.hide();
         }
     }
-
+    /**
+     * Shows the volume popup on the specified scene.
+     * If the popup is not created, it creates the popup and adds UI components such as volume slider and mute checkbox.
+     * The popup is positioned at the center of the stage.
+     *
+     * @param scene The scene on which to show the volume popup.
+     */
     private void showVolumePopup(Scene scene) {
         if (volumePopup == null) {
             volumePopup = new Popup();

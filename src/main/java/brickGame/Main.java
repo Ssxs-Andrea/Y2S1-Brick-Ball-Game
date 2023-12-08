@@ -12,58 +12,92 @@ import inGameControlKey.KeyEventHandler;
 import pauseGame.PauseHandler;
 import pauseGame.WindowsFocusManager;
 import soundEffects.VolumeController;
-
+/**
+ * The {@code Main} class serves as the entry point for the Brick Game application. It extends the JavaFX
+ * {@link Application} class and implements the {@link EventHandler} interface for handling keyboard events.
+ * It initializes the game state, manages the game engine, and controls the switching of views.
+ */
 public class Main extends Application implements EventHandler<KeyEvent>{
     final GameInitializer gameInitializer = new GameInitializer(this);
     private GameState gameState;
     private Stage primaryStage;
     public static boolean restartCertainLevel = false;
     public static PauseHandler pauseHandler;
-
+    /**
+     * The entry point of the application. It initializes the game state, sets up the pause handler,
+     * controls background music, and switches to the main menu scene.
+     *
+     * @param primaryStage The primary stage for the application.
+     */
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-
-        //new gameState object
         gameState = new GameState();
 
-        //initialize pause game for game scene
         pauseHandler = new PauseHandler(this);
         new WindowsFocusManager(this, primaryStage, gameInitializer);
 
-        //background music control
         VolumeController volumeController = new VolumeController();
         volumeController.playBackgroundMusic();
 
-        //first scene would be main menu scene
         ViewSwitcher viewSwitcher = new ViewSwitcher(this);
         viewSwitcher.switchToMainMenuPage();
     }
-
+    /**
+     * The main method that launches the JavaFX application.
+     *
+     * @param args Command-line arguments (not used).
+     */
     public static void main(String[] args) {
         launch(args);
     }
-
-    //keyboard handler
+    /**
+     * Handles keyboard events by delegating to the {@link KeyEventHandler}.
+     *
+     * @param event The keyboard event to be handled.
+     */
     @Override
     public void handle(KeyEvent event) {
         KeyEventHandler keyEventHandler = new KeyEventHandler(this,gameState);
         keyEventHandler.handle(event);
     }
-
-    //getter class to access methods from main
+    /**
+     * Retrieves the current game state.
+     *
+     * @return The {@link GameState} object representing the current state of the game.
+     */
     public GameState getGameState() {
         return gameState;
     }
+    /**
+     * Retrieves the game engine associated with the game initializer.
+     *
+     * @return The {@link GameEngine} object responsible for controlling the game.
+     */
     public GameEngine getEngine() {
         return gameInitializer.getEngine();
     }
+    /**
+     * Retrieves the root pane associated with the game initializer.
+     *
+     * @return The {@link Pane} object representing the root of the game scene.
+     */
     public Pane getRoot() {
         return gameInitializer.getRoot();
     }
+    /**
+     * Retrieves the primary stage of the application.
+     *
+     * @return The {@link Stage} object representing the primary stage.
+     */
     public Stage getPrimaryStage() {
         return primaryStage;
     }
+    /**
+     * Initializes a new game based on the specified condition.
+     *
+     * @param fromMainMenu A boolean indicating whether the game initialization is triggered from the main menu.
+     */
     public void initializeNewGame(boolean fromMainMenu) {
         gameInitializer.initializeNewGame(fromMainMenu);
     }

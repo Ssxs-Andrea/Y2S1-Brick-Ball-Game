@@ -6,10 +6,20 @@ import javafx.util.Duration;
 
 import java.io.File;
 import java.net.URI;
-
+/**
+ * The BackgroundMusicPlayer class is responsible for playing background music in the application.
+ * It utilizes JavaFX's {@link MediaPlayer} for handling audio playback.
+ * The background music is set to loop, meaning it will restart when it reaches the end.
+ */
 public class BackgroundMusicPlayer {
+    /**
+     * The static instance of {@link MediaPlayer} for background music.
+     */
     public static MediaPlayer backgroundMusicPlayer;
-
+    /**
+     * Plays the background music. It loads the audio file, creates a {@link Media} instance, and initializes
+     * the {@link MediaPlayer}. The music is set to loop indefinitely.
+     */
     public void playBackgroundMusic() {
         File backgroundMusicFile = new File("src/main/resources/sound-effects/bg-music.m4a");
         URI backgroundMusicURI = backgroundMusicFile.toURI();
