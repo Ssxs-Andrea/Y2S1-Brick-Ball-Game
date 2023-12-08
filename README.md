@@ -197,15 +197,6 @@ Initially, the stage was resizable, leading to an unsightly display of the game 
 Maintained a default setting throughout all scene to prevent resizing of the game stage.
 
 Reason: Ensures that the game stage remains fixed in size to prevent incomplete game visuals.
-### h. Time Factor Related Bugs
-
-When the pause feature is integrated, the game's timer continuing to run even when paused. 
-
-This can result in abnormal behavior for the gold root and bonus, causing extended gold root times, as well as bonuses moving in the opposite direction (towards the top of the screen) instead of falling down.
-
-To address this issue, pause the execution of the timer when the game is paused and resume it when the game is resumed. 
-
-Reason: This ensure proper synchronization and prevent unexpected behavior associated with the gold root and bonus elements.
 ### Section 3: Refactor In General
 
 ### a. Spelling Mistakes
@@ -227,8 +218,6 @@ Reason: This promotes immutability, making the code more predictable and prevent
 
 - Delete unused import libraries and variables.
 
-- For example: the method setFps in GameEngine is deleted as animation timer is used to control the time.
-
 ### d. Resources
 
 Split the images and css files into different folders based on their usage.
@@ -245,11 +234,7 @@ For example:
 
 This provides a clear and organized structure to the project.
 
-
-
-### e. Use Design Patterns
-
-#### MVC Pattern for New Scenes
+### e. Use MVC Pattern for New Scenes
 
 - High Score, Main Menu, Pause Menu, Level Select are split into MVC pattern.
 - Enforces a clear separation of concerns, dividing the scene into three main components: the Model (data), the View (user interface), and the Controller (input and interaction).
@@ -272,15 +257,6 @@ This provides a clear and organized structure to the project.
 - To search for the relevent class easily.
 
 Reason: Organizing and structuring the code in a modular and maintainable way.
-### Iterator
-
-Iterator is added whenever there is array.
-
-For example: Array of blocks.
-
-Reason: Iterators provide a uniform way to iterate over various types of collections in codebase. This promotes consistency and makes the code more predictable and readable.
-
-
 ### Added Game Design
 
 CSS is added for all different scene. 
@@ -298,8 +274,24 @@ Reason: To prevent potential errors when working with objects that might be null
 ### 3. Implemented but Not Working Properly
 
 List any features that have been implemented but are not working correctly. Explain the issues you encountered, and if possible, the steps you took to address them.
+
+#### Ball-block Collision 
+- Ball cannot properly bounce back when hitting the middle of two blocks in a straight line, was encountered due to the ball's collision detection only considering one part of the block at a time (either left, right, top, or bottom). 
+- Attempts were made to address this by adding conditions for multiple collision scenarios, but these were unsuccessful in fully resolving the issue.
+
+#### Sound Effects for Ball-break Collision
+- Trying to implement sound effect when the ball hits the break.
+- The sound effect not playing sometimes while the ball hits the break.
+- Attempts were undertaken to address the issue by adding conditions, but the desired consistency could not be achieved.
+- Thus, the decision was made to remove the sound effect for ball-break collisions in the final implementation.
+
+#### Flash of Previous Scnene During Scene Switch
+- One issue encountered was a brief flash of the previous scene when switching scenes, when entering levels from the level select screen or while restarting levels, where the buttons of the game scene start page was briefly visible before the selected level scene appeared. 
+- Efforts were made to address this issue by attempting to set the buttons invisible before the new scene loaded. 
+- However, this approach did not fully eliminate the flash, and the issue still persisted.
 ### 4. Features Not Implemented
 
+---
 #### Multiplayer Mode
 
 Unable to implement multiplayer mode in the game, which players can compete among themselves to achieve high score.
@@ -309,7 +301,7 @@ Reason on why they are left out:
 - Lack of knowledge and understanding of server-client architecture. 
 - Limited time for the coursework to investigate fully regarding how the architecture works.
 
-
+---
 #### Turning Blocks
 
 Unable to implement turning blocks, which the blocks will dynamically rotate at its own position.
@@ -318,6 +310,7 @@ Reason on why they are left out:
 - Implementing dynamic block rotation involves complex mathematical calculations and graphical manipulations, to check whether the ball hit the blocks. 
 - Due to these technical challenges and limited time to explore further on this idea.
 
+---
 #### Time-based Mode
 
 Time-based mode not implement, which the player have to complete the level in limited time to proceed to next level.
@@ -328,6 +321,7 @@ Reason on why they are left out:
 - The implementation of a time-based mode remains a potential feature for inclusion in future projects with extended timelines.
 ### 5. New Java Classes
 
+---
 Created a new highScore package.
 
 New Class added in highScore package:
@@ -336,6 +330,7 @@ New Class added in highScore package:
 - HighScoreManager: Manages the storage, retrieval, and updating of high scores, utilizing serialization to persistently store scores in a file, and providing methods to check, update, and format high scores.
 - HighScoreController: Handles user interactions and events for the high scores, including checking and adding new high scores, linking to the main menu, and displaying relevant alerts and dialogs.
 - HighScore: Represents a high score entry, storing the player's name and score, and implementing serialization for efficient storage and retrieval.
+
 ---
 Created a new soundEffects package. 
 
@@ -344,6 +339,7 @@ New Class added in soundEffects package:
 - BackgroundMusicPlayer: Manages the background music for the game, allowing for continuous playback and automatic restart when reaching the end.
 - SoundEffects: Handles the initialization and playback of various sound effects used in the game, including block hits, bonus events, button presses, and bomb explosions.
 - VolumeController: Provides functionality to control the volume of the background music, allowing users to toggle a popup for volume adjustments, mute the music, and set the volume level using a slider.
+
 ---
 Created a new pauseGame package.
 
@@ -362,6 +358,7 @@ New Class added in mainMenu package:
 
 - MainMenuController: Manages user interactions with the main menu buttons, initiating actions for starting a new game, navigating to instructions, and accessing high scores.
 - MainMenuView: Represents the graphical user interface for the main menu, providing buttons for starting a new game, viewing instructions, and checking high scores, along with associated styling.
+
 ---
 Created a new levelSelect package:
 
@@ -370,6 +367,7 @@ New Class added in levelSelect package:
 - LevelSelectionController: Manages the interactions and logic for the level selection screen, including handling button clicks, initializing the game state for selected levels.
 - LevelSelectionView: Represents the graphical user interface for the level selection screen, providing buttons for each playable level, displaying level information, and option to return to the main menu.
 - LevelSelectionModel: Stores and manages the selected level for the level selection screen, allowing for communication between the controller and the view components.
+
 ---
 Created a new instruction package:
 
@@ -377,6 +375,7 @@ New Class added in instruction package:
 
 - InstructionController: Manages user interactions and navigation for the instruction page, handling button click.
 - InstructionView: Represents the graphical user interface for the instruction page, displaying game instructions with images and providing a button to return to the main menu.
+
 ---
 Created a new levelLogic package.
 
@@ -407,7 +406,7 @@ New Class added in breakMovement package:
 ---
 New Class added in brickGame package:
 
-- GameState: Serves as a container for storing and managing the state of the brick game, including information such as the current level, positions of the break and ball, game statistics (score, hearts), block configurations, power-ups, and various flags and parameters that control the game's behavior and interactions.
+- GameState: Serves as a container for storing and managing the state of the brick game (which is initially defined in Main), including information such as the current level, positions of the break and ball, game statistics (score, hearts), block configurations, power-ups, and various flags and parameters that control the game's behavior and interactions.
 
 - By using the GameState class, object is created to encapsulate and manage the state of the brick game, allowing easy access and manipulation of various game parameters by passing the object instance.
 
@@ -473,8 +472,9 @@ Reason: Maintain a tidy and focused game interface, preventing unnecessary visua
 
 - Change the button at the win page in showWin method to "Back To Main Menu" button from "Restart" button.
 - Removing the contents in the root for a clearer page.
+- Add a button "Back To Main Menu" in showGameOver method.
 
-Reason: After winning a game, players might naturally want to return to the main menu to explore other options instead of starting a new game. 
+Reason: Players might naturally want to return to the main menu to explore other options instead of starting a new game. 
 
 -------------------------------------------
 Created a new ball package.
@@ -504,6 +504,11 @@ Reason: To ensure that the entire ball is displayed within the screen, preventin
 
 Reason: Ensures the ball no longer goes out of bounds upon initialization. Prevent the ball fall out of bound.
 
+- Initially the ball will not bounce up when the ball hits the bottom of the screen while falling down in a straight line.
+- Add resetCollideFlags after the ball hits the bottom of the screen.
+
+Reason: Ensure the ball collide and move in correct direction.
+
 -------------------------------------------
 In the new breakMovement package:
 
@@ -523,14 +528,57 @@ Create a new gameAction package.
 - Move GameEngine into the package gameAction.
 - Move the implementation of OnAction interface in Main to a new class OnAction.
 - Split the OnUpdate method in OnAction into smaller methods and move the methods into a new class OnUpdate.
+
+        updateUI();
+        updatePowerUpsUI();
+        checkGameOver();
+        handleGameOver();
+        updateGameElements();
+        handleBlockHit();
+        handleChocoBlock();
+        handleStarBlock();
+        handleBoomBlock();
+        handleBlockType();
+        handleCollisionCode();
+
 - Split the OnPhysicsUpdate method in OnAction into smaller methods and move the methods into a new class OnPhysicsUpdate.
+
+        checkDestroyedCount();
+        applyBallPhysics();
+        updateGoldStatus();
+        updatePowerUps();
+        isPowerUpHitBreak();
+        handlePowerUpHit();
 
 Reason: Improves code organization, reduces clutter in the Main class, and adheres to the principle of single responsibility, enhancing maintainability and readability.
 
-- Initially, utilizing threads for the GameEngine resulted in numerous errors. 
-- To address this issue, the implementation has been updated to use an animation timer instead. 
+- Extract the common functionalities for chocos and booms (Bonus and Penalty) in OnPhysicsUpdate into a method updatePowerUps.
+
+Reason: Avoid duplicated code.
+
+- Initially, the game used custom threads (updateThread and physicsThread) to handle game updates and physics calculations separately in GameEngine.
+- The code changes to utilize the AnimationTimer to create a unified game loop, improving synchronization between update and physics calculations.
+- This provides a more standardized and efficient approach to game loop management.
 
 Reason: Avoids concurrent execution of threads, preventing collisions and associated errors in the game.
+
+
+- When the pause feature is integrated, the game's timer continuing to run even when paused. 
+
+- This result in abnormal behavior for the gold root and bonus, causing extended gold root times, as well as bonuses moving in the opposite direction (towards the top of the screen) instead of falling down.
+
+- To address this issue, add pause and resume method in GameEngine to pause the execution of the timer when the game is paused and resume it when the game is resumed. 
+
+Reason: This ensure proper synchronization and prevent unexpected behavior associated with the gold root and bonus elements.
+
+- Iterator is added for array <Power> in method OnPhysicsUpdate and array <Block> in method OnUpdate.
+
+Reason: Iterators provide a uniform way to iterate over various types of collections in codebase. This promotes consistency and makes the code more predictable and readable.
+
+- Delete unused OnInit in interface OnAction.
+- Delete unused setFps in GameEngine.
+
+- In OnUpdate class, add conditions to check for negative score in checkGameOver method because penalty is added and might cause negative score.
 
 -------------------------------------------
 Create a new inGameControlKey package.
@@ -540,6 +588,11 @@ Create a new inGameControlKey package.
 - Move the action event of the buttons above into a new class GameButtonHandler, which act as a controller for the buttons.
 
 Reason: Improves code modularity by separating the handling mechanisms in the game scene, enhancing maintainability, and adhering to the single responsibility principle.
+
+- In GameButtons and GameButtonHandler, add the buttons and event handler for load, back, levelSelect.
+
+- In KeyEventHandler, added new control keys case R for restart level and case P for pause game.
+- Remove unused case DOWN.
 
 -------------------------------------------
 Create a new block package.
@@ -557,11 +610,53 @@ Reason: By centralizing the creation logic in the factory, can easily add new bl
 
 Reason: Ensure that block can be destroyed when any part of the ball, within its radius, hits the block. Ensures a more consistent gameplay experience.
 
+- Generate blocks for levels 19 and 20 in Block class, each featuring 10 rows of blocks. 
+- Level 19 introduces bonus elements, while level 20 introduces boom elements.
+- Generate boom block starting from level 5 which will generate bomb to cause penalty while receive with break.
+
+Reason: Adding strategic challenges for players to navigate through.
+
+- Move BlockSerializable from brickGame package to block package.
+- Rename variable j to column to better represent the variable's usage.
+
 -------------------------------------------
 In the brickGame package: 
 
 - Move the game start scene in Main to a new class GameInitializer.
 - Make the Main class simple with only the start stage and some getter methods.
+
+- Break the large method into smaller methods.
+
+        resetGameForMainMenu();
+        clearRootAndPauseHandler();
+        initializeSoundEffects();
+        handleGameSetup();
+        handleGameWin();
+        setupGameSceneAndKeyEvents();
+        setupGameButtonsAndHandlers();
+
+- Group repeated code into methods.
+
+        initializeRootAndLabels();
+        setGameElementsVisible();
+        setButtonInvisible();
+        restartEngine();
+
+Reason: To reduce redundancy and promoting a more modular structure.
+
+- In GameInitializer, change the last level to 19, which when the level=20, then only the method handleGameWin will be called.
+- Add conditions for restart level at level 1, which the game play will start immediately. (because restart level at level 1 initially will start with the game scene start page)
 ### 7. Unexpected Problems
 
-Communicate any unexpected challenges or issues you encountered during the assignment. Describe how you addressed or attempted to resolve them.
+---
+#### Unfamiliar with JavaFX
+- Encountering unfamiliarity with JavaFX presented a challenge during the assignment. 
+- Took proactive steps to learn more about JavaFX by searching online resources and seeking additional information through interactions with ChatGPT. 
+- This approach demonstrates a resourceful and adaptive strategy to overcome unfamiliar technologies and gain the necessary knowledge for successful completion of the assignment.
+
+---
+#### Time Management Issue
+- Facing challenges with too many assignments and a lack of time management.
+- Breaking down big tasks into smaller parts and allocating time for them each day.
+- This approach help in maintaining a more organized and manageable workload, leading to improved time management and reduced stress.
+
