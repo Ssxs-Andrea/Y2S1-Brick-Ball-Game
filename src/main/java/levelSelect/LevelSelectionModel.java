@@ -8,11 +8,23 @@ package levelSelect;
  * {@code LevelSelectionController} and {@code LevelSelectionView} classes to facilitate the level selection feature.</p>
 
  */
+/**
+ * Represents the model for level selection.
+ */
 public class LevelSelectionModel {
+
+    /**
+     * The currently selected level.
+     */
     private int selectedLevel;
 
+    /**
+     * Sets the selected level.
+     *
+     * @param level The level to be set as the selected level.
+     */
     public void setSelectedLevel(int level) {
         selectedLevel = level;
     }
-
 }
+

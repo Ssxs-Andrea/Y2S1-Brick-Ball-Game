@@ -7,36 +7,127 @@ import java.io.Serializable;
 /**
  * The {@code Block} class represents a block in the game. Blocks have properties such as position, color, and type.
  * This class provides methods for initializing and checking collisions with the blocks.
+ *
+ * @see <a href="https://github.com/kooitt/CourseworkGame/blob/master/src/main/java/brickGame/Block.java">The original source code for Block </a>
+ *
  */
 public class Block implements Serializable {
-    public int row;
-    public int column;
-    public boolean isDestroyed = false;
+        /**
+         * The row index of the block.
+         */
+        public int row;
 
-    public Color color;
-    public int type;
+        /**
+         * The column index of the block.
+         */
+        public int column;
 
-    public int x;
-    public int y;
+        /**
+         * A flag indicating whether the block is destroyed.
+         */
+        public boolean isDestroyed = false;
 
-    protected int width = 100;
-    protected int height = 30;
-    protected int paddingTop = height * 2;
-    protected int paddingH = 50;
-    public Rectangle rect;
+        /**
+         * The color of the block.
+         */
+        public Color color;
 
-    public static int NO_HIT = -1;
-    public static int HIT_RIGHT = 0;
-    public static int HIT_BOTTOM = 1;
-    public static int HIT_LEFT = 2;
-    public static int HIT_TOP = 3;
+        /**
+         * The type of the block.
+         */
+        public int type;
 
-    public static int BLOCK_NORMAL = 99;
-    public static int BLOCK_CHOCO = 100;
-    public static int BLOCK_STAR = 101;
-    public static int BLOCK_HEART = 102;
-    public static int BLOCK_BOOM = 103;
-    private final double epsilon = 0.01 * height;
+        /**
+         * The x-coordinate of the block.
+         */
+        public int x;
+
+        /**
+         * The y-coordinate of the block.
+         */
+        public int y;
+
+        /**
+         * The width of the block.
+         */
+        protected int width = 100;
+
+        /**
+         * The height of the block.
+         */
+        protected int height = 30;
+
+        /**
+         * The padding at the top of the block.
+         */
+        protected int paddingTop = height * 2;
+
+        /**
+         * The horizontal padding of the block.
+         */
+        protected int paddingH = 50;
+
+        /**
+         * The rectangular shape representing the block.
+         */
+        public Rectangle rect;
+
+        /**
+         * Represents no hit.
+         */
+        public static int NO_HIT = -1;
+
+        /**
+         * Represents a hit on the right side of the block.
+         */
+        public static int HIT_RIGHT = 0;
+
+        /**
+         * Represents a hit on the bottom side of the block.
+         */
+        public static int HIT_BOTTOM = 1;
+
+        /**
+         * Represents a hit on the left side of the block.
+         */
+        public static int HIT_LEFT = 2;
+
+        /**
+         * Represents a hit on the top side of the block.
+         */
+        public static int HIT_TOP = 3;
+
+        /**
+         * Represents a normal block type.
+         */
+        public static int BLOCK_NORMAL = 99;
+
+        /**
+         * Represents a choco block type.
+         */
+        public static int BLOCK_CHOCO = 100;
+
+        /**
+         * Represents a star block type.
+         */
+        public static int BLOCK_STAR = 101;
+
+        /**
+         * Represents a heart block type.
+         */
+        public static int BLOCK_HEART = 102;
+
+        /**
+         * Represents a boom block type.
+         */
+        public static int BLOCK_BOOM = 103;
+
+        /**
+         * A small value to handle precision errors.
+         */
+        private final double epsilon = 0.01 * height;
+
+
     /**
      * Constructs a Block object with the specified row, column, color, and type.
      *

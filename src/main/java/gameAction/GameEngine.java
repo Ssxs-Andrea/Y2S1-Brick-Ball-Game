@@ -5,6 +5,8 @@ import javafx.animation.AnimationTimer;
  * The {@code GameEngine} class orchestrates the game loop, providing methods to start, stop, pause, and resume the
  * animation timer. It uses an {@code OnAction} interface to define callback methods for updating game logic, physics,
  * and time-related events.
+ *
+ * @see <a href="https://github.com/kooitt/CourseworkGame/blob/master/src/main/java/brickGame/GameEngine.java">The original source code for GameEngine </a>
  */
 public class GameEngine {
 

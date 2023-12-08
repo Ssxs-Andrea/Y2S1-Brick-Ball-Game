@@ -11,12 +11,36 @@ import static brickGame.Main.pauseHandler;
  * time-related events.
  */
 public class OnAction implements GameEngine.OnAction {
+    /**
+     * Represents the main class responsible for managing the game.
+     */
     private final Main main;
+
+    /**
+     * Represents the action to be performed on each update of the game logic.
+     */
     private final OnUpdate onUpdate = new OnUpdate(this);
+
+    /**
+     * Represents the action to be performed on each update of the physics in the game.
+     */
     private final OnPhysicsUpdate onPhysicsUpdate = new OnPhysicsUpdate(this);
+
+    /**
+     * Represents the current time in the game.
+     */
     private long time = 0;
+
+    /**
+     * Represents the time when the game achieves a gold status.
+     */
     private long goldTime = 0;
+
+    /**
+     * Represents the initializer for the game.
+     */
     private final GameInitializer gameInitializer;
+
     /**
      * Constructs an instance of the {@code OnAction} class.
      *

@@ -20,6 +20,9 @@ import java.util.List;
  * checking game over conditions, handling game over scenarios, and updating various game elements.
  */
 public class OnUpdate {
+    /**
+     * Represents the action to be performed when an event occurs.
+     */
     private final OnAction onAction;
     /**
      * Constructs an instance of the {@code OnUpdate} class.

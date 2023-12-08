@@ -6,6 +6,7 @@ import javafx.util.Duration;
 
 import java.io.File;
 import java.net.URI;
+
 /**
  * The BackgroundMusicPlayer class is responsible for playing background music in the application.
  * It utilizes JavaFX's {@link MediaPlayer} for handling audio playback.

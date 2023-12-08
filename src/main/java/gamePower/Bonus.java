@@ -7,7 +7,8 @@ package gamePower;
  * may appear during the game. It provides different image URLs for the
  * first and second frames of the power-up animation.</p>
  *
- * @see Power
+ * @see <a href="https://github.com/kooitt/CourseworkGame/blob/master/src/main/java/brickGame/Bonus.java">The original source code for Bonus </a>
+ *
  *  */
 public class Bonus extends Power {
     /**

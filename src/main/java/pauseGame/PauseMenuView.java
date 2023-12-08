@@ -14,9 +14,21 @@ import java.util.Objects;
  * @see PauseMenuController
  */
 public class PauseMenuView extends StackPane {
+    /**
+     * Button used to resume the game.
+     */
     private Button resumeButton;
+
+    /**
+     * Button used to restart the level.
+     */
     private Button restartButton;
+
+    /**
+     * Button used to navigate to the main menu.
+     */
     private Button mainMenuButton;
+
     /**
      * Constructs a PauseMenuView and initializes the buttons for resume, restart, and main menu.
      */

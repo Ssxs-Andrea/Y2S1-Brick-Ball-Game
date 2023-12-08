@@ -19,9 +19,24 @@ import java.util.Objects;
  */
 public class VolumeController {
 
+    /**
+     * The background music player instance.
+     */
     private final BackgroundMusicPlayer backgroundMusicPlayer = new BackgroundMusicPlayer();
+
+    /**
+     * The volume popup for user interaction.
+     */
     private Popup volumePopup;
+
+    /**
+     * A flag indicating whether the audio is currently muted.
+     */
     private boolean isMuted = false;
+
+    /**
+     * The previous volume before muting (used for unmute).
+     */
     private double previousVolume = 1.0;
     /**
      * Plays the background music by calling the {@link BackgroundMusicPlayer#playBackgroundMusic()} method.

@@ -9,9 +9,24 @@ import javafx.scene.media.MediaPlayer;
  * It uses JavaFX's {@link MediaPlayer} to handle the playback of audio files.
  */
 public class SoundEffects {
+    /**
+     * MediaPlayer instance for the sound effect when hitting a block.
+     */
     private MediaPlayer hitBlockSound;
+
+    /**
+     * MediaPlayer instance for the sound effect when hitting a bonus.
+     */
     private MediaPlayer hitBonusSound;
+
+    /**
+     * MediaPlayer instance for the sound effect when hitting a button.
+     */
     private MediaPlayer hitButtonSound;
+
+    /**
+     * MediaPlayer instance for the sound effect when hitting a bomb.
+     */
     private MediaPlayer hitBombSound;
     /**
      * Initializes the sound effects by loading audio files and creating {@link MediaPlayer} instances.

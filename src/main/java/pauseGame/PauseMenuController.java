@@ -19,10 +19,26 @@ import static brickGame.Main.pauseHandler;
  * @see PauseMenu
  */
 public class PauseMenuController {
+    /**
+     * Reference to the main application class.
+     */
     private final Main main;
+
+    /**
+     * Reference to the scene associated with the pause menu.
+     */
     private final Scene scene;
+
+    /**
+     * Reference to the game state, containing information about the current game state.
+     */
     private final GameState gameState;
+
+    /**
+     * The view associated with the pause menu.
+     */
     private final PauseMenuView pauseMenuView;
+
     /**
      * Constructs a PauseMenuController with the specified main application instance, game scene, and game state.
      *

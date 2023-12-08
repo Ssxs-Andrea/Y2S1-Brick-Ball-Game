@@ -11,6 +11,8 @@ import soundEffects.SoundEffects;
  * The {@code EndGameDisplay} class provides methods for displaying end-game messages and options on the game screen.
  * It includes methods to show messages for both game over and game win scenarios, allowing players to restart the game
  * or return to the main menu.
+ *
+ * @see <a href="https://github.com/kooitt/CourseworkGame/blob/master/src/main/java/brickGame/Score.java">The original source code Score</a>
  */
 public class EndGameDisplay {
     /**

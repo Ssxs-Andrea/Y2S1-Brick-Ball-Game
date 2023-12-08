@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 /**
  * The {@code ScoreLabelAnimator} class provides a method for animating score labels on the game screen.
  * It allows for the display of score changes with scaling and fading effects for a more visually appealing presentation.
+ * @see <a href="https://github.com/kooitt/CourseworkGame/blob/master/src/main/java/brickGame/Score.java">The original source code Score</a>
  */
 public class ScoreLabelAnimator {
     /**

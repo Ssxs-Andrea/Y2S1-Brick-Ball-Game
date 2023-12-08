@@ -15,6 +15,9 @@ import java.util.List;
  * and handling power-ups (Chocos and Booms).
  */
 public class OnPhysicsUpdate {
+    /**
+     * Represents the action to be performed when an event occurs.
+     */
     private final OnAction onAction;
     /**
      * Constructs an instance of the {@code OnPhysicsUpdate} class.

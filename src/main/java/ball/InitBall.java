@@ -10,6 +10,9 @@ import java.util.Random;
  * It generates a random starting position within the game scene and creates a Circle representing the ball.
  */
 public class InitBall {
+    /**
+     * Represents the state of the game.
+     */
     private final GameState gameState;
     /**
      * Constructs an InitBall object with the provided GameState.
