@@ -26,9 +26,9 @@ public class SaveGame {
     /** The game state containing current game parameters. */
     private GameState gameState;
     /** The path for saving the game state file. */
-    private final String savePath = "D:/save/save.mdds";
+    private final String savePath = "C:/save/save.mdds";
     /** The directory path for saving game state files. */
-    private final String savePathDir = "D:/save/";
+    private final String savePathDir = "C:/save/";
     /**
      * Constructs a SaveGame instance with references to the main application and game state.
      *

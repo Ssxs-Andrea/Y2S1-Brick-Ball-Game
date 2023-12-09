@@ -20,9 +20,9 @@ public class HighScoreManager {
     /** The maximum number of high scores to retain. */
     private static final int MAX_HIGH_SCORES = 3;
     /** The directory path where the high scores file is stored. */
-    private static final String HIGH_SCORES_PATH_DIR = "D:/save/";
+    private static final String HIGH_SCORES_PATH_DIR = "C:/save/";
     /** The file path for storing and retrieving high scores. */
-    private static final String HIGH_SCORES_FILE = "D:/save/highscores.mdds";
+    private static final String HIGH_SCORES_FILE = "C:/save/highscores.mdds";
     /** The list of high scores managed by this class. */
     private List<HighScore> highScores;
     /**
