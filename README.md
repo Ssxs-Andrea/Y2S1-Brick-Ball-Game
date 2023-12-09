@@ -122,7 +122,7 @@ Reason: Allow player to replay the previous levels.
 ---
 ### High Score Implementation
 
-When the player loses (runs out of hearts) or wins the game （complete all levels）, a dialog box pops up if the player achieves a highscore within the top 3.
+When the player loses (runs out of hearts) or wins the game (complete all levels), a dialog box pops up if the player achieves a highscore within the top 3.
 
 The dialog box prompts the player to enter their name to associate with the highscore.
 
@@ -142,10 +142,6 @@ Back to Main Menu:
 Includes a button "Back to Main Menu" button on the high score page after reviewing the high score list.
 
 Reason: This feature adds a sense of achievement and encourages players to compete for top positions.
-
-
-
-
 
 ---
 ### Game Scene Start Page
@@ -330,6 +326,13 @@ Add null check (!= null) in statements that might produce null pointer exception
 Reason: To prevent potential errors when working with objects that might be null. 
 
 ---
+### Added Platform.runLater
+
+Include Platform.runLater statement in UI related code.
+
+Reason: To ensure proper synchronization with the JavaFX application thread. 
+
+---
 ## 3. Implemented but Not Working Properly
 
 
@@ -477,8 +480,6 @@ New Class added in brickGame package:
 ---
 ## 6. Modified Java Classes
 
-List the Java classes you modified from the provided code base. Describe the changes you made and explain why these modifications were necessary.
-
 Created a new loadSave package.
 
 - Rename LoadSave to ReadFile, and move into the new package loadSave.
@@ -490,7 +491,6 @@ Reason: Renaming classes with more descriptive names that reflect their purpose.
 
 Reason: Enhances code organization by renaming and relocating the class responsible for reading saved game data to the loadSave package. Improves code structure by segregating the responsibility of saving and loading into separate class.
 
-
 - Addressed the bug where initially, the game could be saved but not loaded.
 - In ReadFile, implemented a statement to check if the save.mdds file exists at the beginning of the game.
 - If the save.mdds file exists, the "Load Game" button is displayed on the game scene start page to resume from saved progress.
@@ -501,8 +501,12 @@ Reason: Enable player to to resume from saved progress.
 - When loading the game, the destroy count remains but the block size is recalculated, leading to errors when proceeding to the next level. 
 - To resolve this issue, in saveGame method, the destroy block count is now explicitly set to 0 during the save game process.
 
+Reason: Addressing bugs where the game cannot proceed to next level properly when loading a game.
+
 - In SaveGame, change the default location for save.mdds to C drive.
-- Some computer might not have D drive and will cause error.
+  
+Reason: Some computer might not have D drive and will cause error.
+  
 ---
 In the a new levelLogic package:
 
@@ -525,7 +529,6 @@ Reason: The form template method outlines the steps for creating a power-up, and
 In the new displayUi package:
 
 - Split the method in Score class into different class.
-
 - Move method showWin and showGameOver into EndGameDisplay.
 - Move method show into ScoreLabelAnimator.
 - Move methos showMessage into MessageLabelAnimator.
@@ -549,7 +552,8 @@ Created a new ball package.
 - Move method initBall in Main to a new class InitBall.
 - Move method setPhysicsToBall in Main to new class BallPhysicsHandler.
 - Move method resetCollideFlags in Main to new class CollisionFlagsResetter.
-- Break the long setPhysicsToBall method into smaller methods and call in setPhysicsToBall, which includes
+
+Break the long setPhysicsToBall method into smaller methods and call in setPhysicsToBall, which includes:
 
         updateBallPosition();
         handleTopBottomCollision();
@@ -594,7 +598,8 @@ Create a new gameAction package.
 
 - Move GameEngine into the package gameAction.
 - Move the implementation of OnAction interface in Main to a new class OnAction.
-- Split the OnUpdate method in OnAction into smaller methods and move the methods into a new class OnUpdate.
+  
+Split the OnUpdate method in OnAction into smaller methods and move the methods into a new class OnUpdate.
 
         updateUI();
         updatePowerUpsUI();
@@ -608,7 +613,7 @@ Create a new gameAction package.
         handleBlockType();
         handleCollisionCode();
 
-- Split the OnPhysicsUpdate method in OnAction into smaller methods and move the methods into a new class OnPhysicsUpdate.
+Split the OnPhysicsUpdate method in OnAction into smaller methods and move the methods into a new class OnPhysicsUpdate.
 
         checkDestroyedCount();
         applyBallPhysics();
@@ -631,9 +636,7 @@ Reason: Avoids concurrent execution of threads, preventing collisions and associ
 
 
 - When the pause feature is integrated, the game's timer continuing to run even when paused. 
-
 - This result in abnormal behavior for the gold root and bonus, causing extended gold root times, as well as bonuses moving in the opposite direction (towards the top of the screen) instead of falling down.
-
 - To address this issue, add pause and resume method in GameEngine to pause the execution of the timer when the game is paused and resume it when the game is resumed. 
 
 Reason: This ensure proper synchronization and prevent unexpected behavior associated with the gold root and bonus elements.
@@ -644,7 +647,6 @@ Reason: Iterators provide a uniform way to iterate over various types of collect
 
 - Delete unused OnInit in interface OnAction.
 - Delete unused setFps in GameEngine.
-
 - In OnUpdate class, add conditions to check for negative score in checkGameOver method because penalty is added and might cause negative score.
 
 ---
@@ -657,7 +659,6 @@ Create a new inGameControlKey package.
 Reason: Improves code modularity by separating the handling mechanisms in the game scene, enhancing maintainability, and adhering to the single responsibility principle.
 
 - In GameButtons and GameButtonHandler, add the buttons and event handler for load, back, levelSelect.
-
 - In KeyEventHandler, added new control keys case R for restart level and case P for pause game.
 - Remove unused case DOWN.
 
@@ -686,13 +687,15 @@ Reason: Adding strategic challenges for players to navigate through.
 - Move BlockSerializable from brickGame package to block package.
 - Rename variable j to column to better represent the variable's usage.
 
+Reason: For organizational purposes, aligning the class with a more appropriate package that reflects its functionality.
+
 ---
 In the brickGame package: 
 
 - Move the game start scene in Main to a new class GameInitializer.
 - Make the Main class simple with only the start stage and some getter methods.
 
-- Break the large method into smaller methods.
+Break the large method into smaller methods.
 
         resetGameForMainMenu();
         clearRootAndPauseHandler();
@@ -702,7 +705,7 @@ In the brickGame package:
         setupGameSceneAndKeyEvents();
         setupGameButtonsAndHandlers();
 
-- Group repeated code into methods.
+Group repeated code into methods.
 
         initializeRootAndLabels();
         setGameElementsVisible();
@@ -713,6 +716,8 @@ Reason: To reduce redundancy and promoting a more modular structure.
 
 - In GameInitializer, change the last level to 19, which when the level=20, then only the method handleGameWin will be called.
 - Add conditions for restart level at level 1, which the game play will start immediately. (because restart level at level 1 initially will start with the game scene start page)
+
+Reason: To resolve bugs when restarting at level 1. Added levels for game. 
 
 ---
 ## 7. Unexpected Problems
