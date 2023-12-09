@@ -29,7 +29,6 @@ Open the Main in brickGame package and run the program.
 ---
 ## 2. Implemented and Working Properly
 
----
 ### Section 1: Additional Features
 
 ---
@@ -296,6 +295,7 @@ This provides a clear and organized structure to the project.
 - High Score, Main Menu, Pause Menu, Level Select are split into MVC pattern.
 - Enforces a clear separation of concerns, dividing the scene into three main components: the Model (data), the View (user interface), and the Controller (input and interaction).
 - This separation makes the codebase more modular and easier to maintain.
+
 ---
 ### Breaking into smaller parts
 
@@ -332,9 +332,9 @@ Add null check (!= null) in statements that might produce null pointer exception
 Reason: To prevent potential errors when working with objects that might be null. 
 
 ---
-### 3. Implemented but Not Working Properly
+## 3. Implemented but Not Working Properly
 
----
+
 #### Ball-block Collision 
 - Ball cannot properly bounce back when hitting the middle of two blocks in a straight line, was encountered due to the ball's collision detection only considering one part of the block at a time (either left, right, top, or bottom). 
 - Attempts were made to address this by adding conditions for multiple collision scenarios, but these were unsuccessful in fully resolving the issue.
@@ -353,9 +353,9 @@ Reason: To prevent potential errors when working with objects that might be null
 - However, this approach did not fully eliminate the flash, and the issue still persisted.
 
 ---
-### 4. Features Not Implemented
+## 4. Features Not Implemented
 
----
+
 #### Multiplayer Mode
 
 Unable to implement multiplayer mode in the game, which players can compete among themselves to achieve high score.
@@ -385,9 +385,9 @@ Reason on why they are left out:
 - The implementation of a time-based mode remains a potential feature for inclusion in future projects with extended timelines.
 
 ---
-### 5. New Java Classes
+## 5. New Java Classes
 
----
+
 Created a new highScore package.
 
 New Class added in highScore package:
@@ -477,7 +477,7 @@ New Class added in brickGame package:
 - By using the GameState class, object is created to encapsulate and manage the state of the brick game, allowing easy access and manipulation of various game parameters by passing the object instance.
 
 ---
-### 6. Modified Java Classes
+## 6. Modified Java Classes
 
 List the Java classes you modified from the provided code base. Describe the changes you made and explain why these modifications were necessary.
 
@@ -505,7 +505,6 @@ Reason: Enable player to to resume from saved progress.
 
 - In SaveGame, change the default location for save.mdds to C drive.
 - Some computer might not have D drive and will cause error.
-
 ---
 In the a new levelLogic package:
 
@@ -650,7 +649,7 @@ Reason: Iterators provide a uniform way to iterate over various types of collect
 
 - In OnUpdate class, add conditions to check for negative score in checkGameOver method because penalty is added and might cause negative score.
 
-----
+---
 Create a new inGameControlKey package.
 
 - Move method handle in Main into a new class KeyEventHandler.
@@ -718,9 +717,8 @@ Reason: To reduce redundancy and promoting a more modular structure.
 - Add conditions for restart level at level 1, which the game play will start immediately. (because restart level at level 1 initially will start with the game scene start page)
 
 ---
-### 7. Unexpected Problems
+## 7. Unexpected Problems
 
----
 #### Unfamiliar with JavaFX
 - Encountering unfamiliarity with JavaFX presented a challenge during the assignment. 
 - Took proactive steps to learn more about JavaFX by searching online resources and seeking additional information through interactions with ChatGPT. 
