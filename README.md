@@ -2,6 +2,7 @@
 # Brick Ball Game
 
 ## 1. Compilation Instructions: 
+
 1. Download and extract the ZIP file.
 2. Copy the path of the folder.
 3. Open IntelliJ and select [Open].
@@ -27,9 +28,11 @@ Open the Main in brickGame package and run the program.
 
 ---
 ## 2. Implemented and Working Properly
+
 ### Section 1: Additional Features
 
-### a. Pause Function
+---
+### Pause Function
 
 Press "P" key to pause the game.
 
@@ -47,7 +50,8 @@ Auto-Pause on Frame Loss: The game detects frame loss or window focus loss and a
 Reason: Allowing players to pause the game which will give them control over their gaming experience. 
 
 
-### b. Sound Effects
+---
+### Sound Effects
 
 Sound effects will be triggers when the condition occurs.
 
@@ -58,7 +62,8 @@ Sound effects will be triggers when the condition occurs.
 
 Reason: Sound effects provide immediate feedback to players about the actions they perform or the events happening in the game. 
 
-### c. Background Music (BGM)
+---
+### Background Music (BGM)
 
 BGM starts playing when the player first starts the game.
 
@@ -73,7 +78,9 @@ Volume Control on BGM:
 - Offers flexibility for players who may want to enjoy the game with or without music.
 
 Reason: Background music contributes significantly to setting the atmosphere and ambiance of the game. 
-### d. Main Menu Page
+
+---
+### Main Menu Page
 
 When the player first runs the game, a main menu page is displayed, offering several button options to perfrom different actions.
 
@@ -84,7 +91,10 @@ When the player first runs the game, a main menu page is displayed, offering sev
 Set the game elements invisible while selecting the game mode.
 
 Reason: The main menu provides a clear and organized interface for players to navigate through various sections of the game.
-### e. Instruction Page
+
+
+---
+### Instruction Page
 
 When the player selects "Instruction" in the main menu, the player will be directed to the Instruction Page.
 
@@ -96,6 +106,9 @@ Back to Main Menu:
 Includes a button "Back to Main Menu" button on the instruction page after reviewing the instructions.
 
 Reason: Provides players with a comprehensive understanding of how to interact with the game.
+
+
+---
 ### Level Selection Page
 
 Accessed when the player selects "Level Select" in the game scene start page.
@@ -106,8 +119,10 @@ Accessed when the player selects "Level Select" in the game scene start page.
 
 Added a "Back To Main Menu" button to go back to main menu.
 
+Reason: Allow player to replay the previous levels.
 
-### f. High Score Implementation
+---
+### High Score Implementation
 
 When the player loses (runs out of hearts) or wins the game （complete all levels）, a dialog box pops up if the player achieves a highscore within the top 3.
 
@@ -134,30 +149,34 @@ Reason: This feature adds a sense of achievement and encourages players to compe
 
 
 
-### g. Game Scene Start Page
+---
+### Game Scene Start Page
 
 Accessed when the player selects "Start" in the main menu. Displays buttons for different game options within the game scene.
 
 In the initial implementation there is only a button "New Game" which allows user to start the game from level 1.
 
-#### New Buttons added:
-
+New Buttons added: 
 - Back to Main Menu
 
-If there is a saved game process, displays two additional buttons.
-
+If there is a saved game process, displays two additional buttons:
 - Level Selection
 - Load Game
 
-Reason: Including these additional buttons within the game scene enhances user convenience. 
-### h. Buttons
+Reason: Including these additional buttons within the game scene enhances user convenience.
+
+---
+### Buttons
 
 - Added Back To Main Menu Button in different page to direct user back to main menu.
 
 - When the player hovers over the buttons, a visual hover effect is triggered. This applys to all the buttons available in the game.
 
 Reason: Ensures a consistent and easily accessible way for players to return to the main menu. Hover effects signals to players that the buttons are responsive and ready for interaction. 
-### i. Mouse Drag Handler
+
+
+---
+### Mouse Drag Handler
 
 Added mouse control functionality to the game, allowing the player to interact with the game using the mouse.
 
@@ -166,7 +185,10 @@ The player can drag and move the break using the mouse.
 Statements added to ensure the break is not out of bounds.
 
 Reason: Enhances user experience by providing a more flexible method of controlling the game elements. 
-### j. Restart Level
+
+
+---
+### Restart Level
 
 Implemented the ability for the player to restart the current level.
 
@@ -180,7 +202,10 @@ Provides an alternative method for restarting the level during gameplay.
 The level now begins with the initial heart count and score when the player first enters this level.
 
 Reason: Allows players to reset the level voluntarily, providing an alternative method to address challenges or mistakes during gameplay. 
-### k. Penalty Block Implementation
+
+
+---
+### Penalty Block Implementation
 
 Introduced a new block type that, when hit, triggers a penalty in the form of a falling bomb which will only be generated starting from level 5.
 
@@ -196,7 +221,10 @@ Add a score deduction animation display, to highlight the penalty.
 Ensures players are aware of the score deduction.
 
 Reason: Adds complexity to the game, enhancing its overall difficulty and progression. 
-### l. New Levels
+
+
+---
+### New Levels
 
 Expanded the game with new levels introduced after the default level 17.
 
@@ -209,16 +237,20 @@ Introduced another new level (19) with a unique challenge: 10 rows of penalty el
 Adds a strategic challenge for players to navigate through without receiving penalties.
 
 Reason: Providing players with fresh content and challenges beyond the initial levels.
-### d. Game Stage Size
+
+
+---
+### Game Stage Size
 
 Initially, the stage was resizable, leading to an unsightly display of the game when resized.
 
 Maintained a default setting throughout all scene to prevent resizing of the game stage.
 
 Reason: Ensures that the game stage remains fixed in size to prevent incomplete game visuals.
-### Section 3: Refactor In General
+### Section 2: Refactor In General
 
-### a. Spelling Mistakes
+---
+### Spelling Mistakes
 
 Corrected the spelling mistakes in the code.
 
@@ -226,18 +258,20 @@ For example: isGoldStatus, SceneHeight, Collide
 
 Reason: To ensure readability.
 
-
-### b. Change Variables to final
+---
+### Change Variables to final
 
 Declare some of the variabes as final, as its value cannot be changed once it's assigned. 
 
 Reason: This promotes immutability, making the code more predictable and preventing unintended modifications to the variable.
 
-### c. Delete unused statement
+---
+### Delete unused statement
 
 - Delete unused import libraries and variables.
 
-### d. Resources
+---
+### Resources
 
 Split the images and css files into different folders based on their usage.
 
@@ -253,12 +287,13 @@ For example:
 
 This provides a clear and organized structure to the project.
 
-### e. Use MVC Pattern for New Scenes
+---
+### Use MVC Pattern for New Scenes
 
 - High Score, Main Menu, Pause Menu, Level Select are split into MVC pattern.
 - Enforces a clear separation of concerns, dividing the scene into three main components: the Model (data), the View (user interface), and the Controller (input and interaction).
 - This separation makes the codebase more modular and easier to maintain.
-
+---
 ### Breaking into smaller parts
 
 #### Breaking into Methods
@@ -275,7 +310,7 @@ This provides a clear and organized structure to the project.
 - Break the classes in brickGame into different packages based on their usages.
 - To search for the relevent class easily.
 
-Reason: Organizing and structuring the code in a modular and maintainable way.
+Reason: Organizing and structuring the code in a modular and maintainable way.---
 ### Added Game Design
 
 CSS is added for all different scene. 
@@ -284,7 +319,7 @@ Add icon and title for the game stage.
 
 Reason: To enhance the visual appeal and user experience of the game.
 
-
+---
 ### Added a null check
 
 Add null check (!= null) in statements that might produce null pointer exception before executing it.
