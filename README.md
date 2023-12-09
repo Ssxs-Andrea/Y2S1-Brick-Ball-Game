@@ -88,8 +88,6 @@ When the player first runs the game, a main menu page is displayed, offering sev
 - Instruction
 - Highscore
 
-Set the game elements invisible while selecting the game mode.
-
 Reason: The main menu provides a clear and organized interface for players to navigate through various sections of the game.
 
 
