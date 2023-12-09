@@ -2,11 +2,30 @@
 # Brick Ball Game
 
 ## 1. Compilation Instructions: 
+1. Download and extract the ZIP file.
+2. Copy the path of the folder.
+3. Open IntelliJ and select [Open].
+4. Paste the path, select the folder and select [OK].
+5. Load the maven script found if needed.
+6. Download JavaFX from https://gluonhq.com/products/javafx/
 
-Provide a clear, step-by-step guide on how to compile the code to produce the application. Include any dependencies or special settings required.
+        JavaFx Version: 21.0.1 [LTS]
+        Operating System: Windows
+        Architecture: x64
+        Type: Sdk
 
-javafx.media
+7. After downloading the JavaFx, unzip the file. 
+8. Copy the path of the folder.
+9. In IntelliJ, select [File] -> [Project Structure] -> [Libraries] -> [+] -> [Java] 
+10. Paste the path, select [lib] folder, press [OK] and [Apply]
+11. If you do not have your SDK specified yet, in the [Project Structure], select [Project] -> [Sdk] -> [Download Jdk]
+12. Make sure the location of the Sdk file is correct, press [Download] -> [Apply] -> [OK]
 
+You are all set now.
+
+Open the Main in brickGame package and run the program.
+
+---
 ## 2. Implemented and Working Properly
 ### Section 1: Additional Features
 
@@ -273,18 +292,19 @@ Add null check (!= null) in statements that might produce null pointer exception
 Reason: To prevent potential errors when working with objects that might be null. 
 ### 3. Implemented but Not Working Properly
 
-List any features that have been implemented but are not working correctly. Explain the issues you encountered, and if possible, the steps you took to address them.
-
+---
 #### Ball-block Collision 
 - Ball cannot properly bounce back when hitting the middle of two blocks in a straight line, was encountered due to the ball's collision detection only considering one part of the block at a time (either left, right, top, or bottom). 
 - Attempts were made to address this by adding conditions for multiple collision scenarios, but these were unsuccessful in fully resolving the issue.
 
+---
 #### Sound Effects for Ball-break Collision
 - Trying to implement sound effect when the ball hits the break.
 - The sound effect not playing sometimes while the ball hits the break.
 - Attempts were undertaken to address the issue by adding conditions, but the desired consistency could not be achieved.
 - Thus, the decision was made to remove the sound effect for ball-break collisions in the final implementation.
 
+---
 #### Flash of Previous Scnene During Scene Switch
 - One issue encountered was a brief flash of the previous scene when switching scenes, when entering levels from the level select screen or while restarting levels, where the buttons of the game scene start page was briefly visible before the selected level scene appeared. 
 - Efforts were made to address this issue by attempting to set the buttons invisible before the new scene loaded. 
@@ -436,6 +456,8 @@ Reason: Enable player to to resume from saved progress.
 - When loading the game, the destroy count remains but the block size is recalculated, leading to errors when proceeding to the next level. 
 - To resolve this issue, in saveGame method, the destroy block count is now explicitly set to 0 during the save game process.
 
+- In SaveGame, change the default location for save.mdds to C drive.
+- Some computer might not have D drive and will cause error.
 ----------------------------------------
 In the a new levelLogic package:
 
