@@ -29,6 +29,7 @@ Open the Main in brickGame package and run the program.
 ---
 ## 2. Implemented and Working Properly
 
+---
 ### Section 1: Additional Features
 
 ---
@@ -247,6 +248,8 @@ Initially, the stage was resizable, leading to an unsightly display of the game 
 Maintained a default setting throughout all scene to prevent resizing of the game stage.
 
 Reason: Ensures that the game stage remains fixed in size to prevent incomplete game visuals.
+
+---
 ### Section 2: Refactor In General
 
 ---
@@ -271,7 +274,7 @@ Reason: This promotes immutability, making the code more predictable and prevent
 - Delete unused import libraries and variables.
 
 ---
-### Resources
+### Refactor Resources
 
 Split the images and css files into different folders based on their usage.
 
@@ -310,7 +313,9 @@ This provides a clear and organized structure to the project.
 - Break the classes in brickGame into different packages based on their usages.
 - To search for the relevent class easily.
 
-Reason: Organizing and structuring the code in a modular and maintainable way.---
+Reason: Organizing and structuring the code in a modular and maintainable way.
+
+---
 ### Added Game Design
 
 CSS is added for all different scene. 
@@ -325,6 +330,8 @@ Reason: To enhance the visual appeal and user experience of the game.
 Add null check (!= null) in statements that might produce null pointer exception before executing it.
 
 Reason: To prevent potential errors when working with objects that might be null. 
+
+---
 ### 3. Implemented but Not Working Properly
 
 ---
@@ -344,6 +351,8 @@ Reason: To prevent potential errors when working with objects that might be null
 - One issue encountered was a brief flash of the previous scene when switching scenes, when entering levels from the level select screen or while restarting levels, where the buttons of the game scene start page was briefly visible before the selected level scene appeared. 
 - Efforts were made to address this issue by attempting to set the buttons invisible before the new scene loaded. 
 - However, this approach did not fully eliminate the flash, and the issue still persisted.
+
+---
 ### 4. Features Not Implemented
 
 ---
@@ -374,6 +383,8 @@ Reason on why they are left out:
 - The decision to prioritize core features took precedence over the introduction of time-based mechanics.
 - Focus on features such as scoring mechanism, sound effects to enhance the fundamental gameplay experience.
 - The implementation of a time-based mode remains a potential feature for inclusion in future projects with extended timelines.
+
+---
 ### 5. New Java Classes
 
 ---
@@ -465,6 +476,7 @@ New Class added in brickGame package:
 
 - By using the GameState class, object is created to encapsulate and manage the state of the brick game, allowing easy access and manipulation of various game parameters by passing the object instance.
 
+---
 ### 6. Modified Java Classes
 
 List the Java classes you modified from the provided code base. Describe the changes you made and explain why these modifications were necessary.
@@ -493,7 +505,8 @@ Reason: Enable player to to resume from saved progress.
 
 - In SaveGame, change the default location for save.mdds to C drive.
 - Some computer might not have D drive and will cause error.
-----------------------------------------
+
+---
 In the a new levelLogic package:
 
 - Move nextLevel method in Main to a new class NextLevel.
@@ -501,7 +514,7 @@ In the a new levelLogic package:
 
 Reason: To improve code organization and maintain a modular structure, thus splitting methods regarding to the level logic into new package.
 
--------------------------------------------
+---
 In the new gamePower package:
 
 - Move Bonus into new package gamePower.
@@ -511,7 +524,7 @@ In the new gamePower package:
 
 Reason: The form template method outlines the steps for creating a power-up, and it delegates the implementation of certain steps to subclasses. This can avoid duplicated codes since bonus and penalty have similiar structure. This also facilitates future additions or modifications to the game elements.
 
--------------------------------------------
+---
 In the new displayUi package:
 
 - Split the method in Score class into different class.
@@ -533,7 +546,7 @@ Reason: Maintain a tidy and focused game interface, preventing unnecessary visua
 
 Reason: Players might naturally want to return to the main menu to explore other options instead of starting a new game. 
 
--------------------------------------------
+---
 Created a new ball package.
 
 - Move method initBall in Main to a new class InitBall.
@@ -566,7 +579,7 @@ Reason: Ensures the ball no longer goes out of bounds upon initialization. Preve
 
 Reason: Ensure the ball collide and move in correct direction.
 
--------------------------------------------
+---
 In the new breakMovement package:
 
 - Move method move in Main to a new class BreakMovementHandler.
@@ -579,7 +592,7 @@ Reason: Grouping break-related functions in a new package enhances code organiza
 
 Reason: Preventing unintended consequences, such as losing control of the break.
 
--------------------------------------------
+---
 Create a new gameAction package.
 
 - Move GameEngine into the package gameAction.
@@ -637,7 +650,7 @@ Reason: Iterators provide a uniform way to iterate over various types of collect
 
 - In OnUpdate class, add conditions to check for negative score in checkGameOver method because penalty is added and might cause negative score.
 
--------------------------------------------
+----
 Create a new inGameControlKey package.
 
 - Move method handle in Main into a new class KeyEventHandler.
@@ -651,7 +664,7 @@ Reason: Improves code modularity by separating the handling mechanisms in the ga
 - In KeyEventHandler, added new control keys case R for restart level and case P for pause game.
 - Remove unused case DOWN.
 
--------------------------------------------
+---
 Create a new block package.
 
 - Move method initBoard in Main to a new class InitBoard.
@@ -676,7 +689,7 @@ Reason: Adding strategic challenges for players to navigate through.
 - Move BlockSerializable from brickGame package to block package.
 - Rename variable j to column to better represent the variable's usage.
 
--------------------------------------------
+---
 In the brickGame package: 
 
 - Move the game start scene in Main to a new class GameInitializer.
@@ -703,6 +716,8 @@ Reason: To reduce redundancy and promoting a more modular structure.
 
 - In GameInitializer, change the last level to 19, which when the level=20, then only the method handleGameWin will be called.
 - Add conditions for restart level at level 1, which the game play will start immediately. (because restart level at level 1 initially will start with the game scene start page)
+
+---
 ### 7. Unexpected Problems
 
 ---
