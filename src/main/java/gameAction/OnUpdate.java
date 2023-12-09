@@ -18,6 +18,13 @@ import java.util.List;
 /**
  * The {@code OnUpdate} class encapsulates methods responsible for updating the game's UI elements,
  * checking game over conditions, handling game over scenarios, and updating various game elements.
+ * @see OnAction
+ * @see CollisionFlagsResetter
+ * @see ScoreLabelAnimator
+ * @see HighScoreController
+ * @see EndGameDisplay
+ * @see Bonus
+ * @see Penalty
  */
 public class OnUpdate {
     /**

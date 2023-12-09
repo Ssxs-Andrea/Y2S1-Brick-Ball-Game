@@ -11,7 +11,8 @@ import brickGame.Main;
  *
  * <p>The {@code RestartGame} class collaborates with the {@code GameState} and {@code Main} classes to access and update
  * relevant game state information and manage the game's graphical user interface.</p>
-
+ * @see GameState
+ * @see Main
  */
 public class RestartGame {
     /** The game state object representing the current state of the game. */

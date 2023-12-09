@@ -12,6 +12,11 @@ import javafx.stage.Stage;
  * The {@code ViewSwitcher} class facilitates the switching of scenes in the game application. It provides methods to
  * navigate between different views such as the main menu, instruction page, high score view, and level selection page.
  * This class helps manage the transitions between different states of the game's user interface.
+ * @see Main
+ * @see InstructionController
+ * @see HighScoreController
+ * @see MainMenuController
+ * @see LevelSelectionController
  */
 public class ViewSwitcher {
     private final Main main;

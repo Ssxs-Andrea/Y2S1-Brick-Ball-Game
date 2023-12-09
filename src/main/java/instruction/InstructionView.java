@@ -25,6 +25,7 @@ import java.util.Objects;
  * <p>Images used for instructions include arrow keys, mouse click, and letter keys (R, P, S, M). The scene's styling is
  * defined by an external CSS file. Additionally, it incorporates the VolumeController for handling volume control key events.</p>
  *
+ * @see VolumeController
  */
 public class InstructionView {
     /** The JavaFX scene associated with the InstructionView. */

@@ -13,6 +13,12 @@ import java.util.List;
  * The {@code OnPhysicsUpdate} class encapsulates physics-related updates during the game engine's physics update phase.
  * It includes methods for checking the count of destroyed blocks, applying ball physics, updating gold status,
  * and handling power-ups (Chocos and Booms).
+ *
+ * @see OnAction
+ * @see BallPhysicsHandler
+ * @see NextLevel
+ * @see Power
+ * @see ScoreLabelAnimator
  */
 public class OnPhysicsUpdate {
     /**

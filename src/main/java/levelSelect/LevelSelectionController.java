@@ -16,6 +16,12 @@ import soundEffects.SoundEffects;
  *
  * <p>The {@code LevelSelectionController} class utilizes sound effects for button clicks and collaborates with
  * the {@code ViewSwitcher} class to facilitate the transition between different views in the application.</p>
+ *
+ * @see LevelSelectionModel
+ * @see LevelSelectionView
+ * @see GameState
+ * @see Main
+ * @see ViewSwitcher
  */
 public class LevelSelectionController {
     /** The model responsible for managing the state of the level selection feature. */

@@ -6,7 +6,8 @@ import javafx.animation.AnimationTimer;
  * animation timer. It uses an {@code OnAction} interface to define callback methods for updating game logic, physics,
  * and time-related events.
  *
- *
+ * @see OnAction
+ * @see PausableAnimationTimer
  */
 public class GameEngine {
 

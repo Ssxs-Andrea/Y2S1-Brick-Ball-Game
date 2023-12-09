@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
  * The {@code MessageLabelAnimator} class provides a method for animating message labels on the game screen.
  * It allows for the display of messages with scaling and fading effects for a more visually appealing presentation.
  *
+ * @see Main
  */
 public class MessageLabelAnimator {
     /**

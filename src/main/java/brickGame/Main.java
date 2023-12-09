@@ -16,7 +16,10 @@ import soundEffects.VolumeController;
  * The {@code Main} class serves as the entry point for the Brick Game application. It extends the JavaFX
  * {@link Application} class and implements the {@link EventHandler} interface for handling keyboard events.
  * It initializes the game state, manages the game engine, and controls the switching of views.
- *
+ * @see EventHandler
+ * @see GameInitializer
+ * @see GameState
+ * @see ViewSwitcher
  *
  */
 public class Main extends Application implements EventHandler<KeyEvent>{

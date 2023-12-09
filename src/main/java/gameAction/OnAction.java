@@ -9,6 +9,10 @@ import static brickGame.Main.pauseHandler;
  * The {@code OnAction} class encapsulates actions to be performed during the game engine's update phases.
  * It includes methods for handling UI updates, game over checks, game element updates, physics updates, and
  * time-related events.
+ *
+ * @see GameEngine.OnAction
+ * @see OnUpdate
+ * @see OnPhysicsUpdate
  */
 public class OnAction implements GameEngine.OnAction {
     /**

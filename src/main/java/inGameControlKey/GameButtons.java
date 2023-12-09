@@ -9,14 +9,6 @@ import javafx.scene.control.Button;
  * <p>The class initializes the buttons with appropriate labels and layout properties, including translation
  * and preferred size. These buttons are intended for use in the in-game control panel.</p>
  *
- * <p>The available buttons are:</p>
- * <ul>
- *   <li><strong>load:</strong> Button to load a saved game.</li>
- *   <li><strong>newGame:</strong> Button to start a new game.</li>
- *   <li><strong>levelSelect:</strong> Button to switch to the level selection page.</li>
- *   <li><strong>back:</strong> Button to return to the main menu.</li>
- * </ul>
- *
  * <p>The layout properties, such as translation and preferred size, are set to provide a consistent
  * and visually appealing arrangement of the buttons in the in-game control panel.</p>
  */
