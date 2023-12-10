@@ -115,7 +115,7 @@ Reason: Provides players with a comprehensive understanding of how to interact w
 
 Accessed when the player selects "Level Select" in the game scene start page.
 
-- Show different button corresponding to diffeent levels
+- Show different button corresponding to different levels
 - Permits the player to select a level equal to or below the saved level.
 - Default settings with a score of 0 and 3 hearts to maintain fairness for highscore purposes.
 
@@ -204,7 +204,7 @@ Pause Menu Option:
 Added a "Restart Level" option in the Pause Menu.
 Provides an alternative method for restarting the level during gameplay.
 
-The level now begins with the initial heart count and score when the player first enters this level.
+The restarted level will begin with the initial heart count and score when the player first enters this level.
 
 Reason: Allows players to reset the level voluntarily, providing an alternative method to address challenges or mistakes during gameplay. 
 
@@ -313,7 +313,7 @@ This provides a clear and organized structure to the project.
 ### Use MVC Pattern for New Scenes
 
 - High Score, Main Menu, Pause Menu, Level Select are split into MVC pattern.
-- Enforces a clear separation of concerns, dividing the scene into three main components: the Model (data), the View (user interface), and the Controller (input and interaction).
+- Enforces a clear separation of concerns, dividing the scene into three main components: the Model (data), the View (user interface), and the Controller (input and interaction). (Some only have View and Controller as Model is not needed in some scenes.)
 - This separation makes the codebase more modular and easier to maintain.
 
 ---
@@ -363,7 +363,7 @@ Reason: To ensure proper synchronization with the JavaFX application thread.
 
 
 #### Ball-block Collision 
-- Ball cannot properly bounce back when hitting the middle of two blocks in a straight line, was encountered due to the ball's collision detection only considering one part of the block at a time (either left, right, top, or bottom). 
+- Ball cannot properly bounce back sometimes when hitting the middle of two blocks in a straight line, was encountered due to the ball's collision detection only considering one part of the block at a time (either left, right, top, or bottom). 
 - Attempts were made to address this by adding conditions for multiple collision scenarios, but these were unsuccessful in fully resolving the issue.
 
 ---
@@ -509,9 +509,6 @@ New Class added in brickGame package:
 Created a new loadSave package.
 
 - Rename LoadSave to ReadFile, and move into the new package loadSave.
-
-Reason: Renaming classes with more descriptive names that reflect their purpose.
-
 - Move saveGame method in Main to a new class SaveGame.
 - Move loadGame method in Main to a new class LoadGame.
 
@@ -530,7 +527,7 @@ Reason: Enable player to to resume from saved progress.
 Reason: Addressing bugs where the game cannot proceed to next level properly when loading a game.
 
 - In SaveGame, change the default location for save.mdds to C drive.
-- Rename the save folder to more specific name "WSYBrickBallGame20409327" to avoid same naming with other game, which might cause error. 
+- Rename the save folder to more specific name "WSYBrickBallGame20409327" to avoid same naming with other folder, which might cause error. 
   
 Reason: Some computer might not have D drive and will cause error.
   
@@ -558,7 +555,7 @@ In the new displayUi package:
 - Split the method in Score class into different class.
 - Move method showWin and showGameOver into EndGameDisplay.
 - Move method show into ScoreLabelAnimator.
-- Move methos showMessage into MessageLabelAnimator.
+- Move method showMessage into MessageLabelAnimator.
 
 Reason: To maintain the Single Responsibility Principle, where each new class has a distinct responsibility.
 
@@ -591,15 +588,14 @@ Break the long setPhysicsToBall method into smaller methods and call in setPhysi
 
 Reason: Group ball-related functions in a new package, enhances code organization and adheres to the Single Responsibility Principle, promoting maintainability and clarity in the ball-related functionalities.
 
-
-- Adjusted the collision detection for the ball's interaction with the screen boundary (wall).
+- In BallPhysicsHandler, adjusted the collision detection for the ball's interaction with the screen boundary (wall).
+- Added resetCollideFlags method to ensure the ball go in correct direction.
 - Correct logic error for collideToLeftBlock, set the goRightBall to false.
 
 Reason: To ensure that the entire ball is displayed within the screen, preventing parts of the ball from being outside the visible area.
 
 - Addressed the issue of ball initialization outside the screen.
 - In initBall method in InitBall class, set the ball to a fixed x and y position, which is on the top of the break.
-- In initBreak method in InitBreak class, set the break to be in the middle of the screen while first entering the levels.
 - In setPhysicsToBall method in BallPhysicsHandler class, add a return statement to prevent the ball from moving when the game has not started yet (i.e., when the SPACE key has not been pressed).
 
 Reason: Ensures the ball no longer goes out of bounds upon initialization. Prevent the ball fall out of bound. 
@@ -621,6 +617,10 @@ Reason: Grouping break-related functions in a new package enhances code organiza
 - To address this issue, add statements in method move to ensure the break remains within the specified boundaries.
 
 Reason: Preventing unintended consequences, such as losing control of the break.
+
+- In initBreak method in InitBreak class, set the break to be in the middle of the screen while first entering the levels.
+
+Reason: Having a consistent starting position for the break at the center of the screen ensures that players begin each level from the same point.
 
 ---
 Create a new gameAction package.
@@ -676,7 +676,12 @@ Reason: Iterators provide a uniform way to iterate over various types of collect
 
 - Delete unused OnInit in interface OnAction.
 - Delete unused setFps in GameEngine.
+
+Reason: Improves code clarity. It reduces unnecessary noise in the codebase.
+  
 - In OnUpdate class, add conditions to check for negative score in checkGameOver method because penalty is added and might cause negative score.
+
+Reason: Avoid having negative scores.
 
 ---
 Create a new inGameControlKey package.
@@ -714,7 +719,7 @@ Reason: Ensure that block can be destroyed when any part of the ball, within its
 Reason: Adding strategic challenges for players to navigate through.
 
 - Move BlockSerializable from brickGame package to block package.
-- Rename variable j to column to better represent the variable's usage.
+- In BlockSerializable, rename variable j to column to better represent the variable's usage.
 
 Reason: For organizational purposes, aligning the class with a more appropriate package that reflects its functionality.
 
