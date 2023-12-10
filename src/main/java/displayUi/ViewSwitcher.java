@@ -20,8 +20,16 @@ import javafx.stage.Stage;
  * @see LevelSelectionController
  */
 public class ViewSwitcher {
+    /**
+     * The main application instance.
+     */
     private final Main main;
+
+    /**
+     * The primary stage of the application.
+     */
     private final Stage primaryStage;
+
     /**
      * Constructs a {@code ViewSwitcher} with a reference to the main application instance and its primary stage.
      *

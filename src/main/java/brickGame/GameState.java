@@ -11,26 +11,109 @@ import gamePower.Power;
  * the paddle, ball, blocks, power-ups, and game-related flags.
  */
 public class GameState {
+    /**
+     * The current level of the game.
+     */
     private int level;
+
+    /**
+     * The x-coordinate of the breaking element.
+     */
     private double xBreak;
+
+    /**
+     * The center x-coordinate of the breaking element.
+     */
     private double centerBreakX;
+
+    /**
+     * The y-coordinate of the breaking element.
+     */
     private double yBreak;
+
+    /**
+     * Half of the width of the breaking element.
+     */
     private final int halfBreakWidth = getBreakWidth() / 2;
+
+    /**
+     * The ball object in the game.
+     */
     private Circle ball;
+
+    /**
+     * The x-coordinate of the ball.
+     */
     private double xBall;
+
+    /**
+     * The y-coordinate of the ball.
+     */
     private double yBall;
+
+    /**
+     * Flag indicating whether the game is in gold status.
+     */
     private boolean isGoldStatus = false;
+
+    /**
+     * Flag indicating whether a heart block exists in the game.
+     */
     private boolean isExistHeartBlock = false;
+
+    /**
+     * The rectangle object associated with the game.
+     */
     private Rectangle rect;
+
+    /**
+     * The radius of the ball in the game.
+     */
     private int ballRadius = 10;
+
+    /**
+     * The count of destroyed blocks in the game.
+     */
     private int destroyedBlockCount = 0;
+
+    /**
+     * The current heart count in the game.
+     */
     private int heart = 3;
+
+    /**
+     * The current score in the game.
+     */
     private int score = 0;
+
+    /**
+     * The current time in the game.
+     */
     private long time = 0;
+
+    /**
+     * The time when the game is in gold status.
+     */
     private long goldTime = 0;
+
+    /**
+     * The list of blocks in the game.
+     */
     private ArrayList<Block> blocks = new ArrayList<>();
+
+    /**
+     * The list of power-ups (chocos) in the game.
+     */
     private ArrayList<Power> chocos = new ArrayList<>();
+
+    /**
+     * The list of power-ups (booms) in the game.
+     */
     private ArrayList<Power> booms = new ArrayList<>();
+
+    /**
+     * The array of colors used in the game.
+     */
     private Color[] colors = new Color[]{
             Color.MAGENTA,
             Color.RED,
@@ -47,22 +130,81 @@ public class GameState {
             Color.TAN,
     };
 
+    /**
+     * Flag indicating whether the game is loaded from a save.
+     */
     private boolean loadFromSave = false;
+
+    /**
+     * The saved heart count.
+     */
     private int saveHeart = 3;
+
+    /**
+     * The saved score.
+     */
     private int saveScore = 0;
+
+    /**
+     * Flag indicating the direction of the ball's movement.
+     */
     private boolean goDownBall = false;
+
+    /**
+     * Flag indicating the direction of the ball's movement.
+     */
     private boolean goRightBall = true;
+
+    /**
+     * Flag indicating whether the ball collides with a breakable element.
+     */
     private boolean collideToBreak = false;
+
+    /**
+     * Flag indicating the direction of the ball's movement after colliding with a breakable element.
+     */
     private boolean collideToBreakAndMoveToRight = true;
+
+    /**
+     * Flag indicating whether the ball collides with the right wall.
+     */
     private boolean collideToRightWall = false;
+
+    /**
+     * Flag indicating whether the ball collides with the left wall.
+     */
     private boolean collideToLeftWall = false;
+
+    /**
+     * Flag indicating whether the ball collides with a block on the right.
+     */
     private boolean collideToRightBlock = false;
+
+    /**
+     * Flag indicating whether the ball collides with the bottom of a block.
+     */
     private boolean collideToBottomBlock = false;
+
+    /**
+     * Flag indicating whether the ball collides with a block on the left.
+     */
     private boolean collideToLeftBlock = false;
+
+    /**
+     * Flag indicating whether the ball collides with the top of a block.
+     */
     private boolean collideToTopBlock = false;
 
+    /**
+     * The velocity in the x-direction for the ball.
+     */
     private double vX = 2.000;
+
+    /**
+     * Flag indicating whether the game has started.
+     */
     private boolean gameStarted = false;
+
 
     /**
      * Constructs a new {@code GameState} object with default initializations.

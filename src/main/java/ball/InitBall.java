@@ -4,10 +4,9 @@ import brickGame.GameState;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import java.util.Random;
 /**
  * The {@code InitBall} class is responsible for initializing the game ball when the game level starts.
- * It generates a random starting position within the game scene and creates a Circle representing the ball.
+ * It generates a fixed starting position within the game scene and creates a Circle representing the ball.
  * @see GameState
  */
 public class InitBall {
@@ -30,7 +29,7 @@ public class InitBall {
      * @return A Circle object representing the game ball.
      */
     public Circle initBall() {
-        gameState.setxBall(gameState.getSceneWidth()/2);
+        gameState.setxBall((double) gameState.getSceneWidth() /2);
         gameState.setyBall(gameState.getSceneHeight()- gameState.getBreakHeight()*2 - gameState.getBallRadius());
 
         Circle ball = new Circle();

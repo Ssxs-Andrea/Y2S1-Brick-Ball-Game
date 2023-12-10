@@ -11,10 +11,29 @@ import javafx.animation.AnimationTimer;
  */
 public class GameEngine {
 
+    /**
+     * The {@code OnAction} callback interface for the game engine.
+     */
     private OnAction onAction;
+
+    /**
+     * The {@code PausableAnimationTimer} instance for handling the game loop.
+     */
     private PausableAnimationTimer animationTimer;
+
+    /**
+     * The timestamp of the last update.
+     */
     private long lastUpdateTime;
+
+    /**
+     * The current time value used during the game loop.
+     */
     private long time = 0;
+
+    /**
+     * A flag indicating whether the game engine is currently running.
+     */
     private boolean isRunning = false;
     /**
      * Sets the {@code OnAction} callback interface for the game engine.
@@ -105,7 +124,11 @@ public class GameEngine {
      * capabilities.
      */
     private abstract class PausableAnimationTimer extends AnimationTimer {
+        /**
+         * A flag indicating whether the animation timer is currently paused.
+         */
         private boolean isPaused = false;
+
         /**
          * Pauses the animation timer.
          */
