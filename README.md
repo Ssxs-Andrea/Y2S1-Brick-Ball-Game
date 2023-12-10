@@ -238,9 +238,22 @@ Reason: Providing players with fresh content and challenges beyond the initial l
 
 Initially, the stage was resizable, leading to an unsightly display of the game when resized.
 
-Maintained a default setting throughout all scene to prevent resizing of the game stage.
+Maintained a default setting throughout all scene to prevent resizing of the game stage. (Set the stage non-resizable.)
 
 Reason: Ensures that the game stage remains fixed in size to prevent incomplete game visuals.
+
+---
+### Set Ball on Break
+
+The initial behavior is that the ball will start moving as soon as the level begins.
+
+Change the behaviour to, the ball will be positioned on the paddle, and the game will commence only after the player presses the space key. 
+
+During this waiting period, a message will be displayed at the top of the blocks, prompting the player to press space. 
+
+Once the game starts, this message will disappear. 
+
+Reason: This adjustment is made to allow users the flexibility to initiate the game when they are ready.
 
 ---
 ### Section 2: Refactor In General
@@ -572,9 +585,11 @@ Reason: Group ball-related functions in a new package, enhances code organizatio
 Reason: To ensure that the entire ball is displayed within the screen, preventing parts of the ball from being outside the visible area.
 
 - Addressed the issue of ball initialization outside the screen.
-- In initBall method in InitBall class, set the yBall to a fixed x-position to ensure consistent ball generation.
+- In initBall method in InitBall class, set the ball to a fixed x and y position, which is on the top of the break.
+- In initBreak method in InitBreak class, set the break to be in the middle of the screen while first entering the levels.
+- In setPhysicsToBall method in BallPhysicsHandler class, add a return statement to prevent the ball from moving when the game has not started yet (i.e., when the SPACE key has not been pressed).
 
-Reason: Ensures the ball no longer goes out of bounds upon initialization. Prevent the ball fall out of bound.
+Reason: Ensures the ball no longer goes out of bounds upon initialization. Prevent the ball fall out of bound. 
 
 - Initially the ball will not bounce up when the ball hits the bottom of the screen while falling down in a straight line.
 - Add resetCollideFlags after the ball hits the bottom of the screen.
@@ -660,7 +675,7 @@ Create a new inGameControlKey package.
 Reason: Improves code modularity by separating the handling mechanisms in the game scene, enhancing maintainability, and adhering to the single responsibility principle.
 
 - In GameButtons and GameButtonHandler, add the buttons and event handler for load, back, levelSelect.
-- In KeyEventHandler, added new control keys case R for restart level and case P for pause game.
+- In KeyEventHandler, added new control keys case R for restart level, case P for pause game, case SPACE to start the game.
 - Remove unused case DOWN.
 
 ---
@@ -719,6 +734,14 @@ Reason: To reduce redundancy and promoting a more modular structure.
 - Add conditions for restart level at level 1, which the game play will start immediately. (because restart level at level 1 initially will start with the game scene start page)
 
 Reason: To resolve bugs when restarting at level 1. Added levels for game. 
+
+- Add a boolean field named gameStarted to the GameState class to indicate whether the game has started.
+- In the GameInitializer class, introduce a Label to display the instruction "Press SPACE to start the game."
+- Include this label in the root pane, ensuring it is visible when the game has not started and set to invisible once the game begins.
+- Cooperate with the BallPhysisHandler and KeyEventHandler to set the ball not start moving until the SPACE is pressed.
+
+Reasoning: This enhancement allows users flexibility by not initiating the game immediately upon entering a level.
+
 
 ---
 ## 7. Unexpected Problems
