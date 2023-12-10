@@ -10,7 +10,6 @@ import displayUi.ScoreLabelAnimator;
  * @see Main
  * @see CollisionFlagsResetter
  * @see ScoreLabelAnimator
- * @see GameInitializer
  */
 public class BallPhysicsHandler {
     /**
