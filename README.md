@@ -1,4 +1,3 @@
-
 # Brick Ball Game
 
 ## 1. Compilation Instructions: 
@@ -49,6 +48,7 @@ Auto-Pause on Frame Loss: The game detects frame loss or window focus loss and a
 
 Reason: Allowing players to pause the game which will give them control over their gaming experience. 
 
+![main](src/main/screenshot/pause-menu.png)
 
 ---
 ### Sound Effects
@@ -79,6 +79,8 @@ Volume Control on BGM:
 
 Reason: Background music contributes significantly to setting the atmosphere and ambiance of the game. 
 
+![main](src/main/screenshot/volume-control.png)
+
 ---
 ### Main Menu Page
 
@@ -90,6 +92,7 @@ When the player first runs the game, a main menu page is displayed, offering sev
 
 Reason: The main menu provides a clear and organized interface for players to navigate through various sections of the game.
 
+![main](src/main/screenshot/main-menu.png)
 
 ---
 ### Instruction Page
@@ -105,6 +108,7 @@ Includes a button "Back to Main Menu" button on the instruction page after revie
 
 Reason: Provides players with a comprehensive understanding of how to interact with the game.
 
+![main](src/main/screenshot/instruction.png)
 
 ---
 ### Level Selection Page
@@ -119,12 +123,16 @@ Added a "Back To Main Menu" button to go back to main menu.
 
 Reason: Allow player to replay the previous levels.
 
+![main](src/main/screenshot/level-select.png)
+
 ---
 ### High Score Implementation
 
 When the player loses (runs out of hearts) or wins the game (complete all levels), a dialog box pops up if the player achieves a highscore within the top 3.
 
 The dialog box prompts the player to enter their name to associate with the highscore.
+
+![main](src/main/screenshot/highscore-box.png)
 
 After entering the name, an alert box informs the player that they can view the highscore in the Highscore Page.
 
@@ -143,6 +151,8 @@ Includes a button "Back to Main Menu" button on the high score page after review
 
 Reason: This feature adds a sense of achievement and encourages players to compete for top positions.
 
+![main](src/main/screenshot/high-score.png)
+
 ---
 ### Game Scene Start Page
 
@@ -158,6 +168,8 @@ If there is a saved game process, displays two additional buttons:
 - Load Game
 
 Reason: Including these additional buttons within the game scene enhances user convenience.
+
+![main](src/main/screenshot/game-scene-start.png)
 
 ---
 ### Buttons
@@ -179,7 +191,6 @@ The player can drag and move the break using the mouse.
 Statements added to ensure the break is not out of bounds.
 
 Reason: Enhances user experience by providing a more flexible method of controlling the game elements. 
-
 
 ---
 ### Restart Level
@@ -254,6 +265,8 @@ During this waiting period, a message will be displayed at the top of the blocks
 Once the game starts, this message will disappear. 
 
 Reason: This adjustment is made to allow users the flexibility to initiate the game when they are ready.
+
+![main](src/main/screenshot/startgame.png)
 
 ---
 ### Section 2: Refactor In General
@@ -694,8 +707,8 @@ Reason: By centralizing the creation logic in the factory, can easily add new bl
 
 Reason: Ensure that block can be destroyed when any part of the ball, within its radius, hits the block. Ensures a more consistent gameplay experience.
 
-- Generate blocks for levels 19 and 20 in Block class, each featuring 10 rows of blocks. 
-- Level 19 introduces bonus elements, while level 20 introduces boom elements.
+- Generate blocks for levels 18 and 19 in Block class, each featuring 10 rows of blocks. 
+- Level 18 introduces bonus elements, while level 19 introduces boom elements.
 - Generate boom block starting from level 5 which will generate bomb to cause penalty while receive with break.
 
 Reason: Adding strategic challenges for players to navigate through.
