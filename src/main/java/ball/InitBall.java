@@ -25,14 +25,13 @@ public class InitBall {
     }
     /**
      * Initializes and returns a Circle representing the game ball.
-     * The ball is given a random starting position within the game scene and an image pattern.
+     * The ball is given a fixed starting position within the game scene and an image pattern.
      *
      * @return A Circle object representing the game ball.
      */
     public Circle initBall() {
-        Random random = new Random();
-        gameState.setxBall(random.nextInt(gameState.getSceneWidth()) + 1);
-        gameState.setyBall(gameState.getSceneHeight() - 200);
+        gameState.setxBall(gameState.getSceneWidth()/2);
+        gameState.setyBall(gameState.getSceneHeight()- gameState.getBreakHeight()*2 - gameState.getBallRadius());
 
         Circle ball = new Circle();
         ball.setRadius(gameState.getBallRadius());

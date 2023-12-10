@@ -34,8 +34,9 @@ public class InitBreak {
         Rectangle rect = new Rectangle();
         rect.setWidth(gameState.getBreakWidth());
         rect.setHeight(gameState.getBreakHeight());
-        rect.setX(gameState.getxBreak());
+        rect.setX(gameState.getSceneWidth()/2 - gameState.getBreakWidth()/2 );
         rect.setY(gameState.getyBreak());
+        gameState.setxBreak(gameState.getSceneWidth()/2 - gameState.getBreakWidth()/2);
 
         ImagePattern pattern = new ImagePattern(new Image("game-elements/block.jpg"));
         rect.setFill(pattern);

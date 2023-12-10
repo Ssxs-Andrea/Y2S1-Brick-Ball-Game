@@ -35,6 +35,10 @@ public class BallPhysicsHandler {
      * Sets the physics behavior for the ball, including updating its position and handling various collisions.
      */
     public void setPhysicsToBall() {
+        if (!gameState.isGameStarted()) {
+            // Ball is not allowed to move until the game starts
+            return;
+        }
         updateBallPosition();
         handleTopBottomCollision();
         handleBreakCollision();

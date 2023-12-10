@@ -107,6 +107,13 @@ public class GameInitializer {
      */
     Button levelSelect = null;
     /**
+     * The {@code startMessageLabel} is a static instance of the JavaFX Label class
+     * used to display the "Press SPACE to start the game" message at the beginning of the game.
+     * It provides visual instructions to the user on how to initiate the game.
+     */
+    public static Label startMessageLabel;
+
+    /**
      * Constructs a GameInitializer object with the specified Main instance.
      *
      * @param main The Main instance representing the main class of the game.
@@ -121,7 +128,7 @@ public class GameInitializer {
      * @param fromMainMenu A boolean indicating whether the game is entering from the main menu.
      */
     public void initializeNewGame(boolean fromMainMenu) {
-
+        main.getGameState().setGameStarted(false);
         if (fromMainMenu) resetGameForMainMenu();
         clearRootAndPauseHandler();
         initializeSoundEffects();
@@ -198,12 +205,12 @@ public class GameInitializer {
             handleGameWin();
         }
 
+        InitBreak initBreak = new InitBreak(main.getGameState());
+        rect = initBreak.initBreak();
+
         InitBall initBall = new InitBall(main.getGameState());
         ball = initBall.initBall();
         main.getGameState().setBall(ball);
-
-        InitBreak initBreak = new InitBreak(main.getGameState());
-        rect = initBreak.initBreak();
 
         InitBoard initBoard = new InitBoard(main.getGameState());
         main.getGameState().setBlocks(initBoard.initBoard());
@@ -265,6 +272,14 @@ public class GameInitializer {
      */
     void initializeRootAndLabels() {
         root = new Pane();
+
+        // Add the start message label
+        startMessageLabel = new Label("Press SPACE to start the game");
+        startMessageLabel.setStyle("-fx-font-size: 20; -fx-font-family: 'Papyrus', Cursive;; -fx-text-fill: white;");
+        startMessageLabel.setTranslateX(100);
+        startMessageLabel.setTranslateY(7);
+        root.getChildren().add(startMessageLabel);
+
         scoreLabel = new Label("Score: " + main.getGameState().getScore());
         levelLabel = new Label("Level: " + main.getGameState().getLevel());
         levelLabel.setTranslateY(20);
@@ -282,6 +297,7 @@ public class GameInitializer {
             scoreLabel.setVisible(false);
             heartLabel.setVisible(false);
             levelLabel.setVisible(false);
+            startMessageLabel.setVisible(false);
 
         } else {
             root.getChildren().addAll(rect, main.getGameState().getBall(), scoreLabel, heartLabel, levelLabel);
@@ -297,6 +313,7 @@ public class GameInitializer {
         scoreLabel.setVisible(true);
         heartLabel.setVisible(true);
         levelLabel.setVisible(true);
+        startMessageLabel.setVisible(true);
     }
     /**
      * Sets the visibility of buttons used in the game.

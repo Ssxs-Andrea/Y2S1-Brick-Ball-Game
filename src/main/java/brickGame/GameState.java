@@ -50,7 +50,7 @@ public class GameState {
     private boolean loadFromSave = false;
     private int saveHeart = 3;
     private int saveScore = 0;
-    private boolean goDownBall = true;
+    private boolean goDownBall = false;
     private boolean goRightBall = true;
     private boolean collideToBreak = false;
     private boolean collideToBreakAndMoveToRight = true;
@@ -62,6 +62,7 @@ public class GameState {
     private boolean collideToTopBlock = false;
 
     private double vX = 2.000;
+    private boolean gameStarted = false;
 
     /**
      * Constructs a new {@code GameState} object with default initializations.
@@ -103,7 +104,7 @@ public class GameState {
         this.setLoadFromSave(false);
         this.setSaveHeart(3);
         this.setSaveScore(0);
-        this.setGoDownBall(true);
+        this.setGoDownBall(false);
         this.setGoRightBall(true);
         this.setCollideToBreak(false);
         this.setCollideToBreakAndMoveToRight(true);
@@ -116,6 +117,22 @@ public class GameState {
         this.setvX(2.000);
     }
 
+
+    /**
+     * Checks whether the game has started.
+     *
+     * @return {@code true} if the game has started, {@code false} otherwise.
+     */
+    public boolean isGameStarted() {
+        return gameStarted;
+    }
+    /**
+     * Sets the game started status.
+     * @param gameStarted {@code true} to indicate that the game has started, {@code false} otherwise.
+     */
+    public void setGameStarted(boolean gameStarted) {
+        this.gameStarted = gameStarted;
+    }
     /**
      * Gets the current level of the game.
      *

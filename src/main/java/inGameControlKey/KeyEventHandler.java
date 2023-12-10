@@ -9,6 +9,7 @@ import javafx.scene.input.KeyEvent;
 import levelLogic.RestartLevel;
 import loadSave.SaveGame;
 
+import static brickGame.GameInitializer.startMessageLabel;
 import static brickGame.Main.pauseHandler;
 /**
  * The KeyEventHandler class implements the EventHandler interface for handling JavaFX KeyEvent events in the game.
@@ -87,6 +88,10 @@ public class KeyEventHandler implements EventHandler<KeyEvent> {
             case P:
                 pauseHandler.togglePause(gameInitializer.getGameScene());
                 break;
+            case SPACE:
+                gameState.setGameStarted(true);
+                main.getEngine().resume();
+                startMessageLabel.setVisible(false);
         }
     }
 }
