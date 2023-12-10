@@ -504,6 +504,7 @@ Reason: Enable player to to resume from saved progress.
 Reason: Addressing bugs where the game cannot proceed to next level properly when loading a game.
 
 - In SaveGame, change the default location for save.mdds to C drive.
+- Rename the save folder to more specific name "WSYBrickBallGame20409327" to avoid same naming with other game, which might cause error. 
   
 Reason: Some computer might not have D drive and will cause error.
   
