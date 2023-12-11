@@ -6,24 +6,31 @@
 2. Copy the path of the folder.
 3. Open IntelliJ and select [Open].
 4. Paste the path, select the folder and select [OK].
-5. Load the maven script found if needed.
-6. Download JavaFX from https://gluonhq.com/products/javafx/
+5. If you do not have your SDK specified yet, in the [File] -> [Project Structure], select [Project] -> [Sdk] -> [Download Jdk]
+6. Make sure the location of the Sdk file is correct, press [Download] -> [Apply] -> [OK]
+
+Option 1: 
+1. Load the maven script found if needed.
+2. Press the M symbol on the right column of IntelliJ
+3. Select the 6th symbol (execute maven goal)
+4. Type mvn clean javafx:run
+5. Your game will start running
+
+Option 2
+1. Download JavaFX from https://gluonhq.com/products/javafx/
 
         JavaFx Version: 21.0.1 [LTS]
         Operating System: Windows
         Architecture: x64
         Type: Sdk
 
-7. After downloading the JavaFx, unzip the file. 
-8. Copy the path of the folder.
-9. In IntelliJ, select [File] -> [Project Structure] -> [Libraries] -> [+] -> [Java] 
-10. Paste the path, select [lib] folder, press [OK] and [Apply]
-11. If you do not have your SDK specified yet, in the [Project Structure], select [Project] -> [Sdk] -> [Download Jdk]
-12. Make sure the location of the Sdk file is correct, press [Download] -> [Apply] -> [OK]
+2. After downloading the JavaFx, unzip the file. 
+3. Copy the path of the folder.
+4. In IntelliJ, select [File] -> [Project Structure] -> [Libraries] -> [+] -> [Java] 
+5. Paste the path, select [lib] folder, press [OK] and [Apply]
+6. Open the Main in brickGame package and run the program.
 
 You are all set now.
-
-Open the Main in brickGame package and run the program.
 
 ---
 ## 2. Implemented and Working Properly
