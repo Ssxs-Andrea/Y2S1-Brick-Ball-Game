@@ -18,12 +18,10 @@ Option 1:
 
 Option 2
 1. Download JavaFX from https://gluonhq.com/products/javafx/
-
-        JavaFx Version: 21.0.1 [LTS]
-        Operating System: Windows
-        Architecture: x64
-        Type: Sdk
-
+- JavaFx Version: 21.0.1 [LTS]
+- Operating System: Windows
+- Architecture: x64
+- Type: Sdk
 2. After downloading the JavaFx, unzip the file. 
 3. Copy the path of the folder.
 4. In IntelliJ, select [File] -> [Project Structure] -> [Libraries] -> [+] -> [Java] 
