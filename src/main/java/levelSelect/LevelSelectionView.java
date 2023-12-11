@@ -15,8 +15,6 @@ import java.util.Objects;
  *
  * <p>The scene is styled using an external CSS file, and the layout is organized in a vertical box (VBox) structure to ensure
  * proper alignment and spacing.</p>
- *
- * @see LevelSelectionController
  */
 public class LevelSelectionView {
     /** The scene representing the level selection graphical user interface. */

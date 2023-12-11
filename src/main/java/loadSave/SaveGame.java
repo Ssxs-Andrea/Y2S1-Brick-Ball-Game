@@ -17,8 +17,6 @@ import block.Block;
  * retrieve the save path.</p>
  *
  * <p>This class is used by the {@code LoadGame} class to save the current game state for later retrieval.</p>
- *
- * @see LoadGame
  */
 public class SaveGame {
     /** The main application instance. */

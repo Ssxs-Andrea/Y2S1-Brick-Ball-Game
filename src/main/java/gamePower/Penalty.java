@@ -7,7 +7,6 @@ package gamePower;
  * may appear during the game. It provides different image URLs for the
  * first and second frames of the power-up animation.</p>
  *
- * @see Power
  */
 public class Penalty extends Power {
     /**

@@ -16,9 +16,6 @@ import soundEffects.SoundEffects;
  * which initializes an instance of InstructionView and associates it with the main application instance. This method
  * creates a new InstructionController to manage the instruction page.</p>
  *
- * @see InstructionView
- * @see ViewSwitcher
- * @see SoundEffects
  */
 public class InstructionController {
     /** The InstructionView instance associated with this controller. */

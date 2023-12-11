@@ -13,11 +13,6 @@ import javafx.stage.Stage;
  * navigate between different views such as the main menu, instruction page, high score view, and level selection page.
  * This class helps manage the transitions between different states of the game's user interface.
  *
- * @see Main
- * @see InstructionController
- * @see HighScoreController
- * @see MainMenuController
- * @see LevelSelectionController
  */
 public class ViewSwitcher {
     /**

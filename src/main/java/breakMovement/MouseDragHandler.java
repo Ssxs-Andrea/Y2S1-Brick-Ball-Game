@@ -7,7 +7,6 @@ import javafx.scene.shape.Rectangle;
  * The {@code MouseDragHandler} class is responsible for handling mouse drag events related to the paddle (break)
  * within the game. It updates the position of the break based on the mouse's x-coordinate during a drag event.
  *
- * @see GameState
  */
 public class MouseDragHandler {
     /**
@@ -24,7 +23,6 @@ public class MouseDragHandler {
      * @param gameState The GameState object representing the current state of the game.
      * @param rect      The Rectangle representing the break in the game.
      *
-     * @see MouseEvent
      */
     public MouseDragHandler(GameState gameState, Rectangle rect) {
         this.gameState = gameState;

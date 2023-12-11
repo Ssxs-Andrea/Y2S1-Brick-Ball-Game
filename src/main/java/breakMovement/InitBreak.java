@@ -8,8 +8,6 @@ import brickGame.GameState; // Import GameState
 /**
  * The {@code InitBreak} class is responsible for initializing the breakout paddle (break) within the game.
  * It provides a method to create and configure a Rectangle representing the breakout paddle.
- *
- * @see GameState
  */
 public class InitBreak {
     /**

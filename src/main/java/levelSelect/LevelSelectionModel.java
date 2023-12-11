@@ -6,13 +6,8 @@ package levelSelect;
  *
  * <p>This class is part of the Model-View-Controller (MVC) architecture, and it collaborates with the
  * {@code LevelSelectionController} and {@code LevelSelectionView} classes to facilitate the level selection feature.</p>
-
- */
-/**
- * Represents the model for level selection.
  */
 public class LevelSelectionModel {
-
     /**
      * The currently selected level.
      */

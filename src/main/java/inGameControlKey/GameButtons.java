@@ -5,12 +5,6 @@ import javafx.scene.control.Button;
  * The GameButtons class represents a collection of JavaFX Button instances used as in-game control keys.
  * It provides buttons for actions such as loading a game, starting a new game, selecting a level,
  * and returning to the main menu.
- *
- * <p>The class initializes the buttons with appropriate labels and layout properties, including translation
- * and preferred size. These buttons are intended for use in the in-game control panel.</p>
- *
- * <p>The layout properties, such as translation and preferred size, are set to provide a consistent
- * and visually appealing arrangement of the buttons in the in-game control panel.</p>
  */
 public class GameButtons {
     /** Button for loading a saved game. */

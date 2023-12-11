@@ -16,8 +16,6 @@ import java.util.Objects;
  * The VolumeController class manages the volume control functionality for the background music in the game.
  * It provides the ability to adjust the volume, mute or unmute the background music, and toggle a popup for volume control.
  * The class uses JavaFX's {@link Slider}, {@link CheckBox}, and {@link Popup} for the volume control UI.
- *
- * @see BackgroundMusicPlayer
  */
 public class VolumeController {
 

@@ -14,7 +14,6 @@ import java.util.List;
  * the top three high scores are retained. It uses object serialization to store and
  * retrieve the high score data.</p>
  *
- * @see HighScore
  */
 public class HighScoreManager {
     /** The maximum number of high scores to retain. */
@@ -48,7 +47,6 @@ public class HighScoreManager {
      *
      * @param playerName The name of the player achieving the high score.
      * @param score The new high score to be added.
-     * @see HighScore
      */
     public void updateHighScores(String playerName, int score) {
         HighScore newHighScore = new HighScore(playerName, score);
@@ -127,6 +125,4 @@ public class HighScoreManager {
         }
         return formattedHighScores.toString();
     }
-
-
 }

@@ -9,8 +9,6 @@ import java.io.Serializable;
  *
  * <p>The class implements the Serializable interface to allow for object serialization.</p>
  *
- * @serial 1L
- * @see HighScoreController
  */
 public class HighScore implements Serializable {
     /** The version identifier for object serialization. */

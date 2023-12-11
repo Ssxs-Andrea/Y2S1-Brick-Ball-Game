@@ -11,7 +11,6 @@ import java.util.Objects;
  * <p>This class is part of the pause game module and works in conjunction with the {@link PauseMenuController}
  * class to display and handle user interactions with the pause menu.</p>
  *
- * @see PauseMenuController
  */
 public class PauseMenuView extends StackPane {
     /**

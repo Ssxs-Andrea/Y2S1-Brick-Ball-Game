@@ -15,10 +15,6 @@ import java.util.stream.Collectors;
  *
  * <p>After loading the game, it sets the appropriate flags in the {@code GameState} class and initializes a new game using
  * the {@code initializeNewGame} method from the {@code Main} class.</p>
- *
- * @see ReadFile
- * @see GameState
- * @see Main
  */
 public class LoadGame {
     /** The game state object representing the current state of the game. */

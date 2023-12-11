@@ -12,8 +12,6 @@ import static brickGame.Main.pauseHandler;
  *
  * <p>The class works in collaboration with the {@link PauseHandler} and is used to pause the game when the window
  * loses focus to provide a better user experience.</p>
- *
- * @see PauseHandler
  */
 public class WindowsFocusManager {
 

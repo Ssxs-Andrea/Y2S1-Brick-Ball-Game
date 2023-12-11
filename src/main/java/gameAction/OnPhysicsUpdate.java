@@ -14,11 +14,6 @@ import java.util.List;
  * It includes methods for checking the count of destroyed blocks, applying ball physics, updating gold status,
  * and handling power-ups (Chocos and Booms).
  *
- * @see OnAction
- * @see BallPhysicsHandler
- * @see NextLevel
- * @see Power
- * @see ScoreLabelAnimator
  */
 public class OnPhysicsUpdate {
     /**

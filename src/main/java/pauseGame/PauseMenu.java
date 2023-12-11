@@ -13,8 +13,6 @@ import javafx.scene.layout.StackPane;
  *
  * <p>This class is part of the pause game module and is responsible for creating and displaying
  * the pause menu UI.</p>
- *
- * @see PauseMenuController
  */
 public class PauseMenu extends StackPane {
     /**

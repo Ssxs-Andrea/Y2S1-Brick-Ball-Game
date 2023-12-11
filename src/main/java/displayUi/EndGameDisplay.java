@@ -12,11 +12,6 @@ import soundEffects.SoundEffects;
  * It includes methods to show messages for both game over and game win scenarios, allowing players to restart the game
  * or return to the main menu.
  *
- * @see Main
- * @see GameState
- * @see SoundEffects
- * @see RestartGame
- * @see ViewSwitcher
  */
 public class EndGameDisplay {
     /**

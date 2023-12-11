@@ -6,8 +6,6 @@ import java.util.Random;
 import brickGame.GameState;
 /**
  * The {@code InitBoard} class is responsible for initializing the game board by generating a configuration of blocks based on the current game state.
- * @see Block
- * @see GameState
  */
 public class InitBoard {
     /**

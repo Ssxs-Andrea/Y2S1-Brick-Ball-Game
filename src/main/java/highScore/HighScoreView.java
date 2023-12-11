@@ -27,7 +27,6 @@ import java.util.Objects;
  * <p>The class also defines methods to create labels with images, set up the initial
  * scene, and obtain references to the scene and back button.</p>
  *
- * @see HighScoreManager
  */
 public class HighScoreView {
     /** The JavaFX scene displaying the high scores. */
@@ -66,7 +65,6 @@ public class HighScoreView {
      * the absence of records is displayed.
      *
      * @return The VBox containing the high scores content.
-     * @see HighScoreManager
      */
     private VBox getHighScoresBox() {
         HighScoreManager highScoreManager = new HighScoreManager();

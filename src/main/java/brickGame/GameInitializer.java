@@ -29,21 +29,6 @@ import java.util.List;
  * including the game scene, buttons, labels, and sound effects. It handles the creation of the game engine
  * and manages the visibility of game elements based on the game state.
  *
- * @see Main
- * @see InitBall
- * @see InitBreak
- * @see InitBoard
- * @see MouseDragHandler
- * @see EndGameDisplay
- * @see MessageLabelAnimator
- * @see GameEngine
- * @see OnAction
- * @see HighScoreController
- * @see GameButtonHandlers
- * @see GameButtons
- * @see ReadFile
- * @see SoundEffects
- * @see VolumeController
  */
 public class GameInitializer {
     /**

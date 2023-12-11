@@ -8,8 +8,6 @@ import java.io.Serializable;
  * The {@code Block} class represents a block in the game. Blocks have properties such as position, color, and type.
  * This class provides methods for initializing and checking collisions with the blocks.
  *
- * @see BlockFiller
- * @see BlockFillerFactory
  *
  */
 public class Block implements Serializable {
@@ -136,8 +134,6 @@ public class Block implements Serializable {
      * @param column The column index of the block.
      * @param color  The color of the block.
      * @param type   The type of the block indicating special properties.
-     *
-     * @see #draw()
      */
     public Block(int row, int column, Color color, int type) {
         this.row = row;
@@ -168,11 +164,6 @@ public class Block implements Serializable {
      * @param yBall The y-coordinate of the ball.
      * @return An integer representing the type of collision. Returns {@code NO_HIT} if no collision occurs.
      * Possible values: {@code HIT_RIGHT}, {@code HIT_BOTTOM}, {@code HIT_LEFT}, {@code HIT_TOP}.
-     *
-     * @see #NO_HIT
-     * @see #HIT_RIGHT
-     * @see #HIT_LEFT
-     * @see #HIT_TOP
      */
     public int checkHitToBlock(double xBall, double yBall) {
 

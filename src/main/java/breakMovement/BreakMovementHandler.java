@@ -4,7 +4,6 @@ import brickGame.GameState;
 /**
  * The {@code BreakMovementHandler} class manages the movement of the breakout paddle (break) within the game.
  * It provides methods to move the paddle to the left or right, ensuring it stays within the bounds of the game scene.
- * @see GameState
  */
 public class BreakMovementHandler {
     /**

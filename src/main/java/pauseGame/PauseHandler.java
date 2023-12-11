@@ -7,8 +7,6 @@ import javafx.scene.Scene;
  * It handles toggling the game pause state and displaying the pause menu.
  * This class is part of the pause game module and is responsible for controlling the pause functionality
  * and interactions during the game.
- *
- * @see PauseMenu
  */
 public class PauseHandler {
     /** Indicates whether the game is currently paused. */

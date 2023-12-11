@@ -16,7 +16,6 @@ import static brickGame.Main.pauseHandler;
  * <p>This class is part of the pause game module and works in conjunction with the {@link PauseMenu}
  * class to manage the pause menu's behavior.</p>
  *
- * @see PauseMenu
  */
 public class PauseMenuController {
     /**

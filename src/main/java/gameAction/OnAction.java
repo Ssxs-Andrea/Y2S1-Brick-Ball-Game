@@ -10,9 +10,6 @@ import static brickGame.Main.pauseHandler;
  * It includes methods for handling UI updates, game over checks, game element updates, physics updates, and
  * time-related events.
  *
- * @see GameEngine.OnAction
- * @see OnUpdate
- * @see OnPhysicsUpdate
  */
 public class OnAction implements GameEngine.OnAction {
     /**

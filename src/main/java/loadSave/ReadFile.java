@@ -14,8 +14,6 @@ import block.BlockSerializable;
  * retrieves various game-related parameters, such as game state, level, score, and ball/block positions, from the
  * saved file. This class collaborates with the {@code SaveGame} class to determine the path of the save file.
  * This class is used by the {@code LoadGame} class to load the saved game state and update the game accordingly.
- *
- *
  */
 public class ReadFile {
     /** Indicates whether a heart block exists in the game state loaded from the file. */

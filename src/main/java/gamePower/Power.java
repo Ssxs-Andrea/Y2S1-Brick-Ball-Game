@@ -19,8 +19,6 @@ import java.util.Random;
  * <p>Subclasses of Power, such as {@link Bonus} and {@link Penalty}, implement specific image URLs
  * for their first and second frames of the power-up animation.</p>
  *
- * @see Bonus
- * @see Penalty
  */
 public abstract class Power implements Serializable {
     /** The graphical representation of the power-up. */

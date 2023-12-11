@@ -10,9 +10,6 @@ import soundEffects.SoundEffects;
  *
  * <p>This class is part of the main menu module and is essential for transitioning between different sections of
  * the game, providing a seamless user experience.</p>
- *
- * @see MainMenuView
- * @see ViewSwitcher
  */
 public class MainMenuController {
     /** The main application instance. */

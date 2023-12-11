@@ -17,12 +17,6 @@ import soundEffects.SoundEffects;
  * display a dialog for the player to enter their name for a high score, and update the
  * high scores accordingly. It also sets event handlers for the HighScoreView's back button
  * to navigate back to the main menu.</p>
- *
- * @see HighScoreManager
- * @see HighScoreView
- * @see brickGame.Main
- * @see displayUi.ViewSwitcher
- * @see soundEffects.SoundEffects
  */
 public class HighScoreController {
     /** The HighScoreManager instance for managing high scores. */
@@ -48,8 +42,6 @@ public class HighScoreController {
      * HighScoreView is pressed. Plays a sound effect on button press and switches
      * to the main menu using the ViewSwitcher.
      *
-     * @see soundEffects.SoundEffects
-     * @see displayUi.ViewSwitcher
      */
     private void setEventHandlers() {
         highScoreView.getBackButton().setOnAction(event -> {
@@ -61,8 +53,6 @@ public class HighScoreController {
     }
     /**
      * Switches to the main menu view using the ViewSwitcher.
-     *
-     * @see displayUi.ViewSwitcher
      */
     private void switchToMainMenu() {
         ViewSwitcher viewSwitcher = new ViewSwitcher(main);
@@ -74,7 +64,6 @@ public class HighScoreController {
      * displays an information alert.
      *
      * @param score The score to check for a high score.
-     * @see HighScoreManager
      */
     public void checkAndAddHighScore(final int score) {
         if (score > 0 && highScoreManager.isHighScore(score)) {

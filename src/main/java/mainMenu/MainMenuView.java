@@ -12,12 +12,9 @@ import java.util.Objects;
  * The MainMenuView class represents the graphical user interface (GUI) for the main menu of the game.
  * It includes buttons for starting a new game, accessing game instructions, and viewing high scores.
  *
- *
  * This class is part of the main menu module and is responsible for creating and managing the visual
  * components of the main menu.
  *
- * @see MainMenuController
- * @see VolumeController
  */
 public class MainMenuView {
     /** The main menu scene. */

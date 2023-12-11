@@ -15,27 +15,10 @@ import static brickGame.Main.pauseHandler;
  * The KeyEventHandler class implements the EventHandler interface for handling JavaFX KeyEvent events in the game.
  * It responds to specific key presses, such as LEFT, RIGHT, S, R, and P, to perform corresponding actions in the game.
  *
- * <p>The supported key actions are:</p>
- * <ul>
- *   <li><strong>LEFT:</strong> Move the game paddle to the left.</li>
- *   <li><strong>RIGHT:</strong> Move the game paddle to the right.</li>
- *   <li><strong>S:</strong> Save the current game state.</li>
- *   <li><strong>R:</strong> Restart the current level.</li>
- *   <li><strong>P:</strong> Toggle pause/resume of the game.</li>
- * </ul>
- *
  * <p>The class uses instances of BreakMovementHandler, SaveGame, and RestartLevel to handle specific game actions
  * associated with key presses. It interacts with the Main, GameState, GameInitializer, and PauseHandler classes to
  * execute the corresponding logic based on the pressed keys.</p>
  *
- * <p>KeyEventHandler is intended to be registered as an event handler for KeyEvent events in the game scene.</p>
- *
- * @see BreakMovementHandler
- * @see SaveGame
- * @see RestartLevel
- * @see Main
- * @see GameState
- * @see GameInitializer
  */
 public class KeyEventHandler implements EventHandler<KeyEvent> {
     /** The main application instance. */
