@@ -1,4 +1,5 @@
 This project is about maintaining and extending a re-implementation of a classic retro game (Brick Breaker).
+
 Below is the changes made in the new version of the game.
 
 # Brick Ball Game
